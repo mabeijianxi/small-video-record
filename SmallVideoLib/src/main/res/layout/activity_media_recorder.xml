@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_381902">
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="49dip"
+        android:alpha="0.85"
+        android:background="@color/transparent2"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/title_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:contentDescription="@string/imageview_content_description"
+            android:padding="10dip"
+            android:layout_centerVertical="true"
+            android:src="@drawable/record_cancel_normal" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="49dip"
+            android:layout_alignParentRight="true"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/record_camera_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/record_camera_flash_led_selector"
+                android:button="@null"
+                android:textColor="@android:color/white" />
+
+            <CheckBox
+                android:id="@+id/record_camera_switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/record_camera_switch_selector"
+                android:button="@null" />
+
+            <ImageView
+                android:id="@+id/title_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:contentDescription="@string/imageview_content_description"
+                android:padding="10dip"
+                android:src="@drawable/record_next_seletor"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <mabeijianxi.camera.views.ProgressView
+        android:id="@+id/record_progress"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/title_layout" />
+
+    <RelativeLayout
+        android:id="@+id/camera_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/record_progress">
+
+
+
+        <SurfaceView
+            android:id="@+id/record_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <!-- camera_bottom_bg -->
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/record_progress"
+        android:layout_marginTop="300dip"
+        android:background="@color/color_381902">
+
+        <CheckedTextView
+            android:id="@+id/record_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dip"
+            android:background="@drawable/record_delete_selector"
+            android:button="@null"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/record_controller"
+            android:textColor="@color/camera_progress_three"
+            android:gravity="center"
+            android:text="按住拍"
+            android:textSize="16sp"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/small_video_shoot" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

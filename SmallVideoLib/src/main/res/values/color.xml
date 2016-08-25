@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_381902">#381902</color>
+    <color name="transparent2">#50000000</color>
+    <color name="camera_progress_three">#24ff00</color>
+    <color name="camera_bg">#2c2c2c</color>
+    <color name="camera_progress_split">#005084</color>
+    <color name="camera_progress_delete">#f68b2b</color>
+    <color name="camera_progress_overflow">#1b5d89</color>
+
+</resources>

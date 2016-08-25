@@ -1,0 +1,55 @@
+<resources>
+
+    <string name="app_name">VCameraLibrary</string>
+
+    <string name="hint">提示</string>
+    <string name="dialog_yes">是</string>
+    <string name="dialog_no">否</string>
+    <string name="action_back">返回</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_ok">确定</string>
+    <string name="imageview_content_description"></string>
+    <string name="record_camera_author">%1$s 作品</string>
+    <string name="record_camera_title">拍摄</string>
+    <string name="record_camera_back">返回</string>
+    <string name="record_camera_next">下一步</string>
+    <string name="record_camera_back_delete">回删</string>
+    <string name="record_camera_delay">延迟</string>
+    <string name="record_camera_filter">滤镜</string>
+    <string name="record_camera_init_faild">初始化视频存储路径失败</string>
+    <string name="record_camera_progress_message">准备中…</string>
+    <string name="record_camera_check_available_faild">手机满了！至少需要200M存储空间才能继续拍摄！</string>
+    <string name="record_camera_open_audio_faild">无法打开录音设备！</string>
+    <string name="record_camera_save_faild">视频信息保存失败！</string>
+    <string name="record_camera_exit_dialog_message">是否放弃这段视频？</string>
+    <string name="record_camera_import">导入</string>
+    <string name="record_camera_import_image">照片</string>
+    <string name="record_camera_import_image_choose">从本地照片选择</string>
+    <string name="record_camera_import_image_faild">导入照片失败</string>
+    <string name="record_camera_import_video">视频</string>
+    <string name="record_camera_import_video_title">截\t取</string>
+    <string name="record_camera_import_video_choose">从本地视频选择</string>
+    <string name="record_camera_import_video_faild">导入视频失败</string>
+    <string name="record_camera_tools_focus">焦点</string>
+    <string name="record_camera_tools_led">闪光</string>
+    <string name="record_camera_ghost">幽灵</string>
+    <string name="record_camera_preview_title">编辑</string>
+    <string name="record_camera_preview_pre">拍摄</string>
+    <string name="record_camera_preview_next">下一步</string>
+    <string name="record_camera_cancel_dialog_yes">确定</string>
+    <string name="record_camera_cancel_dialog_no">取消</string>
+    <string name="record_video_transcoding_faild">视频转码失败</string>
+    <string name="record_video_transcoding_success">视频保存在:%s</string>
+    <string name="record_read_object_faild">拍摄信息读取失败！请检查SD卡，稍后重试！</string>
+    <string name="record_preview_theme">主题</string>
+    <string name="record_preview_title">预览</string>
+    <string name="record_preview_theme_original">原始</string>
+    <string name="record_preview_theme_load_faild">主题加载失败</string>
+    <string name="record_preview_encoding">正在转码…</string>
+    <string name="record_preview_encoding_format">转码中\t%d%%</string>
+    <string name="record_preview_music_nothing">无</string>
+    <string name="record_preview_tab_theme">主题</string>
+    <string name="record_preview_tab_filter">滤镜</string>
+    <string name="record_preview_building">视频生成中…</string>
+
+</resources>

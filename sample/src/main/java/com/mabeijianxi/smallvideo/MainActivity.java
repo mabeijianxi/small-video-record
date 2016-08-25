@@ -1,0 +1,48 @@
+package com.mabeijianxi.smallvideo;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import java.io.File;
+
+import mabeijianxi.camera.MediaRecorderActivity;
+import mabeijianxi.camera.VCamera;
+import mabeijianxi.camera.util.DeviceUtils;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initSmallVideo(this);
+    }
+
+    public void go(View c) {
+        MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 8 * 1000, 3 * 1000);
+    }
+
+    public static void initSmallVideo(Context context) {
+        // 设置拍摄视频缓存路径
+        File dcim = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        if (DeviceUtils.isZte()) {
+            if (dcim.exists()) {
+                VCamera.setVideoCachePath(dcim + "/mabeijianxi/");
+            } else {
+                VCamera.setVideoCachePath(dcim.getPath().replace("/sdcard/",
+                        "/sdcard-ext/")
+                        + "/mabeijianxi/");
+            }
+        } else {
+            VCamera.setVideoCachePath(dcim + "/mabeijianxi/");
+        }
+        // 开启log输出,ffmpeg输出到logcat
+        VCamera.setDebugMode(true);
+        // 初始化拍摄SDK，必须
+        VCamera.initialize(context);
+    }
+}
