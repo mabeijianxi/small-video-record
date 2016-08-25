@@ -9,13 +9,16 @@
 #####3：录制简单，一行代码完成集成。 
 ###使用方法：
 ######1：添加依赖
-		java`compile 'com.mabeijianxi:small-video-record:1.0.0'`
+```java
+compile 'com.mabeijianxi:small-video-record:1.0.0'
+```
 ######2:在manifests里面添加
-		java` <activity
-            android:name="mabeijianxi.camera.MediaRecorderActivity"
-            />`
+```java
+ <activity android:name="mabeijianxi.camera.MediaRecorderActivity"/>
+```
 ######3:在Application里面初始化小视频录制：
-		java` public static void initSmallVideo(Context context) {
+```java
+public static void initSmallVideo(Context context) {
         // 设置拍摄视频缓存路径
         File dcim = Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
@@ -32,6 +35,9 @@
         }
         VCamera.setDebugMode(true);
         VCamera.initialize(context);
-    }`
+    }
+```
 ######4:跳转录制界面：
-	java`MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 6 * 1000, (int) (1.5 * 1000));`
+```java
+MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 6 * 1000, (int) (1.5 * 1000));
+```
