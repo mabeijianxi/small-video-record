@@ -41,3 +41,6 @@ public static void initSmallVideo(Context context) {
 ```java
 MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 6 * 1000, (int) (1.5 * 1000));
 ```
+###sample下载：
+![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample.png)
+[Download Demo](http://fir.im/smallvideorecord)
