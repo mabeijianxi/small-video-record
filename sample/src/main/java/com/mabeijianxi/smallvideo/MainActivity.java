@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void go(View c) {
-        MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 8 * 1000, 3 * 1000);
+        MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 6 * 1000, (int) (1.5 * 1000));
     }
 
     public static void initSmallVideo(Context context) {
