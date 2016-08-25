@@ -23,5 +23,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
-    compile project(':SmallVideoLib')
+    compile 'com.mabeijianxi:small-video-record:1.0.0'
 }

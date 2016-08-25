@@ -23,7 +23,6 @@
         <activity
             android:name="mabeijianxi.camera.MediaRecorderActivity"
             android:theme="@style/AppNoBarTheme"
-
             />
         <activity
             android:name=".SendSmallVideoActivity"
