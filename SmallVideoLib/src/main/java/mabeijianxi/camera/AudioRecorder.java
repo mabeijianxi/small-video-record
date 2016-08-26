@@ -6,8 +6,6 @@ import android.media.AudioRecord;
 /**
  * 音频录制
  * 
- * @author yixia.com
- *
  */
 public class AudioRecorder extends Thread {
 

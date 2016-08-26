@@ -33,8 +33,6 @@ import mabeijianxi.camera.views.ProgressView;
 
 /**
  * 视频录制
- *
- * @author tangjun@yixia.com
  */
 public class MediaRecorderActivity extends Activity implements
         MediaRecorderBase.OnErrorListener, OnClickListener, MediaRecorderBase.OnPreparedListener,

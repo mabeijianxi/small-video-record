@@ -16,9 +16,7 @@ import java.io.IOException;
 
 /**
  * 系统版本信息类
- * 
- * @author tangjun
- * 
+ *
  */
 public class DeviceUtils {
 

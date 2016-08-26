@@ -3,8 +3,6 @@ package mabeijianxi.camera;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-import mabeijianxi.camera.util.DeviceUtils;
-import mabeijianxi.camera.util.Log;
 import com.yixia.videoeditor.adapter.UtilityAdapter;
 
 import java.io.File;
@@ -13,12 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import mabeijianxi.camera.util.DeviceUtils;
+import mabeijianxi.camera.util.Log;
+
 /**
- * 
  * 拍摄SDK
- * 
- * @author yixia.com
- *
  */
 public class VCamera {
 	/** 应用包名 */

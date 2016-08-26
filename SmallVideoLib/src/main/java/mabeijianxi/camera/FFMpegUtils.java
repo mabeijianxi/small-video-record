@@ -16,8 +16,6 @@ import java.io.IOException;
 /**
  * ffmpeg工具类
  * 
- * @author yixia.com
- *
  */
 public class FFMpegUtils {
 

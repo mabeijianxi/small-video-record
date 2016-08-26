@@ -19,11 +19,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
-import mabeijianxi.camera.model.MediaObject;
-import mabeijianxi.camera.model.MediaObject.MediaPart;
-import mabeijianxi.camera.util.DeviceUtils;
-import mabeijianxi.camera.util.FileUtils;
-import mabeijianxi.camera.util.StringUtils;
 import com.yixia.videoeditor.adapter.UtilityAdapter;
 
 import java.io.File;
@@ -32,11 +27,14 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
+import mabeijianxi.camera.model.MediaObject;
+import mabeijianxi.camera.model.MediaObject.MediaPart;
+import mabeijianxi.camera.util.DeviceUtils;
+import mabeijianxi.camera.util.FileUtils;
+import mabeijianxi.camera.util.StringUtils;
+
 /**
  * 视频录制抽象类
- * 
- * @author yixia.com
- *
  */
 public abstract class MediaRecorderBase implements Callback, PreviewCallback, IMediaRecorder {
 	/**

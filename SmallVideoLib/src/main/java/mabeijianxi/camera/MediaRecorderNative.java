@@ -4,13 +4,12 @@ import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.util.Log;
 
-import mabeijianxi.camera.model.MediaObject.MediaPart;
 import com.yixia.videoeditor.adapter.UtilityAdapter;
+
+import mabeijianxi.camera.model.MediaObject.MediaPart;
 
 /**
  * 视频录制：边录制边底层处理视频（旋转和裁剪）
- * 
- * @author yixia.com
  *
  */
 public class MediaRecorderNative extends MediaRecorderBase implements MediaRecorder.OnErrorListener {

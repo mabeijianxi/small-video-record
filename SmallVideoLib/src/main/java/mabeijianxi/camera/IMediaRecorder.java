@@ -5,8 +5,6 @@ import mabeijianxi.camera.model.MediaObject.MediaPart;
 /**
  * 视频录制接口
  * 
- * @author yixia.com
- *
  */
 public interface IMediaRecorder {
 

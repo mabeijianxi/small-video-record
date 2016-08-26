@@ -1,5 +1,8 @@
 package mabeijianxi.camera.util;
 
+import android.text.TextPaint;
+import android.text.TextUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,13 +10,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.TimeZone;
 
-import android.text.TextPaint;
-import android.text.TextUtils;
-
 /**
  * 字符串工具类
- * 
- * @author tangjun
  * 
  */
 public class StringUtils {

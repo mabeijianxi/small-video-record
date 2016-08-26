@@ -6,17 +6,15 @@ import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import mabeijianxi.camera.model.MediaObject.MediaPart;
-import mabeijianxi.camera.util.FileUtils;
 import com.yixia.videoeditor.adapter.UtilityAdapter;
 
 import java.io.IOException;
 
+import mabeijianxi.camera.model.MediaObject.MediaPart;
+import mabeijianxi.camera.util.FileUtils;
+
 /**
  * 使用系统MediaRecorder录制，适合低端机
- * 
- * @author yixia.com
- *
  */
 public class MediaRecorderSystem extends MediaRecorderBase implements android.media.MediaRecorder.OnErrorListener {
 

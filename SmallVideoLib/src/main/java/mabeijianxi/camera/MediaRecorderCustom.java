@@ -6,15 +6,13 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
-import mabeijianxi.camera.model.MediaObject.MediaPart;
-
 import java.io.IOException;
+
+import mabeijianxi.camera.model.MediaObject.MediaPart;
 
 /**
  * 自定义录制（Java层保存yuv和pcm数据），未完成
  * 
- * @author yixia.com
- *
  */
 @Deprecated
 public class MediaRecorderCustom extends MediaRecorderBase {
