@@ -10,6 +10,7 @@ import java.io.File;
 
 import mabeijianxi.camera.MediaRecorderActivity;
 import mabeijianxi.camera.VCamera;
+import mabeijianxi.camera.model.MediaRecorderConfig;
 import mabeijianxi.camera.util.DeviceUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +23,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void go(View c) {
-        MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), 6 * 1000, (int) (1.5 * 1000));
+        MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+                .doH264Compress(true)
+                .smallVideoWidth(480)
+                .smallVideoHeight(320)
+                .recordTimeMax(6 * 1000)
+                .captureThumbnailsTime(1)
+                .recordTimeMin((int) (1.5 * 1000))
+                .build();
+        MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
     }
 
     public static void initSmallVideo(Context context) {

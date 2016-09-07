@@ -70,9 +70,9 @@ public class MediaRecorderNative extends MediaRecorderBase implements MediaRecor
 	@Override
 	protected void onStartPreviewSuccess() {
 		if (mCameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-			UtilityAdapter.RenderInputSettings(640, 480, 0, UtilityAdapter.FLIPTYPE_NORMAL);
+			UtilityAdapter.RenderInputSettings(mSupportedPreviewWidth, SMALL_VIDEO_WIDTH, 0, UtilityAdapter.FLIPTYPE_NORMAL);
 		} else {
-			UtilityAdapter.RenderInputSettings(640, 480, 180, UtilityAdapter.FLIPTYPE_HORIZONTAL);
+			UtilityAdapter.RenderInputSettings(mSupportedPreviewWidth, SMALL_VIDEO_WIDTH, 180, UtilityAdapter.FLIPTYPE_HORIZONTAL);
 		}
 		UtilityAdapter.RenderOutputSettings(SMALL_VIDEO_WIDTH, SMALL_VIDEO_HEIGHT, mFrameRate, UtilityAdapter.OUTPUTFORMAT_YUV | UtilityAdapter.OUTPUTFORMAT_MASK_MP4/*| UtilityAdapter.OUTPUTFORMAT_MASK_HARDWARE_ACC*/);
 	}

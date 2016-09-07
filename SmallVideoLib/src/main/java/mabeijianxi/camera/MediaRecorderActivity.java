@@ -26,6 +26,7 @@ import com.yixia.videoeditor.adapter.UtilityAdapter;
 import java.io.File;
 
 import mabeijianxi.camera.model.MediaObject;
+import mabeijianxi.camera.model.MediaRecorderConfig;
 import mabeijianxi.camera.util.DeviceUtils;
 import mabeijianxi.camera.util.FileUtils;
 import mabeijianxi.camera.util.StringUtils;
@@ -41,11 +42,11 @@ public class MediaRecorderActivity extends Activity implements
     /**
      * 录制最长时间
      */
-    public  static int RECORD_TIME_MAX = 6 * 1000;
+    private static int RECORD_TIME_MAX = 6 * 1000;
     /**
      * 录制最小时间
      */
-    public  static int RECORD_TIME_MIN = (int) (1.5f * 1000);
+    private static int RECORD_TIME_MIN = (int) (1.5f * 1000);
     /**
      * 刷新进度条
      */
@@ -125,19 +126,22 @@ public class MediaRecorderActivity extends Activity implements
     /**
      * 最大录制时间的key
      */
-    public final static String MEDIA_RECORDER_MAX_TIME_KEY= "media_recorder_max_time_key";
+    public final static String MEDIA_RECORDER_MAX_TIME_KEY = "media_recorder_max_time_key";
     /**
-     *
+     * 最小录制时间的key
      */
-    public final static String MEDIA_RECORDER_MIN_TIME_KEY= "media_recorder_min_time_key";
+    public final static String MEDIA_RECORDER_MIN_TIME_KEY = "media_recorder_min_time_key";
+    /**
+     * 录制配置key
+     */
+    public final static String MEDIA_RECORDER_CONFIG_KEY = "media_recorder_config_key";
 
     /**
-     *
      * @param context
      * @param overGOActivityName 录制结束后需要跳转的Activity全类名
      */
-    public static void goSmallVideoRecorder(Activity context,String overGOActivityName,int maxTime,int minTime){
-        context.startActivity(new Intent(context,MediaRecorderActivity.class).putExtra(OVER_ACTIVITY_NAME,overGOActivityName).putExtra(MEDIA_RECORDER_MAX_TIME_KEY,maxTime).putExtra(MEDIA_RECORDER_MIN_TIME_KEY,minTime));
+    public static void goSmallVideoRecorder(Activity context, String overGOActivityName, MediaRecorderConfig mediaRecorderConfig) {
+        context.startActivity(new Intent(context, MediaRecorderActivity.class).putExtra(OVER_ACTIVITY_NAME, overGOActivityName).putExtra(MEDIA_RECORDER_CONFIG_KEY, mediaRecorderConfig));
     }
 
     @Override
@@ -150,8 +154,20 @@ public class MediaRecorderActivity extends Activity implements
 
     private void initData() {
         Intent intent = getIntent();
-        RECORD_TIME_MAX = intent.getIntExtra(MEDIA_RECORDER_MAX_TIME_KEY, 6000);
-        RECORD_TIME_MIN=intent.getIntExtra(MEDIA_RECORDER_MIN_TIME_KEY,1500);
+        MediaRecorderConfig mediaRecorderConfig = intent.getParcelableExtra(MEDIA_RECORDER_CONFIG_KEY);
+        if (mediaRecorderConfig == null) {
+            return;
+        }
+        RECORD_TIME_MAX = mediaRecorderConfig.getRecordTimeMax();
+        RECORD_TIME_MIN = mediaRecorderConfig.getRecordTimeMin();
+        MediaRecorderBase.MAX_FRAME_RATE=mediaRecorderConfig.getMaxFrameRate();
+        MediaRecorderBase.MIN_FRAME_RATE=mediaRecorderConfig.getMinFrameRate();
+        MediaRecorderBase.SMALL_VIDEO_HEIGHT=mediaRecorderConfig.getSmallVideoHeight();
+        MediaRecorderBase.SMALL_VIDEO_WIDTH=mediaRecorderConfig.getSmallVideoWidth();
+        MediaRecorderBase.mVideoBitrate=mediaRecorderConfig.getVideoBitrate();
+        MediaRecorderBase.CAPTURE_THUMBNAILS_TIME=mediaRecorderConfig.getCaptureThumbnailsTime();
+        MediaRecorderBase.doH264Compress=mediaRecorderConfig.isDoH264Compress();
+
     }
 
     /**
@@ -451,7 +467,7 @@ public class MediaRecorderActivity extends Activity implements
         } else if (id == R.id.title_next) {// 停止录制
             mMediaRecorder.startEncoding();
             /*finish();
-			overridePendingTransition(R.anim.push_bottom_in,
+            overridePendingTransition(R.anim.push_bottom_in,
 					R.anim.push_bottom_out);*/
         } else if (id == R.id.record_delete) {
             // 取消回删

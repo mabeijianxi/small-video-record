@@ -244,7 +244,7 @@ public class FileUtils {
             File files = new File(f);
             if (files.exists() && files.isDirectory()) {
                 for (File file : files.listFiles()) {
-                    if (!file.isDirectory() && (file.getName().contains("ts") || file.getName().contains("temp"))) {
+                    if (!file.isDirectory() && (file.getName().contains(".ts") || file.getName().contains("temp"))) {
                         file.delete();
                     }
 
@@ -252,7 +252,19 @@ public class FileUtils {
             }
         }
     }
+    public static void deleteCacheFile2TS(String f) {
+        if (f != null && f.length() > 0) {
+            File files = new File(f);
+            if (files.exists() && files.isDirectory()) {
+                for (File file : files.listFiles()) {
+                    if (!file.isDirectory() && (file.getName().contains(".ts"))) {
+                        file.delete();
+                    }
 
+                }
+            }
+        }
+    }
     public static void deleteDir(String f) {
         if (f != null && f.length() > 0) {
             deleteDir(new File(f));
