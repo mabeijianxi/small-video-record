@@ -50,9 +50,9 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
 ```
 ######更新日志：
-	######2016-08-26：提交小视频1.0.2，增加Buidler配置，可自定义更多内容。
-	######2016-08-26：提交小视频1.0.1，更新配置文件。
-	######2016-08-25：提交小视频1.0.0
+	2016-08-26：提交小视频1.0.2，增加Buidler配置，可自定义更多内容。
+	2016-08-26：提交小视频1.0.1，更新配置文件。
+	2016-08-25：提交小视频1.0.0
 ###sample下载：
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample.png)
 [Download Demo](http://fir.im/smallvideorecord)
