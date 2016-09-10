@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
                 .smallVideoWidth(480)
                 .smallVideoHeight(320)
                 .recordTimeMax(6 * 1000)
+                .maxFrameRate(20)
+                .minFrameRate(8)
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();

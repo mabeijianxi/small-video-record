@@ -191,7 +191,7 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param doH264Compress 录制后是否需要H264压缩
+         * @param doH264Compress 录制后是否需要H264压缩，（压缩后可得到清晰而小巧的视频）
          * @return
          */
         public Buidler doH264Compress(boolean doH264Compress) {
@@ -200,7 +200,7 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param MAX_FRAME_RATE 最大帧率
+         * @param MAX_FRAME_RATE 最大帧率(与视频清晰度、大小息息相关)
          * @return
          */
         public Buidler maxFrameRate(int MAX_FRAME_RATE) {
@@ -209,7 +209,7 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param MIN_FRAME_RATE 最小帧率
+         * @param MIN_FRAME_RATE 最小帧率(与视频清晰度、大小息息相关)
          * @return
          */
         public Buidler minFrameRate(int MIN_FRAME_RATE) {
@@ -245,7 +245,7 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param SMALL_VIDEO_WIDTH 小视频宽度,TODO 注意：宽度不能随意穿，需要传送手机摄像头手支持录制的视频高度，注意是高度（因为会选择，具体原因不多解析）。
+         * @param SMALL_VIDEO_WIDTH 小视频宽度,TODO 注意：宽度不能随意传入，需要传送手机摄像头手支持录制的视频高度，注意是高度（因为会选择，具体原因不多解析）。
          *                          获取摄像头所支持的尺寸的方式是{@link android.graphics.Camera #getSupportedPreviewSizes()}
          *                          一般支持的尺寸的高度有：240、480、720、1080等，具体值请用以上方法获取
          * @return

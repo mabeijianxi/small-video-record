@@ -548,7 +548,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         if (findWidth) {
             mParameters.setPreviewSize(mSupportedPreviewWidth, SMALL_VIDEO_WIDTH);
         } else {
-            new RuntimeException("传入高度不支持或未找到对应宽度");
+            new IllegalArgumentException("传入高度不支持或未找到对应宽度");
         }
 
         // 设置输出视频流尺寸，采样率
