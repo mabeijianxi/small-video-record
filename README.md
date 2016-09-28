@@ -39,7 +39,7 @@ public static void initSmallVideo(Context context) {
 ```
 ######4:跳转录制界面：
 ```java
-MediaRecorderConfig config = new  MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .doH264Compress(true)
                 .smallVideoWidth(480)
                 .smallVideoHeight(360)
