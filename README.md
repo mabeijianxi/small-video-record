@@ -42,7 +42,7 @@ public static void initSmallVideo(Context context) {
 MediaRecorderConfig config = new  MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .doH264Compress(true)
                 .smallVideoWidth(480)
-                .smallVideoHeight(320)
+                .smallVideoHeight(360)
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
