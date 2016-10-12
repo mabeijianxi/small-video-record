@@ -47,6 +47,7 @@ public final class MediaRecorderConfig implements Parcelable {
      */
     private final int captureThumbnailsTime;
 
+
     private MediaRecorderConfig(Buidler buidler) {
         this.RECORD_TIME_MAX = buidler.RECORD_TIME_MAX;
         this.RECORD_TIME_MIN = buidler.RECORD_TIME_MIN;
@@ -177,6 +178,7 @@ public final class MediaRecorderConfig implements Parcelable {
          */
         private int captureThumbnailsTime = 1;
 
+
         public MediaRecorderConfig build() {
             return new MediaRecorderConfig(this);
         }
@@ -263,7 +265,6 @@ public final class MediaRecorderConfig implements Parcelable {
             this.VIDEO_BITRATE = VIDEO_BITRATE;
             return this;
         }
-
     }
 
 }
