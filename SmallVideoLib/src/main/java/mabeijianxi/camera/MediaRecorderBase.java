@@ -538,9 +538,10 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         for (int i = 0; i < mSupportedPreviewSizes.size(); i++) {
             Size size = mSupportedPreviewSizes.get(i);
             if (size.height == SMALL_VIDEO_WIDTH) {
-                mSupportedPreviewWidth = size.width;
-                if(mSupportedPreviewWidth==720){
+                if(SMALL_VIDEO_WIDTH==480){
                     mSupportedPreviewWidth=640;
+                }else {
+                    mSupportedPreviewWidth = size.width;
                 }
                 findWidth = true;
             }
