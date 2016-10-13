@@ -10,7 +10,7 @@
 ###使用方法：
 ######1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record:1.0.2'
+compile 'com.mabeijianxi:small-video-record:1.0.5'
 ```
 ######2:在manifests里面添加
 ```java
