@@ -1,5 +1,5 @@
 # small-video-record
-利用FFmpeg视频录制与压缩处理，这里得感谢vatamio家的秒拍SO库。
+利用FFmpeg视频录制与压缩处理，这里得感谢vatamio家的秒拍SO库，也感谢提出问题的朋友们！
 
 ###效果如下：
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/small_video.gif)
