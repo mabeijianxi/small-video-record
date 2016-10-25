@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     public void go(View c) {
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .doH264Compress(true)
-                .smallVideoWidth(640)
-                .smallVideoHeight(480)
+                .smallVideoWidth(480)
+                .smallVideoHeight(320)
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
