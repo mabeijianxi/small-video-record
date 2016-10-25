@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 .minFrameRate(8)
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
-                .goHome(false)
                 .build();
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
     }
