@@ -535,22 +535,22 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         // mParameters.setPreviewFpsRange(15 * 1000, 20 * 1000);
 //		TODO 设置浏览尺寸
         boolean findWidth = false;
-        for (int i = 0; i < mSupportedPreviewSizes.size(); i++) {
+        for (int i = mSupportedPreviewSizes.size() - 1; i >= 0; i--) {
             Size size = mSupportedPreviewSizes.get(i);
             if (size.height == SMALL_VIDEO_WIDTH) {
-                if (SMALL_VIDEO_WIDTH == 480) {
-                    mSupportedPreviewWidth = 640;
-                } else {
-                    mSupportedPreviewWidth = size.width;
-                }
+
+                mSupportedPreviewWidth = size.width;
                 findWidth = true;
+                break;
             }
         }
-        if (findWidth) {
-            mParameters.setPreviewSize(mSupportedPreviewWidth, SMALL_VIDEO_WIDTH);
-        } else {
-            throw new IllegalArgumentException("传入高度不支持或未找到对应宽度");
+        if (!findWidth) {
+            Log.e(getClass().getSimpleName(), "传入高度不支持或未找到对应宽度,请按照要求重新设置，否则会出现一些验证问题");
+            mSupportedPreviewWidth = 640;
+            SMALL_VIDEO_WIDTH = 480;
+            SMALL_VIDEO_HEIGHT = 360;
         }
+        mParameters.setPreviewSize(mSupportedPreviewWidth, SMALL_VIDEO_WIDTH);
 
         // 设置输出视频流尺寸，采样率
         mParameters.setPreviewFormat(ImageFormat.NV21);

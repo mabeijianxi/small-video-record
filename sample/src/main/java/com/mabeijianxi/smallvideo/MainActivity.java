@@ -26,12 +26,13 @@ public class MainActivity extends AppCompatActivity {
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .doH264Compress(true)
                 .smallVideoWidth(480)
-                .smallVideoHeight(320)
+                .smallVideoHeight(360)
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
+                .goHome(false)
                 .build();
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
     }

@@ -47,6 +47,7 @@ public final class MediaRecorderConfig implements Parcelable {
      */
     private final int captureThumbnailsTime;
 
+    private final boolean GO_HOME;
 
     private MediaRecorderConfig(Buidler buidler) {
         this.RECORD_TIME_MAX = buidler.RECORD_TIME_MAX;
@@ -58,8 +59,12 @@ public final class MediaRecorderConfig implements Parcelable {
         this.SMALL_VIDEO_WIDTH = buidler.SMALL_VIDEO_WIDTH;
         this.VIDEO_BITRATE = buidler.VIDEO_BITRATE;
         this.doH264Compress = buidler.doH264Compress;
-    }
+        this.GO_HOME=buidler.GO_HOME;
 
+    }
+    public boolean isGO_HOME() {
+        return GO_HOME;
+    }
     public int getCaptureThumbnailsTime() {
         return captureThumbnailsTime;
     }
@@ -111,6 +116,7 @@ public final class MediaRecorderConfig implements Parcelable {
         VIDEO_BITRATE = in.readInt();
         doH264Compress = in.readByte() != 0;
         captureThumbnailsTime = in.readInt();
+        GO_HOME=in.readByte() != 0;
     }
 
     public static final Creator<MediaRecorderConfig> CREATOR = new Creator<MediaRecorderConfig>() {
@@ -136,6 +142,7 @@ public final class MediaRecorderConfig implements Parcelable {
         dest.writeInt(VIDEO_BITRATE);
         dest.writeByte((byte) (doH264Compress ? 1 : 0));
         dest.writeInt(captureThumbnailsTime);
+        dest.writeInt((byte)(GO_HOME?1:0));
     }
 
     public static class Buidler {
@@ -177,6 +184,8 @@ public final class MediaRecorderConfig implements Parcelable {
          * 录制后会剪切一帧缩略图并保存，就是取时间轴上这个时间的画面
          */
         private int captureThumbnailsTime = 1;
+
+        private boolean GO_HOME=false;
 
 
         public MediaRecorderConfig build() {
@@ -263,6 +272,11 @@ public final class MediaRecorderConfig implements Parcelable {
          */
         public Buidler videoBitrate(int VIDEO_BITRATE) {
             this.VIDEO_BITRATE = VIDEO_BITRATE;
+            return this;
+        }
+
+        public Buidler goHome(boolean GO_HOME) {
+            this.GO_HOME = GO_HOME;
             return this;
         }
     }

@@ -136,6 +136,7 @@ public class MediaRecorderActivity extends Activity implements
      */
     public final static String MEDIA_RECORDER_CONFIG_KEY = "media_recorder_config_key";
 
+    private boolean GO_HOME;
     /**
      * @param context
      * @param overGOActivityName 录制结束后需要跳转的Activity全类名
@@ -167,6 +168,7 @@ public class MediaRecorderActivity extends Activity implements
         MediaRecorderBase.mVideoBitrate=mediaRecorderConfig.getVideoBitrate();
         MediaRecorderBase.CAPTURE_THUMBNAILS_TIME=mediaRecorderConfig.getCaptureThumbnailsTime();
         MediaRecorderBase.doH264Compress=mediaRecorderConfig.isDoH264Compress();
+        GO_HOME=mediaRecorderConfig.isGO_HOME();
     }
 
     /**
@@ -581,6 +583,7 @@ public class MediaRecorderActivity extends Activity implements
             intent.putExtra(MediaRecorderActivity.OUTPUT_DIRECTORY, mMediaObject.getOutputDirectory());
             intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempTranscodingVideoPath());
             intent.putExtra(MediaRecorderActivity.VIDEO_SCREENSHOT, mMediaObject.getOutputVideoThumbPath());
+            intent.putExtra("go_home",GO_HOME);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             throw new IllegalArgumentException("需要传入录制完成后跳转的Activity的全类名");
