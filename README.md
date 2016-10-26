@@ -10,7 +10,7 @@
 ###使用方法：
 ######1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record:1.0.6'
+compile 'com.mabeijianxi:small-video-record:1.0.7'
 ```
 ######2:在manifests里面添加
 ```java
@@ -52,6 +52,9 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
 ```
 ######更新日志：
+	2016-10-26:
+	提交1.0.7,增强兼容性，防止录制尺寸不支持奔溃
+
 	2016-10-14:
 	提交1.0.6，修复在不支持的尺寸下无异常抛出。
 
