@@ -545,7 +545,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             }
         }
         if (!findWidth) {
-            Log.e(getClass().getSimpleName(), "传入高度不支持或未找到对应宽度,请按照要求重新设置，否则会出现一些验证问题");
+            Log.e(getClass().getSimpleName(), "传入高度不支持或未找到对应宽度,请按照要求重新设置，否则会出现一些严重问题");
             mSupportedPreviewWidth = 640;
             SMALL_VIDEO_WIDTH = 480;
             SMALL_VIDEO_HEIGHT = 360;
@@ -626,6 +626,28 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             Log.e("Yixia", "startPreview fail :" + e.getMessage());
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 预览调用成功，子类可以做一些操作

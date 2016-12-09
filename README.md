@@ -51,6 +51,9 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .build();
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
 ```
+######一些问题：
+	1：编译环境请满足：targetSdkVersion<=22
+	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ######更新日志：
 	2016-10-26:
 	提交1.0.7,增强兼容性，防止录制尺寸不支持奔溃
