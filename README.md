@@ -10,7 +10,7 @@
 ###使用方法：
 ######1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record:1.0.7'
+compile 'com.mabeijianxi:small-video-record:1.0.8'
 ```
 ######2:在manifests里面添加
 ```java
@@ -55,6 +55,9 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ######更新日志：
+	2016-12-14：
+	提交1.0.8，修复部分手机不支持输入帧率问题，彻底修复录制浏览变形
+
 	2016-10-26:
 	提交1.0.7,增强兼容性，防止录制尺寸不支持奔溃
 

@@ -177,7 +177,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
      */
     protected static int mVideoBitrate = 2048;
 
-    protected int mSupportedPreviewWidth = 0;
+    public static int mSupportedPreviewWidth = 0;
     /**
      * 状态标记
      */
@@ -515,18 +515,22 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
     protected void prepareCameraParaments() {
         if (mParameters == null)
             return;
-
         List<Integer> rates = mParameters.getSupportedPreviewFrameRates();
         if (rates != null) {
             if (rates.contains(MAX_FRAME_RATE)) {
                 mFrameRate = MAX_FRAME_RATE;
             } else {
+                boolean findFrame=false;
                 Collections.sort(rates);
                 for (int i = rates.size() - 1; i >= 0; i--) {
                     if (rates.get(i) <= MAX_FRAME_RATE) {
                         mFrameRate = rates.get(i);
+                        findFrame=true;
                         break;
                     }
+                }
+                if (!findFrame){
+                    mFrameRate=rates.get(0);
                 }
             }
         }

@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ import mabeijianxi.camera.util.DeviceUtils;
 import mabeijianxi.camera.util.FileUtils;
 import mabeijianxi.camera.util.StringUtils;
 import mabeijianxi.camera.views.ProgressView;
+
+import static mabeijianxi.camera.MediaRecorderBase.SMALL_VIDEO_WIDTH;
 
 /**
  * 视频录制
@@ -164,7 +167,7 @@ public class MediaRecorderActivity extends Activity implements
         MediaRecorderBase.MAX_FRAME_RATE=mediaRecorderConfig.getMaxFrameRate();
         MediaRecorderBase.MIN_FRAME_RATE=mediaRecorderConfig.getMinFrameRate();
         MediaRecorderBase.SMALL_VIDEO_HEIGHT=mediaRecorderConfig.getSmallVideoHeight();
-        MediaRecorderBase.SMALL_VIDEO_WIDTH=mediaRecorderConfig.getSmallVideoWidth();
+        SMALL_VIDEO_WIDTH=mediaRecorderConfig.getSmallVideoWidth();
         MediaRecorderBase.mVideoBitrate=mediaRecorderConfig.getVideoBitrate();
         MediaRecorderBase.CAPTURE_THUMBNAILS_TIME=mediaRecorderConfig.getCaptureThumbnailsTime();
         MediaRecorderBase.doH264Compress=mediaRecorderConfig.isDoH264Compress();
@@ -213,7 +216,6 @@ public class MediaRecorderActivity extends Activity implements
 
         mProgressView.setMaxDuration(RECORD_TIME_MAX);
         mProgressView.setMinTime(RECORD_TIME_MIN);
-        initSurfaceView();
     }
 
     /**
@@ -221,11 +223,11 @@ public class MediaRecorderActivity extends Activity implements
      */
     private void initSurfaceView() {
         final int w = DeviceUtils.getScreenWidth(this);
-        ((RelativeLayout.LayoutParams) mBottomLayout.getLayoutParams()).topMargin = (int) (w / (MediaRecorderBase.SMALL_VIDEO_WIDTH / (MediaRecorderBase.SMALL_VIDEO_HEIGHT * 1.0f)));
+        ((RelativeLayout.LayoutParams) mBottomLayout.getLayoutParams()).topMargin = (int) (w / (SMALL_VIDEO_WIDTH / (MediaRecorderBase.SMALL_VIDEO_HEIGHT * 1.0f)));
         int width = w;
-        int height = w * 4 / 3;
+        int height = (int) (w * ((MediaRecorderBase.mSupportedPreviewWidth*1.0f)/MediaRecorderBase.SMALL_VIDEO_WIDTH));
         //
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSurfaceView
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mSurfaceView
                 .getLayoutParams();
         lp.width = width;
         lp.height = height;
@@ -240,6 +242,8 @@ public class MediaRecorderActivity extends Activity implements
 
         mMediaRecorder.setOnErrorListener(this);
         mMediaRecorder.setOnEncodeListener(this);
+        mMediaRecorder.setOnPreparedListener(this);
+
         File f = new File(VCamera.getVideoCachePath());
         if (!FileUtils.checkFile(f)) {
             f.mkdirs();
@@ -615,7 +619,7 @@ public class MediaRecorderActivity extends Activity implements
 
     @Override
     public void onPrepared() {
-
+        initSurfaceView();
     }
 
     public void onFinished() {

@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 9
+        versionName "1.0.8"
     }
 
     buildTypes {
@@ -23,7 +23,7 @@ android {
         userOrg = 'mabeijianxi'//bintray.com用户名
         groupId = 'com.mabeijianxi'//jcenter上的路径
         artifactId = 'small-video-record'//项目名称
-        publishVersion = '1.0.7'//版本号
+        publishVersion = '1.0.8'//版本号
         desc = '利用FFmpeg来小视频录制与压缩处理!'//描述，不重要
         website = 'https://github.com/mabeijianxi/small-video-record'//网站，不重要
     }
