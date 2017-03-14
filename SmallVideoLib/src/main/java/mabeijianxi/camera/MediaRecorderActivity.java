@@ -169,6 +169,7 @@ public class MediaRecorderActivity extends Activity implements
         MediaRecorderBase.SMALL_VIDEO_HEIGHT=mediaRecorderConfig.getSmallVideoHeight();
         SMALL_VIDEO_WIDTH=mediaRecorderConfig.getSmallVideoWidth();
         MediaRecorderBase.mVideoBitrate=mediaRecorderConfig.getVideoBitrate();
+        MediaRecorderBase.mediaRecorderConfig=mediaRecorderConfig.getMediaBitrateConfig();
         MediaRecorderBase.CAPTURE_THUMBNAILS_TIME=mediaRecorderConfig.getCaptureThumbnailsTime();
         MediaRecorderBase.doH264Compress=mediaRecorderConfig.isDoH264Compress();
         GO_HOME=mediaRecorderConfig.isGO_HOME();

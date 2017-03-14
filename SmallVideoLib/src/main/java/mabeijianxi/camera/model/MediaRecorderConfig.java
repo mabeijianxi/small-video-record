@@ -48,6 +48,10 @@ public final class MediaRecorderConfig implements Parcelable {
     private final int captureThumbnailsTime;
 
     private final boolean GO_HOME;
+    /**
+     * 码率配置
+     */
+    private final MediaBitrateConfig mediaBitrateConfig;
 
     private MediaRecorderConfig(Buidler buidler) {
         this.RECORD_TIME_MAX = buidler.RECORD_TIME_MAX;
@@ -59,9 +63,57 @@ public final class MediaRecorderConfig implements Parcelable {
         this.SMALL_VIDEO_WIDTH = buidler.SMALL_VIDEO_WIDTH;
         this.VIDEO_BITRATE = buidler.VIDEO_BITRATE;
         this.doH264Compress = buidler.doH264Compress;
+        mediaBitrateConfig= buidler.mediaBitrateConfig;
         this.GO_HOME=buidler.GO_HOME;
 
     }
+
+    protected MediaRecorderConfig(Parcel in) {
+        RECORD_TIME_MAX = in.readInt();
+        RECORD_TIME_MIN = in.readInt();
+        SMALL_VIDEO_HEIGHT = in.readInt();
+        SMALL_VIDEO_WIDTH = in.readInt();
+        MAX_FRAME_RATE = in.readInt();
+        MIN_FRAME_RATE = in.readInt();
+        VIDEO_BITRATE = in.readInt();
+        doH264Compress = in.readByte() != 0;
+        captureThumbnailsTime = in.readInt();
+        GO_HOME = in.readByte() != 0;
+        mediaBitrateConfig = in.readParcelable(MediaBitrateConfig.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(RECORD_TIME_MAX);
+        dest.writeInt(RECORD_TIME_MIN);
+        dest.writeInt(SMALL_VIDEO_HEIGHT);
+        dest.writeInt(SMALL_VIDEO_WIDTH);
+        dest.writeInt(MAX_FRAME_RATE);
+        dest.writeInt(MIN_FRAME_RATE);
+        dest.writeInt(VIDEO_BITRATE);
+        dest.writeByte((byte) (doH264Compress ? 1 : 0));
+        dest.writeInt(captureThumbnailsTime);
+        dest.writeByte((byte) (GO_HOME ? 1 : 0));
+        dest.writeParcelable(mediaBitrateConfig, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MediaRecorderConfig> CREATOR = new Creator<MediaRecorderConfig>() {
+        @Override
+        public MediaRecorderConfig createFromParcel(Parcel in) {
+            return new MediaRecorderConfig(in);
+        }
+
+        @Override
+        public MediaRecorderConfig[] newArray(int size) {
+            return new MediaRecorderConfig[size];
+        }
+    };
+
     public boolean isGO_HOME() {
         return GO_HOME;
     }
@@ -97,52 +149,12 @@ public final class MediaRecorderConfig implements Parcelable {
         return SMALL_VIDEO_WIDTH;
     }
 
+    public MediaBitrateConfig getMediaBitrateConfig() {
+        return mediaBitrateConfig;
+    }
+
     public int getVideoBitrate() {
         return VIDEO_BITRATE;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    protected MediaRecorderConfig(Parcel in) {
-        RECORD_TIME_MAX = in.readInt();
-        RECORD_TIME_MIN = in.readInt();
-        SMALL_VIDEO_HEIGHT = in.readInt();
-        SMALL_VIDEO_WIDTH = in.readInt();
-        MAX_FRAME_RATE = in.readInt();
-        MIN_FRAME_RATE = in.readInt();
-        VIDEO_BITRATE = in.readInt();
-        doH264Compress = in.readByte() != 0;
-        captureThumbnailsTime = in.readInt();
-        GO_HOME=in.readByte() != 0;
-    }
-
-    public static final Creator<MediaRecorderConfig> CREATOR = new Creator<MediaRecorderConfig>() {
-        @Override
-        public MediaRecorderConfig createFromParcel(Parcel in) {
-            return new MediaRecorderConfig(in);
-        }
-
-        @Override
-        public MediaRecorderConfig[] newArray(int size) {
-            return new MediaRecorderConfig[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(RECORD_TIME_MAX);
-        dest.writeInt(RECORD_TIME_MIN);
-        dest.writeInt(SMALL_VIDEO_HEIGHT);
-        dest.writeInt(SMALL_VIDEO_WIDTH);
-        dest.writeInt(MAX_FRAME_RATE);
-        dest.writeInt(MIN_FRAME_RATE);
-        dest.writeInt(VIDEO_BITRATE);
-        dest.writeByte((byte) (doH264Compress ? 1 : 0));
-        dest.writeInt(captureThumbnailsTime);
-        dest.writeInt((byte)(GO_HOME?1:0));
     }
 
     public static class Buidler {
@@ -173,9 +185,9 @@ public final class MediaRecorderConfig implements Parcelable {
          */
         private int MIN_FRAME_RATE = 8;
         /**
-         * 视频码率
+         * 视频码率//todo 注意传入>0的值后码率模式将从VBR变成CBR
          */
-        private int VIDEO_BITRATE = 2048;
+        private int VIDEO_BITRATE;
         /**
          * 录制后是否需要H264压缩
          */
@@ -184,6 +196,8 @@ public final class MediaRecorderConfig implements Parcelable {
          * 录制后会剪切一帧缩略图并保存，就是取时间轴上这个时间的画面
          */
         private int captureThumbnailsTime = 1;
+
+        private MediaBitrateConfig mediaBitrateConfig;
 
         private boolean GO_HOME=false;
 
@@ -267,9 +281,10 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param VIDEO_BITRATE 视频码率
+         * @param VIDEO_BITRATE 视频码率 设置无效,请用{@link #setMediaBitrateConfig(MediaBitrateConfig)}
          * @return
          */
+        @Deprecated
         public Buidler videoBitrate(int VIDEO_BITRATE) {
             this.VIDEO_BITRATE = VIDEO_BITRATE;
             return this;
@@ -278,6 +293,12 @@ public final class MediaRecorderConfig implements Parcelable {
         public Buidler goHome(boolean GO_HOME) {
             this.GO_HOME = GO_HOME;
             return this;
+        }
+
+        public Buidler setMediaBitrateConfig(MediaBitrateConfig mediaBitrateConfig) {
+            this.mediaBitrateConfig = mediaBitrateConfig;
+            return this;
+
         }
     }
 

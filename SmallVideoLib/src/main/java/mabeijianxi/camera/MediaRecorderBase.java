@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
+import mabeijianxi.camera.model.MediaBitrateConfig;
 import mabeijianxi.camera.model.MediaObject;
 import mabeijianxi.camera.model.MediaObject.MediaPart;
 import mabeijianxi.camera.util.DeviceUtils;
@@ -121,6 +122,8 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
 
     protected static boolean doH264Compress = true;
 
+    protected static MediaBitrateConfig mediaRecorderConfig;
+
     /**
      * 摄像头对象
      */
@@ -175,7 +178,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
     /**
      * 视频码率
      */
-    protected static int mVideoBitrate = 2048;
+    protected static int mVideoBitrate;
 
     public static int mSupportedPreviewWidth = 0;
     /**
@@ -520,17 +523,17 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             if (rates.contains(MAX_FRAME_RATE)) {
                 mFrameRate = MAX_FRAME_RATE;
             } else {
-                boolean findFrame=false;
+                boolean findFrame = false;
                 Collections.sort(rates);
                 for (int i = rates.size() - 1; i >= 0; i--) {
                     if (rates.get(i) <= MAX_FRAME_RATE) {
                         mFrameRate = rates.get(i);
-                        findFrame=true;
+                        findFrame = true;
                         break;
                     }
                 }
-                if (!findFrame){
-                    mFrameRate=rates.get(0);
+                if (!findFrame) {
+                    mFrameRate = rates.get(0);
                 }
             }
         }
@@ -630,27 +633,6 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             Log.e("Yixia", "startPreview fail :" + e.getMessage());
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -857,10 +839,14 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             @Override
             protected Boolean doInBackground(Void... params) {
                 //合并ts流
-                String cmd = String.format("ffmpeg %s -i \"%s\" -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\"", FFMpegUtils.getLogCommand(), mMediaObject.getConcatYUV(), mMediaObject.getOutputTempVideoPath());
+                String cmd = String.format("ffmpeg %s -i \"%s\"  -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\" ", FFMpegUtils.getLogCommand(), mMediaObject.getConcatYUV(), mMediaObject.getOutputTempVideoPath());
                 boolean mergeFlag = UtilityAdapter.FFmpegRun("", cmd) == 0;
                 if (doH264Compress) {
-                    String cmd_transcoding = "ffmpeg -i " + mMediaObject.getOutputTempVideoPath() + " -c:v libx264 -crf 28 -preset:v veryfast -c:a libfdk_aac -vbr 4 " + mMediaObject.getOutputTempTranscodingVideoPath();
+                    String vbr=" -vbr 4 ";
+                    if(mediaRecorderConfig!=null&&mediaRecorderConfig.getMode()== MediaBitrateConfig.MODE.CBR){
+                        vbr="";
+                    }
+                    String cmd_transcoding = "ffmpeg -i " + mMediaObject.getOutputTempVideoPath() + " -c:v libx264 " + getBitrateCommand() + " -crf 28 -preset:v veryfast -c:a libfdk_aac "+vbr + mMediaObject.getOutputTempTranscodingVideoPath();
 
                     boolean transcodingFlag = UtilityAdapter.FFmpegRun("", cmd_transcoding) == 0;
 
@@ -937,5 +923,18 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         }
     }
 
-    ;
+    protected String getBitrateCommand() {
+        String add = "";
+        if (mediaRecorderConfig != null) {
+
+            if (mediaRecorderConfig.getMode() == MediaBitrateConfig.MODE.VBR) {
+
+                add = String.format(" -x264opts \"bitrate=%d:vbv-maxrate=%d\" ", mediaRecorderConfig.getBitrate(), mediaRecorderConfig.getMaxBitrate());
+            } else if (mediaRecorderConfig.getMode() == MediaBitrateConfig.MODE.CBR) {
+
+                add = String.format(" -x264opts \"bitrate=%d:vbv-bufsize=%d:nal_hrd=cbr\" ", mediaRecorderConfig.getBitrate(), mediaRecorderConfig.getBufsize());
+            }
+        }
+        return add;
+    }
 }

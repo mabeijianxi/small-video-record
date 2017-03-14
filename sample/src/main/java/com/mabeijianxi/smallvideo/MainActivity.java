@@ -10,6 +10,7 @@ import java.io.File;
 
 import mabeijianxi.camera.MediaRecorderActivity;
 import mabeijianxi.camera.VCamera;
+import mabeijianxi.camera.model.MediaBitrateConfig;
 import mabeijianxi.camera.model.MediaRecorderConfig;
 import mabeijianxi.camera.util.DeviceUtils;
 
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
+                .setMediaBitrateConfig(new MediaBitrateConfig.Builder()
+                        .setMode(MediaBitrateConfig.MODE.AUTO_VBR)
+                        .build()
+                )
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();
