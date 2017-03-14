@@ -46,6 +46,10 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
+		.setMediaBitrateConfig(new MediaBitrateConfig.Builder()
+                        .setMode(MediaBitrateConfig.MODE.AUTO_VBR)
+                        .build()
+                )
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();
@@ -55,6 +59,9 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ######更新日志：
+	2017-03-14：
+	提交1.0.9，新增可配置码率模式（VBR、CBR）与其大小
+	
 	2016-12-14：
 	提交1.0.8，修复部分手机不支持输入帧率问题，彻底修复录制浏览变形
 
