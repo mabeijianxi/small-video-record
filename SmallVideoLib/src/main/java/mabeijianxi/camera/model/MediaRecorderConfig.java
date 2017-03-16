@@ -51,7 +51,10 @@ public final class MediaRecorderConfig implements Parcelable {
     /**
      * 码率配置
      */
-    private final MediaBitrateConfig mediaBitrateConfig;
+
+    private final BaseMediaBitrateConfig mediaBitrateConfig;
+
+    private final BaseMediaBitrateConfig compressConfig;
 
     private MediaRecorderConfig(Buidler buidler) {
         this.RECORD_TIME_MAX = buidler.RECORD_TIME_MAX;
@@ -63,10 +66,12 @@ public final class MediaRecorderConfig implements Parcelable {
         this.SMALL_VIDEO_WIDTH = buidler.SMALL_VIDEO_WIDTH;
         this.VIDEO_BITRATE = buidler.VIDEO_BITRATE;
         this.doH264Compress = buidler.doH264Compress;
-        mediaBitrateConfig= buidler.mediaBitrateConfig;
+        this.mediaBitrateConfig= buidler.mediaBitrateConfig;
+        this.compressConfig = buidler.compressConfig;
         this.GO_HOME=buidler.GO_HOME;
 
     }
+
 
     protected MediaRecorderConfig(Parcel in) {
         RECORD_TIME_MAX = in.readInt();
@@ -79,27 +84,8 @@ public final class MediaRecorderConfig implements Parcelable {
         doH264Compress = in.readByte() != 0;
         captureThumbnailsTime = in.readInt();
         GO_HOME = in.readByte() != 0;
-        mediaBitrateConfig = in.readParcelable(MediaBitrateConfig.class.getClassLoader());
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(RECORD_TIME_MAX);
-        dest.writeInt(RECORD_TIME_MIN);
-        dest.writeInt(SMALL_VIDEO_HEIGHT);
-        dest.writeInt(SMALL_VIDEO_WIDTH);
-        dest.writeInt(MAX_FRAME_RATE);
-        dest.writeInt(MIN_FRAME_RATE);
-        dest.writeInt(VIDEO_BITRATE);
-        dest.writeByte((byte) (doH264Compress ? 1 : 0));
-        dest.writeInt(captureThumbnailsTime);
-        dest.writeByte((byte) (GO_HOME ? 1 : 0));
-        dest.writeParcelable(mediaBitrateConfig, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        mediaBitrateConfig = in.readParcelable(BaseMediaBitrateConfig.class.getClassLoader());
+        compressConfig = in.readParcelable(BaseMediaBitrateConfig.class.getClassLoader());
     }
 
     public static final Creator<MediaRecorderConfig> CREATOR = new Creator<MediaRecorderConfig>() {
@@ -149,12 +135,37 @@ public final class MediaRecorderConfig implements Parcelable {
         return SMALL_VIDEO_WIDTH;
     }
 
-    public MediaBitrateConfig getMediaBitrateConfig() {
+    public BaseMediaBitrateConfig getMediaBitrateConfig() {
         return mediaBitrateConfig;
+    }
+
+    public BaseMediaBitrateConfig getCompressConfig() {
+        return compressConfig;
     }
 
     public int getVideoBitrate() {
         return VIDEO_BITRATE;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(RECORD_TIME_MAX);
+        dest.writeInt(RECORD_TIME_MIN);
+        dest.writeInt(SMALL_VIDEO_HEIGHT);
+        dest.writeInt(SMALL_VIDEO_WIDTH);
+        dest.writeInt(MAX_FRAME_RATE);
+        dest.writeInt(MIN_FRAME_RATE);
+        dest.writeInt(VIDEO_BITRATE);
+        dest.writeByte((byte) (doH264Compress ? 1 : 0));
+        dest.writeInt(captureThumbnailsTime);
+        dest.writeByte((byte) (GO_HOME ? 1 : 0));
+        dest.writeParcelable(mediaBitrateConfig, flags);
+        dest.writeParcelable(compressConfig, flags);
     }
 
     public static class Buidler {
@@ -197,9 +208,11 @@ public final class MediaRecorderConfig implements Parcelable {
          */
         private int captureThumbnailsTime = 1;
 
-        private MediaBitrateConfig mediaBitrateConfig;
+        private BaseMediaBitrateConfig mediaBitrateConfig;
 
         private boolean GO_HOME=false;
+
+        private BaseMediaBitrateConfig compressConfig;
 
 
         public MediaRecorderConfig build() {
@@ -219,11 +232,25 @@ public final class MediaRecorderConfig implements Parcelable {
          * @param doH264Compress 录制后是否需要H264压缩，（压缩后可得到清晰而小巧的视频）
          * @return
          */
+        @Deprecated
         public Buidler doH264Compress(boolean doH264Compress) {
             this.doH264Compress = doH264Compress;
+            if (doH264Compress){
+                doH264Compress(new AutoVBRMode());
+            }
             return this;
         }
 
+        /**
+         *
+         * @param compressConfig 压缩配置设置,不需要要进一步压缩可不配置
+         * {@link AutoVBRMode }{@link VBRMode}{@link CBRMode}
+         * @return
+         */
+        public Buidler doH264Compress(BaseMediaBitrateConfig compressConfig) {
+            this.compressConfig = compressConfig;
+            return this;
+        }
         /**
          * @param MAX_FRAME_RATE 最大帧率(与视频清晰度、大小息息相关)
          * @return
@@ -281,7 +308,7 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param VIDEO_BITRATE 视频码率 设置无效,请用{@link #setMediaBitrateConfig(MediaBitrateConfig)}
+         * @param VIDEO_BITRATE 视频码率 设置无效,请用{@link #setMediaBitrateConfig(BaseMediaBitrateConfig)}
          * @return
          */
         @Deprecated
@@ -295,7 +322,13 @@ public final class MediaRecorderConfig implements Parcelable {
             return this;
         }
 
-        public Buidler setMediaBitrateConfig(MediaBitrateConfig mediaBitrateConfig) {
+        /**
+         *
+         * @param mediaBitrateConfig
+         * 录制码率配置{@link AutoVBRMode }{@link VBRMode}{@link CBRMode}
+         * @return
+         */
+        public Buidler setMediaBitrateConfig(BaseMediaBitrateConfig mediaBitrateConfig) {
             this.mediaBitrateConfig = mediaBitrateConfig;
             return this;
 

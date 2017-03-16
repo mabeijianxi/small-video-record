@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
-import mabeijianxi.camera.model.MediaBitrateConfig;
+import mabeijianxi.camera.model.BaseMediaBitrateConfig;
 import mabeijianxi.camera.model.MediaObject;
 import mabeijianxi.camera.model.MediaObject.MediaPart;
 import mabeijianxi.camera.util.DeviceUtils;
@@ -122,7 +122,9 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
 
     protected static boolean doH264Compress = true;
 
-    protected static MediaBitrateConfig mediaRecorderConfig;
+    protected static BaseMediaBitrateConfig mediaRecorderConfig;
+
+    public static BaseMediaBitrateConfig compressConfig;
 
     /**
      * 摄像头对象
@@ -839,15 +841,22 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             @Override
             protected Boolean doInBackground(Void... params) {
                 //合并ts流
-                String cmd = String.format("ffmpeg %s -i \"%s\"  -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\" ", FFMpegUtils.getLogCommand(), mMediaObject.getConcatYUV(), mMediaObject.getOutputTempVideoPath());
+                String cmd = String.format("ffmpeg %s -i \"%s\" -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\" ", FFMpegUtils.getLogCommand(), mMediaObject.getConcatYUV(), mMediaObject.getOutputTempVideoPath());
                 boolean mergeFlag = UtilityAdapter.FFmpegRun("", cmd) == 0;
-                if (doH264Compress) {
-                    String vbr=" -vbr 4 ";
-                    if(mediaRecorderConfig!=null&&mediaRecorderConfig.getMode()== MediaBitrateConfig.MODE.CBR){
-                        vbr="";
+                if (compressConfig != null) {
+                    String vbr = " -vbr 4 ";
+                    if (compressConfig != null && compressConfig.getMode() == BaseMediaBitrateConfig.MODE.CBR) {
+                        vbr = "";
                     }
-                    String cmd_transcoding = "ffmpeg -i " + mMediaObject.getOutputTempVideoPath() + " -c:v libx264 " + getBitrateCommand() + " -crf 28 -preset:v veryfast -c:a libfdk_aac "+vbr + mMediaObject.getOutputTempTranscodingVideoPath();
-
+                    String cmd_transcoding = String.format("ffmpeg -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s",
+                            mMediaObject.getOutputTempVideoPath(),
+                            getBitrateModeCommand(compressConfig,"",false),
+                            getBitrateCrfSize(compressConfig, "-crf 28", false),
+                            getBitrateVelocity(compressConfig, "-preset:v veryfast", false),
+                            vbr,
+                            mMediaObject.getOutputTempTranscodingVideoPath()
+                    );
+//                    String cmd_transcodin = "ffmpeg -i " + mMediaObject.getOutputTempVideoPath() + " -c:v libx264 " + getBitrateModeCommand() + " -crf 28 -preset:v veryfast -c:a libfdk_aac " + vbr + mMediaObject.getOutputTempTranscodingVideoPath();
                     boolean transcodingFlag = UtilityAdapter.FFmpegRun("", cmd_transcoding) == 0;
 
                     boolean captureFlag = FFMpegUtils.captureThumbnails(mMediaObject.getOutputTempTranscodingVideoPath(), mMediaObject.getOutputVideoThumbPath(), SMALL_VIDEO_WIDTH + "x" + SMALL_VIDEO_HEIGHT, String.valueOf(CAPTURE_THUMBNAILS_TIME));
@@ -923,17 +932,63 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         }
     }
 
-    protected String getBitrateCommand() {
+    protected String getBitrateModeCommand(BaseMediaBitrateConfig config, String defualtCmd, boolean needSymbol) {
         String add = "";
-        if (mediaRecorderConfig != null) {
+        if (TextUtils.isEmpty(defualtCmd)) {
+            defualtCmd = "";
+        }
+        if (config != null) {
+            if (config.getMode() == BaseMediaBitrateConfig.MODE.VBR) {
+                if (needSymbol) {
+                    add = String.format(" -x264opts \"bitrate=%d:vbv-maxrate=%d\" ", config.getBitrate(), config.getMaxBitrate());
+                } else {
+                    add = String.format(" -x264opts bitrate=%d:vbv-maxrate=%d ", config.getBitrate(), config.getMaxBitrate());
+                }
+                return add;
+            } else if (mediaRecorderConfig.getMode() == BaseMediaBitrateConfig.MODE.CBR) {
+                if (needSymbol) {
+                    add = String.format(" -x264opts \"bitrate=%d:vbv-bufsize=%d:nal_hrd=cbr\" ", config.getBitrate(), config.getBufSize());
+                } else {
+                    add = String.format(" -x264opts bitrate=%d:vbv-bufsize=%d:nal_hrd=cbr ", config.getBitrate(), config.getBufSize());
 
-            if (mediaRecorderConfig.getMode() == MediaBitrateConfig.MODE.VBR) {
+                }
+                return add;
 
-                add = String.format(" -x264opts \"bitrate=%d:vbv-maxrate=%d\" ", mediaRecorderConfig.getBitrate(), mediaRecorderConfig.getMaxBitrate());
-            } else if (mediaRecorderConfig.getMode() == MediaBitrateConfig.MODE.CBR) {
-
-                add = String.format(" -x264opts \"bitrate=%d:vbv-bufsize=%d:nal_hrd=cbr\" ", mediaRecorderConfig.getBitrate(), mediaRecorderConfig.getBufsize());
             }
+        }
+        return defualtCmd;
+    }
+
+    protected String getBitrateCrfSize(BaseMediaBitrateConfig config, String defualtCmd, boolean nendSymbol) {
+        if (TextUtils.isEmpty(defualtCmd)) {
+            defualtCmd = "";
+        }
+        String add = "";
+        if (config != null && config.getMode() == BaseMediaBitrateConfig.MODE.AUTO_VBR && config.getCrfSize() > 0) {
+            if (nendSymbol) {
+                add = String.format("-crf \"%d\" ", config.getCrfSize());
+            } else {
+                add = String.format("-crf %d ", config.getCrfSize());
+            }
+        } else {
+            return defualtCmd;
+        }
+        return add;
+    }
+
+    protected String getBitrateVelocity(BaseMediaBitrateConfig config, String defualtCmd, boolean nendSymbol) {
+        if (TextUtils.isEmpty(defualtCmd)) {
+            defualtCmd = "";
+        }
+        String add = "";
+        if (config != null && !TextUtils.isEmpty(config.getVelocity())) {
+            if (nendSymbol) {
+                add = String.format("-preset \"%s\" ", config.getVelocity());
+            } else {
+                add = String.format("-preset %s ", config.getVelocity());
+            }
+        } else {
+            return defualtCmd;
         }
         return add;
     }

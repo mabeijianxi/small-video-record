@@ -37,10 +37,16 @@ public class MediaRecorderNative extends MediaRecorderBase implements MediaRecor
             String cmd = String.format("filename = \"%s\"; ", result.mediaPath);
             //如果需要定制非480x480的视频，可以启用以下代码，其他vf参数参考ffmpeg的文档：
             if (mCameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                cmd += String.format("addcmd = %s; ", " -vf \"transpose=1,crop=" + SMALL_VIDEO_WIDTH + ":" + SMALL_VIDEO_HEIGHT + ":0:0\" "+getBitrateCommand());
+                cmd += String.format("addcmd = %s; ", " -vf \"transpose=1,crop=" + SMALL_VIDEO_WIDTH + ":" + SMALL_VIDEO_HEIGHT + ":0:0\" "
+                        +getBitrateCrfSize(mediaRecorderConfig,"",true)
+                        +getBitrateVelocity(mediaRecorderConfig,"",true)
+                        +getBitrateModeCommand(mediaRecorderConfig,"",true));
 
             } else {
-                cmd += String.format("addcmd = %s; ", " -vf \"transpose=2,crop=" + SMALL_VIDEO_WIDTH + ":" + SMALL_VIDEO_HEIGHT + ":0:0\" "+getBitrateCommand());
+                cmd += String.format("addcmd = %s; ", " -vf \"transpose=2,crop=" + SMALL_VIDEO_WIDTH + ":" + SMALL_VIDEO_HEIGHT + ":0:0\" "
+                        +getBitrateCrfSize(mediaRecorderConfig,"",true)
+                        +getBitrateVelocity(mediaRecorderConfig,"",true)
+                        +getBitrateModeCommand(mediaRecorderConfig,"",true));
             }
 
             UtilityAdapter.FilterParserAction(cmd , UtilityAdapter.PARSERACTION_START);

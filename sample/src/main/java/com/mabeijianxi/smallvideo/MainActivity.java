@@ -10,7 +10,7 @@ import java.io.File;
 
 import mabeijianxi.camera.MediaRecorderActivity;
 import mabeijianxi.camera.VCamera;
-import mabeijianxi.camera.model.MediaBitrateConfig;
+import mabeijianxi.camera.model.AutoVBRMode;
 import mabeijianxi.camera.model.MediaRecorderConfig;
 import mabeijianxi.camera.util.DeviceUtils;
 
@@ -25,16 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void go(View c) {
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
-                .doH264Compress(true)
+                .doH264Compress(new AutoVBRMode()
+//                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
+                        )
+                .setMediaBitrateConfig(new AutoVBRMode()
+//                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
+                )
                 .smallVideoWidth(480)
                 .smallVideoHeight(360)
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
-                .setMediaBitrateConfig(new MediaBitrateConfig.Builder()
-                        .setMode(MediaBitrateConfig.MODE.AUTO_VBR)
-                        .build()
-                )
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();
