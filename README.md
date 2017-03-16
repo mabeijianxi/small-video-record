@@ -10,7 +10,7 @@
 ### 使用方法：
 ###### 1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record:1.0.9'
+compile 'com.mabeijianxi:small-video-record:1.1.0’
 ```
 ###### 2:在manifests里面添加
 ```java
@@ -39,17 +39,18 @@ public static void initSmallVideo(Context context) {
 ```
 ###### 4:跳转录制界面：
 ```java
-MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
-                .doH264Compress(true)
+ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+                .doH264Compress(new AutoVBRMode()
+//                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
+                        )
+                .setMediaBitrateConfig(new AutoVBRMode()
+//                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
+                )
                 .smallVideoWidth(480)
                 .smallVideoHeight(360)
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
                 .minFrameRate(8)
-		.setMediaBitrateConfig(new MediaBitrateConfig.Builder()
-                        .setMode(MediaBitrateConfig.MODE.AUTO_VBR)
-                        .build()
-                )
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();
@@ -59,6 +60,9 @@ MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ###### 更新日志：
+	2017-03-16:
+	提交1.1.0，增加更精细的码率控制、转码速度、压缩等级等可配置参数，修复一些bug	
+
 	2017-03-14：
 	提交1.0.9，新增可配置码率模式（VBR、CBR）与其大小
 	
