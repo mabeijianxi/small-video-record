@@ -34,6 +34,7 @@ import mabeijianxi.camera.util.StringUtils;
 import mabeijianxi.camera.views.ProgressView;
 
 import static mabeijianxi.camera.MediaRecorderBase.SMALL_VIDEO_WIDTH;
+import static mabeijianxi.camera.MediaRecorderBase.doH264Compress;
 
 /**
  * 视频录制
@@ -586,7 +587,11 @@ public class MediaRecorderActivity extends Activity implements
         try {
             intent = new Intent(this, Class.forName(getIntent().getStringExtra(OVER_ACTIVITY_NAME)));
             intent.putExtra(MediaRecorderActivity.OUTPUT_DIRECTORY, mMediaObject.getOutputDirectory());
-            intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempTranscodingVideoPath());
+            if(doH264Compress){
+                intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempTranscodingVideoPath());
+            }else {
+                intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempVideoPath());
+            }
             intent.putExtra(MediaRecorderActivity.VIDEO_SCREENSHOT, mMediaObject.getOutputVideoThumbPath());
             intent.putExtra("go_home",GO_HOME);
             startActivity(intent);
