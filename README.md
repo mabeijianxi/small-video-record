@@ -56,6 +56,20 @@ public static void initSmallVideo(Context context) {
                 .build();
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
 ```
+###### 5:一些参数说明：
+		maxFrameRate：指定最大帧率，越大视频质量越好，体积也会越大，当在cbr模式下不再是动态帧率，而是固定帧率；
+		
+		captureThumbnailsTime：指定剪切哪个时间的画面来作为封面图；
+		
+		doH264Compress：不传入值将不做进一步压缩，暂时可以传入三种模式AutoVBRMode、VBRMode、VBRMode；
+		
+		setMediaBitrateConfig:视频录制时期的一些配置，暂时可以传入三种模式AutoVBRMode、VBRMode、VBRMode；
+		
+		AutoVBRMode：可以传入一个视频等级与转码速度，等级为0-51，越大质量越差，建议18~28之间即可。转码速度有ultrafast、superfast、			veryfast、faster、fast、medium、slow、slower、veryslow、placebo。
+		
+		VBRMode：此模式下可以传入一个最大码率与一个额定码率，当然同样可以设置转码速度。
+		
+		VBRMode:可以传入一个固定码率，也可以添加一个转码速度。
 ###### 一些问题：
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
