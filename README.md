@@ -2,7 +2,7 @@
 利用FFmpeg视频录制与压缩处理，这里得感谢vitamio家的秒拍SO库，也感谢提出问题的朋友们！
 
 ### 效果如下：
-![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/small_video.gif)
+![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
 ### 特点：
 ##### 1：利用FFmpeg录制各种分辨率的视频。
 ##### 2：可设置以H264编码压缩，6秒的1M视频压缩后为200多KB，且视频还比较清晰
