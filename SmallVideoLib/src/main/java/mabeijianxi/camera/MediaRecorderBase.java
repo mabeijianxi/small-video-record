@@ -605,7 +605,6 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
                 camera = Camera.open();
             else
                 camera = Camera.open(mCameraId);
-
             camera.setDisplayOrientation(90);
             try {
                 camera.setPreviewDisplay(mSurfaceHolder);
@@ -841,7 +840,10 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             @Override
             protected Boolean doInBackground(Void... params) {
                 //合并ts流
-                String cmd = String.format("ffmpeg %s -i \"%s\" -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\" ", FFMpegUtils.getLogCommand(), mMediaObject.getConcatYUV(), mMediaObject.getOutputTempVideoPath());
+                String cmd = String.format("ffmpeg %s -i \"%s\" -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\" ",
+                        FFMpegUtils.getLogCommand(),
+                        mMediaObject.getConcatYUV(),
+                        mMediaObject.getOutputTempVideoPath());
                 boolean mergeFlag = UtilityAdapter.FFmpegRun("", cmd) == 0;
                 if (compressConfig != null) {
                     String vbr = " -vbr 4 ";
@@ -850,13 +852,12 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
                     }
                     String cmd_transcoding = String.format("ffmpeg -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s",
                             mMediaObject.getOutputTempVideoPath(),
-                            getBitrateModeCommand(compressConfig,"",false),
+                            getBitrateModeCommand(compressConfig, "", false),
                             getBitrateCrfSize(compressConfig, "-crf 28", false),
                             getBitrateVelocity(compressConfig, "-preset:v veryfast", false),
                             vbr,
                             mMediaObject.getOutputTempTranscodingVideoPath()
                     );
-//                    String cmd_transcodin = "ffmpeg -i " + mMediaObject.getOutputTempVideoPath() + " -c:v libx264 " + getBitrateModeCommand() + " -crf 28 -preset:v veryfast -c:a libfdk_aac " + vbr + mMediaObject.getOutputTempTranscodingVideoPath();
                     boolean transcodingFlag = UtilityAdapter.FFmpegRun("", cmd_transcoding) == 0;
 
                     boolean captureFlag = FFMpegUtils.captureThumbnails(mMediaObject.getOutputTempTranscodingVideoPath(), mMediaObject.getOutputVideoThumbPath(), SMALL_VIDEO_WIDTH + "x" + SMALL_VIDEO_HEIGHT, String.valueOf(CAPTURE_THUMBNAILS_TIME));

@@ -73,7 +73,6 @@ public class MediaRecorderNative extends MediaRecorderBase implements MediaRecor
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
         if (mRecording) {
-            //底层实时处理视频，将视频旋转好，并剪切成480x480
             UtilityAdapter.RenderDataYuv(data);
         }
         super.onPreviewFrame(data, camera);
