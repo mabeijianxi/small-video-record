@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         BaseMediaBitrateConfig recordMode;
         BaseMediaBitrateConfig compressMode = null;
 
-        if (recordModeCheckedId == R.id.rb_vbr) {
+        if (recordModeCheckedId == R.id.rb_cbr) {
             String bitrate = et_record_bitrate.getText().toString();
             if (checkStrEmpty(bitrate, "请输入额定码率")) {
                 return;
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         if (useCompressId == R.id.rb_compress) {
             int compressModeCheckedId = rg_compress_mode.getCheckedRadioButtonId();
 
-            if (compressModeCheckedId == R.id.rb_vbr) {
+            if (compressModeCheckedId == R.id.rb_cbr) {
                 String bitrate = et_compress_bitrate.getText().toString();
                 if (checkStrEmpty(bitrate, "请输入二次压缩额定码率")) {
                     return;
