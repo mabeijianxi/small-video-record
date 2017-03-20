@@ -4,9 +4,9 @@
 ### 效果如下：
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
 ### 特点：
-##### 1：利用FFmpeg录制各种分辨率的视频。
-##### 2：可设置以H264编码压缩，6秒的1M视频压缩后为200多KB，且视频还比较清晰
-##### 3：录制简单，一行代码完成集成。 
+##### 1：利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
+##### 2：可设置以H264编解码器二次压缩，6秒的1M视频压缩后为200多KB，且视频还比较清晰
+##### 3：录制简单，一行代码完成集成，几个参数搞定录制。 
 ### 使用方法：
 ###### 1：添加依赖
 ```java
@@ -50,7 +50,6 @@ public static void initSmallVideo(Context context) {
                 .smallVideoHeight(360)
                 .recordTimeMax(6 * 1000)
                 .maxFrameRate(20)
-                .minFrameRate(8)
                 .captureThumbnailsTime(1)
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();
