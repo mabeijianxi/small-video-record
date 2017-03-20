@@ -20,7 +20,7 @@ import java.util.List;
 
 import mabeijianxi.camera.MediaRecorderActivity;
 import mabeijianxi.camera.VCamera;
-import mabeijianxi.camera.model.AutoVbrMode;
+import mabeijianxi.camera.model.AutoVBRMode;
 import mabeijianxi.camera.model.BaseMediaBitrateConfig;
 import mabeijianxi.camera.model.CBRMode;
 import mabeijianxi.camera.model.MediaRecorderConfig;
@@ -217,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (recordModeCheckedId == R.id.rb_auto) {
             String crfSize = et_compress_crfSize.getText().toString();
             if (TextUtils.isEmpty(crfSize)) {
-                recordMode = new AutoVbrMode();
+                recordMode = new AutoVBRMode();
             } else {
-                recordMode = new AutoVbrMode(Integer.valueOf(crfSize));
+                recordMode = new AutoVBRMode(Integer.valueOf(crfSize));
             }
         } else if (recordModeCheckedId == R.id.rb_vbr) {
             String maxBitrate = et_record_maxbitrate.getText().toString();
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
             }
             recordMode = new VbrMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
         } else {
-            recordMode = new AutoVbrMode();
+            recordMode = new AutoVBRMode();
         }
 
         if(!spinner_record.getSelectedItem().toString().equals("none")){
@@ -259,9 +259,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (compressModeCheckedId == R.id.rb_auto) {
                 String crfSize = et_compress_crfSize.getText().toString();
                 if (TextUtils.isEmpty(crfSize)) {
-                    compressMode = new AutoVbrMode();
+                    compressMode = new AutoVBRMode();
                 } else {
-                    compressMode = new AutoVbrMode(Integer.valueOf(crfSize));
+                    compressMode = new AutoVBRMode(Integer.valueOf(crfSize));
                 }
             } else if (compressModeCheckedId == R.id.rb_vbr) {
                 String maxBitrate = et_compress_maxbitrate.getText().toString();
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 compressMode = new VbrMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
             } else {
-                compressMode = new AutoVbrMode();
+                compressMode = new AutoVBRMode();
             }
 
             if(!spinner_compress.getSelectedItem().toString().equals("none")){
@@ -296,10 +296,10 @@ public class MainActivity extends AppCompatActivity {
 //
         /*
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
-                .doH264Compress(new AutoVbrMode()
+                .doH264Compress(new AutoVBRMode()
 //                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
                 )
-                .setMediaBitrateConfig(new AutoVbrMode()
+                .setMediaBitrateConfig(new AutoVBRMode()
 //                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
                 )
                 .smallVideoWidth(480)

@@ -236,7 +236,7 @@ public final class MediaRecorderConfig implements Parcelable {
         public Buidler doH264Compress(boolean doH264Compress) {
             this.doH264Compress = doH264Compress;
             if (doH264Compress){
-                doH264Compress(new AutoVbrMode());
+                doH264Compress(new AutoVBRMode());
             }
             return this;
         }
@@ -244,7 +244,7 @@ public final class MediaRecorderConfig implements Parcelable {
         /**
          *
          * @param compressConfig 压缩配置设置,不需要要进一步压缩可不配置
-         * {@link AutoVbrMode }{@link VbrMode}{@link CBRMode}
+         * {@link AutoVBRMode }{@link VbrMode}{@link CBRMode}
          * @return
          */
         public Buidler doH264Compress(BaseMediaBitrateConfig compressConfig) {
@@ -325,7 +325,7 @@ public final class MediaRecorderConfig implements Parcelable {
         /**
          *
          * @param mediaBitrateConfig
-         * 录制码率配置{@link AutoVbrMode }{@link VbrMode}{@link CBRMode}
+         * 录制码率配置{@link AutoVBRMode }{@link VbrMode}{@link CBRMode}
          * @return
          */
         public Buidler setMediaBitrateConfig(BaseMediaBitrateConfig mediaBitrateConfig) {

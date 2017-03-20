@@ -6,9 +6,9 @@ package mabeijianxi.camera.model;
  * mabeijianxi@gmail.com
  */
 
-public class AutoVbrMode extends BaseMediaBitrateConfig {
+public class AutoVBRMode extends BaseMediaBitrateConfig {
 
-    public AutoVbrMode(){
+    public AutoVBRMode(){
         this.mode= MODE.AUTO_VBR;
     }
 
@@ -16,7 +16,7 @@ public class AutoVbrMode extends BaseMediaBitrateConfig {
      *
      * @param crfSize 压缩等级，0~51，值越大约模糊，视频越小，建议18~28.
      */
-    public AutoVbrMode(int crfSize){
+    public AutoVBRMode(int crfSize){
         if(crfSize<0||crfSize>51){
             throw  new IllegalArgumentException("crfSize 在0~51之间");
         }
