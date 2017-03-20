@@ -20,11 +20,11 @@ import java.util.List;
 
 import mabeijianxi.camera.MediaRecorderActivity;
 import mabeijianxi.camera.VCamera;
-import mabeijianxi.camera.model.AutoVBRMode;
+import mabeijianxi.camera.model.AutoVbrMode;
 import mabeijianxi.camera.model.BaseMediaBitrateConfig;
 import mabeijianxi.camera.model.CBRMode;
 import mabeijianxi.camera.model.MediaRecorderConfig;
-import mabeijianxi.camera.model.VBRMode;
+import mabeijianxi.camera.model.VbrMode;
 import mabeijianxi.camera.util.DeviceUtils;
 
 import static com.mabeijianxi.smallvideo.R.id.et_crfSize;
@@ -32,33 +32,33 @@ import static com.mabeijianxi.smallvideo.R.id.rb_no_compress;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RadioGroup rg_record_mode;
-    private LinearLayout ll_record_crf;
-    private EditText et_record_crfSize;
-    private LinearLayout ll_record_bitrate;
-    private EditText et_record_maxbitrate;
-    private EditText et_record_bitrate;
-    private Spinner spinner_record;
-    private RadioGroup rg_compress;
+    private View i_record;
     private View i_compress;
-    private RadioGroup rg_compress_mode;
-    private LinearLayout ll_compress_crf;
-    private EditText et_compress_crfSize;
-    private LinearLayout ll_compress_bitrate;
-    private EditText et_compress_maxbitrate;
-    private EditText et_compress_bitrate;
-    private Spinner spinner_compress;
     private Button bt_start;
+    private TextView tv_size;
     private EditText et_width;
     private EditText et_height;
-    private EditText et_maxframerate;
     private EditText et_maxtime;
     private EditText et_mintime;
-    private View i_record;
-    private TextView tv_record_maxbitrate;
+    private RadioGroup rg_compress;
+    private Spinner spinner_record;
     private LinearLayout ll_compress;
+    private EditText et_maxframerate;
+    private Spinner spinner_compress;
+    private RadioGroup rg_record_mode;
+    private EditText et_record_crfSize;
+    private LinearLayout ll_record_crf;
+    private EditText et_record_bitrate;
+    private RadioGroup rg_compress_mode;
+    private EditText et_compress_bitrate;
+    private EditText et_compress_crfSize;
+    private LinearLayout ll_compress_crf;
+    private TextView tv_record_maxbitrate;
+    private EditText et_record_maxbitrate;
+    private LinearLayout ll_record_bitrate;
     private TextView tv_compress_maxbitrate;
-    private TextView tv_size;
+    private EditText et_compress_maxbitrate;
+    private LinearLayout ll_compress_bitrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (recordModeCheckedId == R.id.rb_auto) {
             String crfSize = et_compress_crfSize.getText().toString();
             if (TextUtils.isEmpty(crfSize)) {
-                recordMode = new AutoVBRMode();
+                recordMode = new AutoVbrMode();
             } else {
-                recordMode = new AutoVBRMode(Integer.valueOf(crfSize));
+                recordMode = new AutoVbrMode(Integer.valueOf(crfSize));
             }
         } else if (recordModeCheckedId == R.id.rb_vbr) {
             String maxBitrate = et_record_maxbitrate.getText().toString();
@@ -228,9 +228,9 @@ public class MainActivity extends AppCompatActivity {
             if (checkStrEmpty(maxBitrate, "请输入最大码率") || checkStrEmpty(bitrate, "请输入额定码率")) {
                 return;
             }
-            recordMode = new VBRMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
+            recordMode = new VbrMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
         } else {
-            recordMode = new AutoVBRMode();
+            recordMode = new AutoVbrMode();
         }
 
         if(!spinner_record.getSelectedItem().toString().equals("none")){
@@ -259,9 +259,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (compressModeCheckedId == R.id.rb_auto) {
                 String crfSize = et_compress_crfSize.getText().toString();
                 if (TextUtils.isEmpty(crfSize)) {
-                    compressMode = new AutoVBRMode();
+                    compressMode = new AutoVbrMode();
                 } else {
-                    compressMode = new AutoVBRMode(Integer.valueOf(crfSize));
+                    compressMode = new AutoVbrMode(Integer.valueOf(crfSize));
                 }
             } else if (compressModeCheckedId == R.id.rb_vbr) {
                 String maxBitrate = et_compress_maxbitrate.getText().toString();
@@ -270,9 +270,9 @@ public class MainActivity extends AppCompatActivity {
                 if (checkStrEmpty(maxBitrate, "请输入二次压缩最大码率") || checkStrEmpty(bitrate, "请输入二次压缩额定码率")) {
                     return;
                 }
-                compressMode = new VBRMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
+                compressMode = new VbrMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
             } else {
-                compressMode = new AutoVBRMode();
+                compressMode = new AutoVbrMode();
             }
 
             if(!spinner_compress.getSelectedItem().toString().equals("none")){
@@ -296,10 +296,10 @@ public class MainActivity extends AppCompatActivity {
 //
         /*
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
-                .doH264Compress(new AutoVBRMode()
+                .doH264Compress(new AutoVbrMode()
 //                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
                 )
-                .setMediaBitrateConfig(new AutoVBRMode()
+                .setMediaBitrateConfig(new AutoVbrMode()
 //                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
                 )
                 .smallVideoWidth(480)
