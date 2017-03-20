@@ -6,13 +6,13 @@ package mabeijianxi.camera.model;
  * mabeijianxi@gmail.com
  */
 
-public class VbrMode extends BaseMediaBitrateConfig {
+public class VBRMode extends BaseMediaBitrateConfig {
     /**
      *
      * @param maxBitrate 最大码率
      * @param bitrate 额定码率
      */
-    public VbrMode(int maxBitrate, int bitrate){
+    public VBRMode(int maxBitrate, int bitrate){
         if(maxBitrate<=0||bitrate<=0){
             throw new IllegalArgumentException("maxBitrate or bitrate value error!");
         }

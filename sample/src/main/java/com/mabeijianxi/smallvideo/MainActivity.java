@@ -24,7 +24,7 @@ import mabeijianxi.camera.model.AutoVBRMode;
 import mabeijianxi.camera.model.BaseMediaBitrateConfig;
 import mabeijianxi.camera.model.CBRMode;
 import mabeijianxi.camera.model.MediaRecorderConfig;
-import mabeijianxi.camera.model.VbrMode;
+import mabeijianxi.camera.model.VBRMode;
 import mabeijianxi.camera.util.DeviceUtils;
 
 import static com.mabeijianxi.smallvideo.R.id.et_crfSize;
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             if (checkStrEmpty(maxBitrate, "请输入最大码率") || checkStrEmpty(bitrate, "请输入额定码率")) {
                 return;
             }
-            recordMode = new VbrMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
+            recordMode = new VBRMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
         } else {
             recordMode = new AutoVBRMode();
         }
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkStrEmpty(maxBitrate, "请输入二次压缩最大码率") || checkStrEmpty(bitrate, "请输入二次压缩额定码率")) {
                     return;
                 }
-                compressMode = new VbrMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
+                compressMode = new VBRMode(Integer.valueOf(maxBitrate), Integer.valueOf(bitrate));
             } else {
                 compressMode = new AutoVBRMode();
             }
