@@ -6,13 +6,14 @@
 ### 特点：
 ##### 1：利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
 ##### 2：可设置以H264编解码器二次压缩，6秒的1M视频压缩后为200多KB，且视频还比较清晰
-##### 3：录制简单，一行代码完成集成，几个参数搞定录制。 
+##### 3：可选择本地视频压缩
+##### 4：录制简单，一行代码完成集成，几个参数搞定录制。 
 ### 源码详解：
 [利用FFmpeg玩转Android视频录制与压缩（一）](http://blog.csdn.net/mabeijianxi/article/details/63335722)
 ### 使用方法：
 ###### 1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record:1.1.0’
+compile 'com.mabeijianxi:small-video-record:1.2.0’
 ```
 ###### 2:在manifests里面添加
 ```java
@@ -39,8 +40,9 @@ public static void initSmallVideo(Context context) {
         VCamera.initialize(context);
     }
 ```
-###### 4:跳转录制界面：
+###### 4:跳转录制界面或选择压缩：
 ```java
+// 录制
  MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .doH264Compress(new AutoVBRMode()
 //                        .setVelocity(BaseMediaBitrateConfig.Velocity.ULTRAFAST)
@@ -56,6 +58,15 @@ public static void initSmallVideo(Context context) {
                 .recordTimeMin((int) (1.5 * 1000))
                 .build();
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
+// 选择本地视频压缩
+LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
+                        final LocalMediaConfig config = buidler
+                                .setVideoPath(path)
+                                .captureThumbnailsTime(1)
+                                .doH264Compress(new AutoVBRMode())
+                                .setFramerate(15)
+                                .build();
+                        OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();	
 ```
 ###### 5:一些参数说明：
 		maxFrameRate：指定最大帧率，越大视频质量越好，体积也会越大，当在cbr模式下不再是动态帧率，而是固定帧率；
@@ -75,6 +86,10 @@ public static void initSmallVideo(Context context) {
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ###### 更新日志：
+
+	2017-04-06:
+	提交1.2.0，增加选择本地视频压缩，修改一系列bug
+	
 	2017-03-16:
 	提交1.1.0，增加更精细的码率控制、转码速度、压缩等级等可配置参数，修复一些bug	
 
