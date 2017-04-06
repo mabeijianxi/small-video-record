@@ -20,7 +20,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="取消"
-            android:textColor="@color/camera_progress_three"
+            android:textColor="@android:color/white"
             android:textSize="13sp" />
 
         <TextView
@@ -32,6 +32,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="发送"
+            android:visibility="gone"
             android:textColor="@color/camera_progress_three"
             android:textSize="13sp" />
     </RelativeLayout>
@@ -61,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top"
-                android:hint="跟邻居说说新鲜事"
+                android:hint="呵呵呵呵呵呵呵呵"
                 android:minHeight="66dp"
                 android:paddingLeft="15dp"
                 android:textColor="@android:color/white"

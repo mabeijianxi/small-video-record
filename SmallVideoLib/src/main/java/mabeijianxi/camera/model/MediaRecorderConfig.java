@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 /**
  * Created by jian on 2016/8/25 17:03
+ * https://github.com/mabeijianxi
  * mabeijianxi@gmail.com
  */
 public final class MediaRecorderConfig implements Parcelable {

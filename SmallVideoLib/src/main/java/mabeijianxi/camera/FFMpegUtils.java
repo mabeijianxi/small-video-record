@@ -47,18 +47,6 @@ public class FFMpegUtils {
 	}
 
 	/**
-	 * 视频截图
-	 * 
-	 * @param videoPath 视频路径
-	 * @param outputPath 截图输出路径
-	 * @param wh 截图宽高，例如80x80
-	 * @return
-	 */
-	public static boolean captureThumbnails(String videoPath, String outputPath, String wh) {
-		return captureThumbnails(videoPath, outputPath, wh, "1");
-	}
-
-	/**
 	 * 导入视频
 	 * 
 	 * @param part 分块信息
@@ -305,6 +293,17 @@ public class FFMpegUtils {
 		}
 
 		return false;
+	}
+	public static boolean captureThumbnails(String videoPath, String outputPath, String ss) {
+		//ffmpeg -i /storage/emulated/0/DCIM/04.04.mp4 -s 84x84 -vframes 1 /storage/emulated/0/DCIM/Camera/miaopai/1388843007381.jpg
+		//ffmpeg -i eis-sample.mpg -s 40x40 -r 1/5 -vframes 10 %d.jpg
+		FileUtils.deleteFile(outputPath);
+		if (ss == null)
+			ss = "";
+		else
+			ss = " -ss " + ss;
+		String cmd = String.format("ffmpeg -d stdout -loglevel verbose -i \"%s\"%s  -vframes 1 \"%s\"", videoPath, ss, outputPath);
+		return UtilityAdapter.FFmpegRun("", cmd) == 0;
 	}
 
 	/**
