@@ -26,7 +26,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理！
 
 ## 使用方法：
 **small-video-record2**和**small-video-record**是两个不同的项目，且不兼容，不过使用方法差不多。
-#### small-video-record2使用方法
+#### 1、small-video-record2使用方法
 ###### 1：添加依赖
 ```java
 compile 'com.mabeijianxi:small-video-record2:1.0.2beta@aar
@@ -79,7 +79,7 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
                         OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();	
 ```
 
-#### small-video-record使用方法
+#### 2、small-video-record使用方法
 ###### 1：添加依赖
 ```java
 compile 'com.mabeijianxi:small-video-record:1.2.0'
