@@ -194,5 +194,9 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 	2016-08-25：
 	提交小视频1.0.0
 ### sample下载：
+###### small-video-record:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample.png)
-[Download Demo](http://fir.im/smallvideorecord)
+[Download Demo1](http://fir.im/smallvideorecord)
+###### small-video-record2:
+![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample2.png)
+[Download Demo2](https://fir.im/jianxiMediaRecord2)
