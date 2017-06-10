@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rg_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="AutoVBRMode" />
+
+        <RadioButton
+            android:id="@+id/rb_vbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VBRMode" />
+
+        <RadioButton
+            android:id="@+id/rb_cbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CBRMode" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/ll_crf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频质量(可选)："
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_crfSize"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:hint="0~51越大质量越差"
+            android:inputType="number"
+            android:textColorHint="#9b9b9b"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bitrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_maxbitrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最大码率："
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_maxbitrate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColorHint="#9b9b9b"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="额定码率："
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_bitrate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColorHint="#9b9b9b"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

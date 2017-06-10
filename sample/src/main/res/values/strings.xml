@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmallVideo</string>
+    <string name="app_name">jianxi_record1</string>
     <string-array name="velocity">
         <item>none</item>
         <item>ultrafast</item>
