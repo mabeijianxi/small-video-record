@@ -19,7 +19,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 [Android下玩JNI的新老三种姿势](http://blog.csdn.net/mabeijianxi/article/details/68525164)<br>
 ## 关于small-video-record2：
 ###### 源码编译:
-你需要拥有ndk环境且AndroidStudio版本大于2.2，还还需要修改CMakeList.txt里面动态库路径与FFmpeg源码路径
+你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。
 ###### 变化
 * 输入的高度宽度概念与small-video-record相反，现在相对合理。
 * 暂时不支持暂停录制。
@@ -164,7 +164,7 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 ## small-video-record2 更新日志：
 	
 	2017-06-10:
-	提交1.0.2beta
+	修改编译脚本，增加可移植性
 	
 ## small-video-record 更新日志：
 	
