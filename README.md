@@ -36,7 +36,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 #### 一、small-video-record2使用方法
 ###### 1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record2:1.0.2beta@aar
+compile 'com.mabeijianxi:small-video-record2:2.0.0beta@aar
 ```
 ###### 2:在manifests里面添加
 ```java
