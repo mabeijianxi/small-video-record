@@ -1,5 +1,5 @@
 # small-video-record
-Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-video-record2已发布）！
+Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-video-record2已从C到Java全面开源）！
 
 ## 效果如下：
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
