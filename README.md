@@ -1,16 +1,85 @@
 # small-video-record
-利用FFmpeg视频录制与压缩处理，这里得感谢vitamio家的秒拍SO库，也感谢提出问题的朋友们！
+Android端音频视频采集，底层利用FFmpeg编码压缩处理！
 
-### 效果如下：
+## 效果如下：
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
-### 特点：
-##### 1：利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
-##### 2：可设置以H264编解码器二次压缩，6秒的1M视频压缩后为200多KB，且视频还比较清晰
-##### 3：可选择本地视频压缩
-##### 4：录制简单，一行代码完成集成，几个参数搞定录制。 
-### 源码详解：
+## 特点：
+* 边采集边编码。
+* 利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
+* small-video-record2已解耦FFmpeg，可根据自己需求定制FFmpeg。
+* 视频采用libx264编解,音频采用libfdk-aac,相对效率高。
+* 可选择本地视频压缩。
+* 可选择本地视频压缩。
+* 录制简单，几行代码完成集成，几个参数搞定录制。
+## 源码详解：
 [利用FFmpeg玩转Android视频录制与压缩（一）](http://blog.csdn.net/mabeijianxi/article/details/63335722)
-### 使用方法：
+## small-video-record2：
+###### 变化
+* 输入的高度宽度概念与small-video-record相反，现在相对合理。
+* 暂时不支持暂停录制。
+* 视频录制模式下暂时不支持码率模式控制与编码速度控制（本地压缩支持）。
+###### 待开发功能
+* 视频暂停录制功能。
+* 录制时码率模式控制。
+* 美颜功能。
+* 更多未知功能...
+
+## 使用方法：
+**small-video-record2**和**small-video-record**是两个不同的项目，且不兼容，不过使用方法差不多。
+#### small-video-record2使用方法
+###### 1：添加依赖
+```java
+compile 'com.mabeijianxi:small-video-record2:1.0.2beta@aar
+```
+###### 2:在manifests里面添加
+```java
+ <activity android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity"/>
+```
+###### 3:在Application里面初始化小视频录制：
+```java
+public static void initSmallVideo() {
+        // 设置拍摄视频缓存路径
+        File dcim = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        if (DeviceUtils.isZte()) {
+            if (dcim.exists()) {
+                JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
+            } else {
+                JianXiCamera.setVideoCachePath(dcim.getPath().replace("/sdcard/",
+                        "/sdcard-ext/")
+                        + "/mabeijianxi/");
+            }
+        } else {
+            JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
+        }
+        // 初始化拍摄
+        JianXiCamera.initialize(false,null);
+    }
+```
+###### 4:跳转录制界面或选择压缩：
+```java
+// 录制
+MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+                .smallVideoWidth(360)
+                .smallVideoHeight(480)
+                .recordTimeMax(6*1000)
+                .maxFrameRate(20)
+                .videoBitrate(600*1000)
+                .captureThumbnailsTime(1)
+                .build();
+        MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
+// 选择本地视频压缩
+LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
+                        final LocalMediaConfig config = buidler
+                                .setVideoPath(path)
+                                .captureThumbnailsTime(1)
+                                .doH264Compress(new AutoVBRMode())
+                                .setFramerate(15)
+                                .build();
+                        OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();	
+```
+
+#### small-video-record使用方法
 ###### 1：添加依赖
 ```java
 compile 'com.mabeijianxi:small-video-record:1.2.0'
@@ -82,11 +151,16 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 		VBRMode：此模式下可以传入一个最大码率与一个额定码率，当然同样可以设置转码速度。
 		
 		VBRMode:可以传入一个固定码率，也可以添加一个转码速度。
-###### 一些问题：
+## small-video-record的一些问题（2中已修复）：
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
-###### 更新日志：
-
+## small-video-record2 更新日志：
+	
+	2017-06-10:
+	提交1.0.2beta
+	
+## small-video-record 更新日志：
+	
 	2017-04-06:
 	提交1.2.0，增加选择本地视频压缩，修改一系列bug
 	
