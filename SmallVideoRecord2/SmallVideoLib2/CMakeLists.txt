@@ -39,7 +39,7 @@ add_library(
 set_target_properties(
     avcodec
     PROPERTIES IMPORTED_LOCATION
-    /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libavcodec.so
+    ${CMAKE_SOURCE_DIR}/src/main/cpp/libavcodec.so
     )
 add_library(
             avfilter
@@ -49,7 +49,7 @@ add_library(
 set_target_properties(
         avfilter
         PROPERTIES IMPORTED_LOCATION
-        /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libavfilter.so
+        ${CMAKE_SOURCE_DIR}/src/main/cpp/libavfilter.so
         )
 
 add_library(
@@ -60,7 +60,7 @@ add_library(
 set_target_properties(
             avformat
             PROPERTIES IMPORTED_LOCATION
-            /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libavformat.so
+            ${CMAKE_SOURCE_DIR}/src/main/cpp/libavformat.so
             )
 
 add_library(
@@ -71,7 +71,7 @@ add_library(
 set_target_properties(
             avutil
             PROPERTIES IMPORTED_LOCATION
-            /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libavutil.so
+            ${CMAKE_SOURCE_DIR}/src/main/cpp/libavutil.so
             )
 add_library(
             swresample
@@ -81,7 +81,7 @@ add_library(
 set_target_properties(
             swresample
             PROPERTIES IMPORTED_LOCATION
-            /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libswresample.so
+            ${CMAKE_SOURCE_DIR}/src/main/cpp/libswresample.so
              )
 add_library(
             swscale
@@ -91,7 +91,7 @@ add_library(
 set_target_properties(
             swscale
             PROPERTIES IMPORTED_LOCATION
-            /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libswscale.so
+            ${CMAKE_SOURCE_DIR}/src/main/cpp/libswscale.so
              )
 add_library(
             jxffmpegcmd
@@ -101,11 +101,11 @@ add_library(
 set_target_properties(
             jxffmpegcmd
             PROPERTIES IMPORTED_LOCATION
-            /Users/jianxi/android/projects/SmallVideoRecord2/SmallVideoLib2/src/main/cpp/libjxffmpegrun.so
+            ${CMAKE_SOURCE_DIR}/src/main/cpp/libjxffmpegrun.so
              )
 
 include_directories(
-    /Users/jianxi/Downloads/code/ffmpeg-3.2.5/
+    ${CMAKE_SOURCE_DIR}/ffmpeg-3.2.5/
 
 )
 # Searches for a specified prebuilt library and stores the path as a

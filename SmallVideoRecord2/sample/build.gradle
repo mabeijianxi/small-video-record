@@ -28,6 +28,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.1.0'
-//    compile 'com.mabeijianxi:small-video-record2:1.0.1beta@aar'
+//    compile 'com.mabeijianxi:small-video-record2:1.0.2beta@aar'
     compile project(':SmallVideoLib2')
 }
