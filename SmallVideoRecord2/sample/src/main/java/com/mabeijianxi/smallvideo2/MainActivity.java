@@ -1,13 +1,19 @@
 package com.mabeijianxi.smallvideo2;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -39,6 +45,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int PERMISSION_REQUEST_CODE = 0x001;
     private ScrollView sv;
     private Button bt_start;
     private TextView tv_size;
@@ -48,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_maxtime;
     private Spinner spinner_record;
     private EditText et_maxframerate;
-    private int CHOOSE_CODE = 0x000520;
+    private final int CHOOSE_CODE = 0x000520;
     private RadioGroup rg_aspiration;
     private ProgressDialog mProgressDialog;
     private LinearLayout ll_only_compress;
@@ -63,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinner_only_compress;
     private EditText et_only_framerate;
     private EditText et_bitrate;
+    private static final String[] permissionManifest = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         initSmallVideo();
         initView();
         initEvent();
-        setSupportCameraSize();
+        permissionCheck();
     }
 
     private void setSupportCameraSize() {
@@ -174,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 选择本地视频，为了方便我采取了系统的API，所以也许在一些定制机上会取不到视频地址，
      * 所以选择手机里视频的代码根据自己业务写为妙。
+     *
      * @param v
      */
     public void choose(View v) {
@@ -198,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         BaseMediaBitrateConfig compressMode = null;
 
 
-            recordMode = new AutoVBRMode();
+        recordMode = new AutoVBRMode();
 
         if (!spinner_record.getSelectedItem().toString().equals("none")) {
             recordMode.setVelocity(spinner_record.getSelectedItem().toString());
@@ -228,12 +242,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    if (Manifest.permission.CAMERA.equals(permissions[i])) {
+                        setSupportCameraSize();
+                    } else if (Manifest.permission.RECORD_AUDIO.equals(permissions[i])) {
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CHOOSE_CODE) {
             //
             if (resultCode == RESULT_OK && data != null && data.getData() != null) {
                 Uri uri = data.getData();
-                String[] proj = { MediaStore.Images.Media.DATA ,MediaStore.Images.Media.MIME_TYPE};
+                String[] proj = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.MIME_TYPE};
 
                 Cursor cursor = getContentResolver().query(uri, proj, null,
                         null, null);
@@ -278,9 +308,9 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         String sRate = et_only_framerate.getText().toString();
-                        int iRate=0;
-                        if(!TextUtils.isEmpty(sRate)){
-                            iRate=Integer.valueOf(sRate);
+                        int iRate = 0;
+                        if (!TextUtils.isEmpty(sRate)) {
+                            iRate = Integer.valueOf(sRate);
                         }
                         LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
                         final LocalMediaConfig config = buidler
@@ -295,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        showProgress("","压缩中...",-1);
+                                        showProgress("", "压缩中...", -1);
                                     }
                                 });
                                 OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();
@@ -328,6 +358,25 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    private void permissionCheck() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            boolean permissionState = true;
+            for (String permission : permissionManifest) {
+                if (ContextCompat.checkSelfPermission(this, permission)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    permissionState = false;
+                }
+            }
+            ActivityCompat.requestPermissions(this, permissionManifest, PERMISSION_REQUEST_CODE);
+            if (!permissionState) {
+            } else {
+                setSupportCameraSize();
+            }
+        } else {
+            setSupportCameraSize();
+        }
+    }
+
     public static void initSmallVideo() {
         // 设置拍摄视频缓存路径
         File dcim = Environment
@@ -344,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
             JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
         }
         // 初始化拍摄
-        JianXiCamera.initialize(false,null);
+        JianXiCamera.initialize(false, null);
     }
 
     private void showProgress(String title, String message, int theme) {
