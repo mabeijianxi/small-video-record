@@ -164,11 +164,17 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 	1：编译环境请满足：targetSdkVersion<=22
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ## small-video-record2 更新日志：
-	
+
+	2017-06-13:
+	提交2.0.0-beta2，更改默认压缩速度为最快，开始多线程编码。
 	2017-06-10:
 	修改编译脚本，增加可移植性
+
 	
 ## small-video-record 更新日志：
+
+	2017-06-13:
+	提交1.2.1，更改默认压缩速度为最快。
 	
 	2017-04-06:
 	提交1.2.0，增加选择本地视频压缩，修改一系列bug
