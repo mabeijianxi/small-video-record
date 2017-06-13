@@ -22,6 +22,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 ###### 源码编译:
 你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。
 ###### 变化
+* 解耦FFmpeg与JNI，你可以编译符合自己的FFmpeg动态库替换掉我的。
 * 输入的高度宽度概念与small-video-record相反，现在相对合理。
 * 暂时不支持暂停录制。
 * 视频录制模式下暂时不支持码率模式控制与编码速度控制（本地压缩支持）。
