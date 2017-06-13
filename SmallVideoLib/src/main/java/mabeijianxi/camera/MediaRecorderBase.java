@@ -873,7 +873,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
                     mMediaObject.getOutputTempVideoPath(),
                     getBitrateModeCommand(compressConfig, "", false),
                     getBitrateCrfSize(compressConfig, "-crf 28", false),
-                    getBitrateVelocity(compressConfig, "-preset:v veryfast", false),
+                    getBitrateVelocity(compressConfig, "-preset:v ultrafast", false),
                     vbr,
                     getFrameRateCmd(),
                     mMediaObject.getOutputTempTranscodingVideoPath()

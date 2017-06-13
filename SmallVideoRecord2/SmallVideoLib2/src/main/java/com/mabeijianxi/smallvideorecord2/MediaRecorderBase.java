@@ -805,11 +805,11 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             if (compressConfig != null && compressConfig.getMode() == BaseMediaBitrateConfig.MODE.CBR) {
                 vbr = "";
             }
-            String cmd_transcoding = String.format("ffmpeg -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s %s",
+            String cmd_transcoding = String.format("ffmpeg -threads 16 -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s %s",
                     mMediaObject.getOutputTempVideoPath(),
                     getBitrateModeCommand(compressConfig, "", false),
                     getBitrateCrfSize(compressConfig, "-crf 28", false),
-                    getBitrateVelocity(compressConfig, "-preset:v veryfast", false),
+                    getBitrateVelocity(compressConfig, "-preset:v ultrafast", false),
                     vbr,
                     getFrameRateCmd(),
                     mMediaObject.getOutputTempTranscodingVideoPath()
