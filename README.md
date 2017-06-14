@@ -7,8 +7,8 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 * 边采集边编码。
 * 利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
 * small-video-record2已解耦FFmpeg，可根据自己需求定制FFmpeg。
+* 暴露FFmpeg命令操作接口，可自定义更多功能。
 * 视频采用libx264编解,音频采用libfdk-aac,相对效率高。
-* 可选择本地视频压缩。
 * 可选择本地视频压缩。
 * 录制简单，几行代码完成集成，几个参数搞定录制。
 ## 开发步骤、源码详解、工具准备：
@@ -38,7 +38,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 #### 一、small-video-record2使用方法
 ###### 1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record2:2.0.0-beta2@aar'
+compile 'com.mabeijianxi:small-video-record2:2.0.0-beta3@aar'
 ```
 ###### 2:在manifests里面添加
 ```java
@@ -84,6 +84,7 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
                                 .captureThumbnailsTime(1)
                                 .doH264Compress(new AutoVBRMode())
                                 .setFramerate(15)
+				.setScale(1.0f)
                                 .build();
                         OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();	
 ```
@@ -91,7 +92,7 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 #### 二、small-video-record使用方法
 ###### 1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record:1.2.1'
+compile 'com.mabeijianxi:small-video-record:1.2.2'
 ```
 ###### 2:在manifests里面添加
 ```java
@@ -143,6 +144,7 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
                                 .captureThumbnailsTime(1)
                                 .doH264Compress(new AutoVBRMode())
                                 .setFramerate(15)
+				.setScale(1.0f)
                                 .build();
                         OnlyCompressOverBean onlyCompressOverBean = new LocalMediaCompress(config).startCompress();	
 ```
@@ -165,14 +167,21 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ## small-video-record2 更新日志：
 
+	2017-06-14:
+	提交2.0.0-beta3，本地压缩新增分辨率缩放功能。
+	
 	2017-06-13:
 	提交2.0.0-beta2，更改默认压缩速度为最快，开始多线程编码。
+	
 	2017-06-10:
 	修改编译脚本，增加可移植性
 
 	
 ## small-video-record 更新日志：
 
+	2017-06-14:
+	提交1.2.2，本地压缩新增分辨率缩放功能。
+	
 	2017-06-13:
 	提交1.2.1，更改默认压缩速度为最快。
 	
