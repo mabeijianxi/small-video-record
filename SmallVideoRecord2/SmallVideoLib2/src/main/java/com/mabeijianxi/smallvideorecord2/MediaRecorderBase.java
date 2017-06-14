@@ -742,6 +742,12 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
 
     }
 
+    protected String getScaleWH(){
+
+        return "";
+    }
+
+
     /**
      * 预处理监听
      */
@@ -805,13 +811,20 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             if (compressConfig != null && compressConfig.getMode() == BaseMediaBitrateConfig.MODE.CBR) {
                 vbr = "";
             }
-            String cmd_transcoding = String.format("ffmpeg -threads 16 -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s %s",
+            String scaleWH = getScaleWH();
+            if(!TextUtils.isEmpty(scaleWH)){
+                scaleWH="-s "+scaleWH;
+            }else {
+                scaleWH="";
+            }
+            String cmd_transcoding = String.format("ffmpeg -threads 16 -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s %s %s",
                     mMediaObject.getOutputTempVideoPath(),
                     getBitrateModeCommand(compressConfig, "", false),
                     getBitrateCrfSize(compressConfig, "-crf 28", false),
                     getBitrateVelocity(compressConfig, "-preset:v ultrafast", false),
                     vbr,
                     getFrameRateCmd(),
+                    scaleWH,
                     mMediaObject.getOutputTempTranscodingVideoPath()
             );
             boolean transcodingFlag = FFmpegBridge.jxFFmpegCMDRun( cmd_transcoding) == 0;

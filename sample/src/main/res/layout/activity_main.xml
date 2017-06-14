@@ -72,7 +72,27 @@
                 android:textColorHint="#9b9b9b"
                 android:textSize="14sp" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_only_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="缩放视频比例，为浮点型，大于1有效"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_only_scale"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColorHint="#9b9b9b"
+                android:text="1.0"
+                android:textSize="14sp" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

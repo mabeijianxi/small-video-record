@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
+    private EditText et_only_scale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         et_bitrate = (EditText) findViewById(R.id.et_record_bitrate);
         et_maxtime = (EditText) findViewById(R.id.et_maxtime);
         et_only_framerate = (EditText) findViewById(R.id.et_only_framerate);
+        et_only_scale = (EditText) findViewById(R.id.et_only_scale);
 
 
         spinner_record = (Spinner) findViewById(R.id.spinner_record);
@@ -308,9 +310,14 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         String sRate = et_only_framerate.getText().toString();
+                        String scale = et_only_scale.getText().toString();
                         int iRate = 0;
+                        float fScale=0;
                         if (!TextUtils.isEmpty(sRate)) {
                             iRate = Integer.valueOf(sRate);
+                        }
+                        if (!TextUtils.isEmpty(scale)) {
+                            fScale = Float.valueOf(scale);
                         }
                         LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
                         final LocalMediaConfig config = buidler
@@ -318,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
                                 .captureThumbnailsTime(1)
                                 .doH264Compress(compressMode)
                                 .setFramerate(iRate)
+                                .setScale(fScale)
                                 .build();
                         new Thread(new Runnable() {
                             @Override

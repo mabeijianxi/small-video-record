@@ -28,14 +28,18 @@ public final class LocalMediaConfig implements Parcelable {
 
     private final String videoAddress;
 
+    private final float scale;
+
     private LocalMediaConfig(Buidler buidler) {
         this.captureThumbnailsTime = buidler.captureThumbnailsTime;
         this.FRAME_RATE = buidler.FRAME_RATE;
         this.compressConfig = buidler.compressConfig;
-        this.videoAddress=buidler.videoPath;
+        this.videoAddress = buidler.videoPath;
+        this.scale = buidler.scale;
         this.GO_HOME = buidler.GO_HOME;
 
     }
+
 
     protected LocalMediaConfig(Parcel in) {
         FRAME_RATE = in.readInt();
@@ -43,20 +47,7 @@ public final class LocalMediaConfig implements Parcelable {
         GO_HOME = in.readByte() != 0;
         compressConfig = in.readParcelable(BaseMediaBitrateConfig.class.getClassLoader());
         videoAddress = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(FRAME_RATE);
-        dest.writeInt(captureThumbnailsTime);
-        dest.writeByte((byte) (GO_HOME ? 1 : 0));
-        dest.writeParcelable(compressConfig, flags);
-        dest.writeString(videoAddress);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        scale = in.readFloat();
     }
 
     public static final Creator<LocalMediaConfig> CREATOR = new Creator<LocalMediaConfig>() {
@@ -92,6 +83,25 @@ public final class LocalMediaConfig implements Parcelable {
         return videoAddress;
     }
 
+    public float getScale() {
+        return scale;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(FRAME_RATE);
+        dest.writeInt(captureThumbnailsTime);
+        dest.writeByte((byte) (GO_HOME ? 1 : 0));
+        dest.writeParcelable(compressConfig, flags);
+        dest.writeString(videoAddress);
+        dest.writeFloat(scale);
+    }
+
 
     public static class Buidler {
         /**
@@ -106,6 +116,7 @@ public final class LocalMediaConfig implements Parcelable {
         private int FRAME_RATE;
 
         private String videoPath;
+        private float scale;
 
         public LocalMediaConfig build() {
             return new LocalMediaConfig(this);
@@ -143,6 +154,19 @@ public final class LocalMediaConfig implements Parcelable {
 
         public Buidler setVideoPath(String videoPath) {
             this.videoPath = videoPath;
+            return this;
+        }
+
+        /**
+         * @param scale 大于1，否者无效
+         * @return
+         */
+        public Buidler setScale(float scale) {
+            if (scale <= 1) {
+                this.scale = 1;
+            } else {
+                this.scale = scale;
+            }
             return this;
         }
     }

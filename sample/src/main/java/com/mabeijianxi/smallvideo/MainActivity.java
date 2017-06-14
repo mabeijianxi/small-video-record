@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_only_compress_bitrate;
     private Spinner spinner_only_compress;
     private EditText et_only_framerate;
+    private EditText et_only_scale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
         et_maxtime = (EditText) findViewById(R.id.et_maxtime);
         et_mintime = (EditText) findViewById(R.id.et_mintime);
         et_only_framerate = (EditText) findViewById(R.id.et_only_framerate);
+        et_only_scale = (EditText) findViewById(R.id.et_only_scale);
+
 
         i_record = findViewById(R.id.i_record);
         rg_record_mode = (RadioGroup) i_record.findViewById(R.id.rg_mode);
@@ -464,16 +467,23 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         String sRate = et_only_framerate.getText().toString();
-                        int iRate=0;
-                        if(!TextUtils.isEmpty(sRate)){
-                            iRate=Integer.valueOf(sRate);
+                        String scale = et_only_scale.getText().toString();
+                        int iRate = 0;
+                        float fScale=0;
+                        if (!TextUtils.isEmpty(sRate)) {
+                            iRate = Integer.valueOf(sRate);
                         }
+                        if (!TextUtils.isEmpty(scale)) {
+                            fScale = Float.valueOf(scale);
+                        }
+
                         LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
                         final LocalMediaConfig config = buidler
                                 .setVideoPath(_data)
                                 .captureThumbnailsTime(1)
                                 .doH264Compress(compressMode)
                                 .setFramerate(iRate)
+                                .setScale(fScale)
                                 .build();
                         new Thread(new Runnable() {
                             @Override
