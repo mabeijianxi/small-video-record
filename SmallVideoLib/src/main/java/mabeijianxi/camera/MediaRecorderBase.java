@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
+import mabeijianxi.camera.model.BaseMediaBitrateConfig;
 import mabeijianxi.camera.model.MediaObject;
 import mabeijianxi.camera.model.MediaObject.MediaPart;
 import mabeijianxi.camera.util.DeviceUtils;
@@ -121,6 +122,10 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
 
     protected static boolean doH264Compress = true;
 
+    protected static BaseMediaBitrateConfig mediaRecorderConfig;
+
+    public static BaseMediaBitrateConfig compressConfig;
+
     /**
      * 摄像头对象
      */
@@ -175,7 +180,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
     /**
      * 视频码率
      */
-    protected static int mVideoBitrate = 2048;
+    protected static int mVideoBitrate;
 
     public static int mSupportedPreviewWidth = 0;
     /**
@@ -190,6 +195,8 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
      * PreviewFrame调用次数，测试用
      */
     protected volatile long mPreviewFrameCallCount = 0;
+
+    private String mFrameRateCmd="";
 
     public MediaRecorderBase() {
 
@@ -520,17 +527,17 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             if (rates.contains(MAX_FRAME_RATE)) {
                 mFrameRate = MAX_FRAME_RATE;
             } else {
-                boolean findFrame=false;
+                boolean findFrame = false;
                 Collections.sort(rates);
                 for (int i = rates.size() - 1; i >= 0; i--) {
                     if (rates.get(i) <= MAX_FRAME_RATE) {
                         mFrameRate = rates.get(i);
-                        findFrame=true;
+                        findFrame = true;
                         break;
                     }
                 }
-                if (!findFrame){
-                    mFrameRate=rates.get(0);
+                if (!findFrame) {
+                    mFrameRate = rates.get(0);
                 }
             }
         }
@@ -600,7 +607,6 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
                 camera = Camera.open();
             else
                 camera = Camera.open(mCameraId);
-
             camera.setDisplayOrientation(90);
             try {
                 camera.setPreviewDisplay(mSurfaceHolder);
@@ -632,34 +638,15 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * 预览调用成功，子类可以做一些操作
      */
     protected void onStartPreviewSuccess() {
 
     }
-
+    protected String getScaleWH() {
+        return "";
+    }
     /**
      * 设置回调
      */
@@ -857,26 +844,12 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             @Override
             protected Boolean doInBackground(Void... params) {
                 //合并ts流
-                String cmd = String.format("ffmpeg %s -i \"%s\" -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\"", FFMpegUtils.getLogCommand(), mMediaObject.getConcatYUV(), mMediaObject.getOutputTempVideoPath());
+                String cmd = String.format("ffmpeg %s -i \"%s\" -vcodec copy -acodec copy -absf aac_adtstoasc -f mp4 -movflags faststart \"%s\" ",
+                        FFMpegUtils.getLogCommand(),
+                        mMediaObject.getConcatYUV(),
+                        mMediaObject.getOutputTempVideoPath());
                 boolean mergeFlag = UtilityAdapter.FFmpegRun("", cmd) == 0;
-                if (doH264Compress) {
-                    String cmd_transcoding = "ffmpeg -i " + mMediaObject.getOutputTempVideoPath() + " -c:v libx264 -crf 28 -preset:v veryfast -c:a libfdk_aac -vbr 4 " + mMediaObject.getOutputTempTranscodingVideoPath();
-
-                    boolean transcodingFlag = UtilityAdapter.FFmpegRun("", cmd_transcoding) == 0;
-
-                    boolean captureFlag = FFMpegUtils.captureThumbnails(mMediaObject.getOutputTempTranscodingVideoPath(), mMediaObject.getOutputVideoThumbPath(), SMALL_VIDEO_WIDTH + "x" + SMALL_VIDEO_HEIGHT, String.valueOf(CAPTURE_THUMBNAILS_TIME));
-
-                    FileUtils.deleteCacheFile(mMediaObject.getOutputDirectory());
-
-                    return mergeFlag && captureFlag && transcodingFlag;
-                } else {
-                    boolean captureFlag = FFMpegUtils.captureThumbnails(mMediaObject.getOutputTempVideoPath(), mMediaObject.getOutputVideoThumbPath(), SMALL_VIDEO_WIDTH + "x" + SMALL_VIDEO_HEIGHT, String.valueOf(CAPTURE_THUMBNAILS_TIME));
-
-                    FileUtils.deleteCacheFile2TS(mMediaObject.getOutputDirectory());
-
-                    return captureFlag && mergeFlag;
-
-                }
+                return doCompress(mergeFlag);
             }
 
 
@@ -890,6 +863,56 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
                 }
             }
         }.execute();
+    }
+
+    protected Boolean doCompress(boolean mergeFlag) {
+        if (compressConfig != null) {
+            String vbr = " -vbr 4 ";
+            if (compressConfig != null && compressConfig.getMode() == BaseMediaBitrateConfig.MODE.CBR) {
+                vbr = "";
+            }
+            String scaleWH = getScaleWH();
+            if(!TextUtils.isEmpty(scaleWH)){
+                scaleWH="-s "+scaleWH;
+            }else {
+                scaleWH="";
+            }
+            String cmd_transcoding = String.format("ffmpeg -i %s -c:v libx264 %s %s %s -c:a libfdk_aac %s %s %s %s",
+                    mMediaObject.getOutputTempVideoPath(),
+                    getBitrateModeCommand(compressConfig, "", false),
+                    getBitrateCrfSize(compressConfig, "-crf 28", false),
+                    getBitrateVelocity(compressConfig, "-preset:v ultrafast", false),
+                    vbr,
+                    getFrameRateCmd(),
+                    scaleWH,
+                    mMediaObject.getOutputTempTranscodingVideoPath()
+            );
+            boolean transcodingFlag = UtilityAdapter.FFmpegRun("", cmd_transcoding) == 0;
+
+            boolean captureFlag = FFMpegUtils.captureThumbnails(mMediaObject.getOutputTempTranscodingVideoPath(), mMediaObject.getOutputVideoThumbPath(), String.valueOf(CAPTURE_THUMBNAILS_TIME));
+
+            FileUtils.deleteCacheFile(mMediaObject.getOutputDirectory());
+            boolean result = mergeFlag && captureFlag && transcodingFlag;
+
+            return result;
+        } else {
+            boolean captureFlag = FFMpegUtils.captureThumbnails(mMediaObject.getOutputTempVideoPath(), mMediaObject.getOutputVideoThumbPath(),  String.valueOf(CAPTURE_THUMBNAILS_TIME));
+
+            FileUtils.deleteCacheFile2TS(mMediaObject.getOutputDirectory());
+            boolean result = captureFlag && mergeFlag;
+
+            return result;
+
+        }
+
+    }
+
+    protected String getFrameRateCmd() {
+        return mFrameRateCmd;
+    }
+
+    protected void setTranscodingFrameRate(int rate){
+        this.mFrameRateCmd=String.format(" -r %d",rate);
     }
 
     /**
@@ -937,5 +960,64 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         }
     }
 
-    ;
+    protected String getBitrateModeCommand(BaseMediaBitrateConfig config, String defualtCmd, boolean needSymbol) {
+        String add = "";
+        if (TextUtils.isEmpty(defualtCmd)) {
+            defualtCmd = "";
+        }
+        if (config != null) {
+            if (config.getMode() == BaseMediaBitrateConfig.MODE.VBR) {
+                if (needSymbol) {
+                    add = String.format(" -x264opts \"bitrate=%d:vbv-maxrate=%d\" ", config.getBitrate(), config.getMaxBitrate());
+                } else {
+                    add = String.format(" -x264opts bitrate=%d:vbv-maxrate=%d ", config.getBitrate(), config.getMaxBitrate());
+                }
+                return add;
+            } else if (config.getMode() == BaseMediaBitrateConfig.MODE.CBR) {
+                if (needSymbol) {
+                    add = String.format(" -x264opts \"bitrate=%d:vbv-bufsize=%d:nal_hrd=cbr\" ", config.getBitrate(), config.getBufSize());
+                } else {
+                    add = String.format(" -x264opts bitrate=%d:vbv-bufsize=%d:nal_hrd=cbr ", config.getBitrate(), config.getBufSize());
+
+                }
+                return add;
+
+            }
+        }
+        return defualtCmd;
+    }
+
+    protected String getBitrateCrfSize(BaseMediaBitrateConfig config, String defualtCmd, boolean nendSymbol) {
+        if (TextUtils.isEmpty(defualtCmd)) {
+            defualtCmd = "";
+        }
+        String add = "";
+        if (config != null && config.getMode() == BaseMediaBitrateConfig.MODE.AUTO_VBR && config.getCrfSize() > 0) {
+            if (nendSymbol) {
+                add = String.format("-crf \"%d\" ", config.getCrfSize());
+            } else {
+                add = String.format("-crf %d ", config.getCrfSize());
+            }
+        } else {
+            return defualtCmd;
+        }
+        return add;
+    }
+
+    protected String getBitrateVelocity(BaseMediaBitrateConfig config, String defualtCmd, boolean nendSymbol) {
+        if (TextUtils.isEmpty(defualtCmd)) {
+            defualtCmd = "";
+        }
+        String add = "";
+        if (config != null && !TextUtils.isEmpty(config.getVelocity())) {
+            if (nendSymbol) {
+                add = String.format("-preset \"%s\" ", config.getVelocity());
+            } else {
+                add = String.format("-preset %s ", config.getVelocity());
+            }
+        } else {
+            return defualtCmd;
+        }
+        return add;
+    }
 }

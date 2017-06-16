@@ -8,8 +8,8 @@ android {
         applicationId "com.mabeijianxi.smallvideo"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 14
+        versionName "1.2.2"
     }
     buildTypes {
         release {
@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {

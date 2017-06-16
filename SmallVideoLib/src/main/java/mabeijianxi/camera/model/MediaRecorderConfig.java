@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 /**
  * Created by jian on 2016/8/25 17:03
+ * https://github.com/mabeijianxi
  * mabeijianxi@gmail.com
  */
 public final class MediaRecorderConfig implements Parcelable {
@@ -48,6 +49,13 @@ public final class MediaRecorderConfig implements Parcelable {
     private final int captureThumbnailsTime;
 
     private final boolean GO_HOME;
+    /**
+     * 码率配置
+     */
+
+    private final BaseMediaBitrateConfig mediaBitrateConfig;
+
+    private final BaseMediaBitrateConfig compressConfig;
 
     private MediaRecorderConfig(Buidler buidler) {
         this.RECORD_TIME_MAX = buidler.RECORD_TIME_MAX;
@@ -59,9 +67,40 @@ public final class MediaRecorderConfig implements Parcelable {
         this.SMALL_VIDEO_WIDTH = buidler.SMALL_VIDEO_WIDTH;
         this.VIDEO_BITRATE = buidler.VIDEO_BITRATE;
         this.doH264Compress = buidler.doH264Compress;
+        this.mediaBitrateConfig= buidler.mediaBitrateConfig;
+        this.compressConfig = buidler.compressConfig;
         this.GO_HOME=buidler.GO_HOME;
 
     }
+
+
+    protected MediaRecorderConfig(Parcel in) {
+        RECORD_TIME_MAX = in.readInt();
+        RECORD_TIME_MIN = in.readInt();
+        SMALL_VIDEO_HEIGHT = in.readInt();
+        SMALL_VIDEO_WIDTH = in.readInt();
+        MAX_FRAME_RATE = in.readInt();
+        MIN_FRAME_RATE = in.readInt();
+        VIDEO_BITRATE = in.readInt();
+        doH264Compress = in.readByte() != 0;
+        captureThumbnailsTime = in.readInt();
+        GO_HOME = in.readByte() != 0;
+        mediaBitrateConfig = in.readParcelable(BaseMediaBitrateConfig.class.getClassLoader());
+        compressConfig = in.readParcelable(BaseMediaBitrateConfig.class.getClassLoader());
+    }
+
+    public static final Creator<MediaRecorderConfig> CREATOR = new Creator<MediaRecorderConfig>() {
+        @Override
+        public MediaRecorderConfig createFromParcel(Parcel in) {
+            return new MediaRecorderConfig(in);
+        }
+
+        @Override
+        public MediaRecorderConfig[] newArray(int size) {
+            return new MediaRecorderConfig[size];
+        }
+    };
+
     public boolean isGO_HOME() {
         return GO_HOME;
     }
@@ -97,6 +136,14 @@ public final class MediaRecorderConfig implements Parcelable {
         return SMALL_VIDEO_WIDTH;
     }
 
+    public BaseMediaBitrateConfig getMediaBitrateConfig() {
+        return mediaBitrateConfig;
+    }
+
+    public BaseMediaBitrateConfig getCompressConfig() {
+        return compressConfig;
+    }
+
     public int getVideoBitrate() {
         return VIDEO_BITRATE;
     }
@@ -105,31 +152,6 @@ public final class MediaRecorderConfig implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    protected MediaRecorderConfig(Parcel in) {
-        RECORD_TIME_MAX = in.readInt();
-        RECORD_TIME_MIN = in.readInt();
-        SMALL_VIDEO_HEIGHT = in.readInt();
-        SMALL_VIDEO_WIDTH = in.readInt();
-        MAX_FRAME_RATE = in.readInt();
-        MIN_FRAME_RATE = in.readInt();
-        VIDEO_BITRATE = in.readInt();
-        doH264Compress = in.readByte() != 0;
-        captureThumbnailsTime = in.readInt();
-        GO_HOME=in.readByte() != 0;
-    }
-
-    public static final Creator<MediaRecorderConfig> CREATOR = new Creator<MediaRecorderConfig>() {
-        @Override
-        public MediaRecorderConfig createFromParcel(Parcel in) {
-            return new MediaRecorderConfig(in);
-        }
-
-        @Override
-        public MediaRecorderConfig[] newArray(int size) {
-            return new MediaRecorderConfig[size];
-        }
-    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -142,7 +164,9 @@ public final class MediaRecorderConfig implements Parcelable {
         dest.writeInt(VIDEO_BITRATE);
         dest.writeByte((byte) (doH264Compress ? 1 : 0));
         dest.writeInt(captureThumbnailsTime);
-        dest.writeInt((byte)(GO_HOME?1:0));
+        dest.writeByte((byte) (GO_HOME ? 1 : 0));
+        dest.writeParcelable(mediaBitrateConfig, flags);
+        dest.writeParcelable(compressConfig, flags);
     }
 
     public static class Buidler {
@@ -173,9 +197,9 @@ public final class MediaRecorderConfig implements Parcelable {
          */
         private int MIN_FRAME_RATE = 8;
         /**
-         * 视频码率
+         * 视频码率//todo 注意传入>0的值后码率模式将从VBR变成CBR
          */
-        private int VIDEO_BITRATE = 2048;
+        private int VIDEO_BITRATE;
         /**
          * 录制后是否需要H264压缩
          */
@@ -185,7 +209,11 @@ public final class MediaRecorderConfig implements Parcelable {
          */
         private int captureThumbnailsTime = 1;
 
+        private BaseMediaBitrateConfig mediaBitrateConfig;
+
         private boolean GO_HOME=false;
+
+        private BaseMediaBitrateConfig compressConfig;
 
 
         public MediaRecorderConfig build() {
@@ -205,11 +233,25 @@ public final class MediaRecorderConfig implements Parcelable {
          * @param doH264Compress 录制后是否需要H264压缩，（压缩后可得到清晰而小巧的视频）
          * @return
          */
+        @Deprecated
         public Buidler doH264Compress(boolean doH264Compress) {
             this.doH264Compress = doH264Compress;
+            if (doH264Compress){
+                doH264Compress(new AutoVBRMode());
+            }
             return this;
         }
 
+        /**
+         *
+         * @param compressConfig 压缩配置设置,不需要要进一步压缩可不配置
+         * {@link AutoVBRMode }{@link VBRMode}{@link CBRMode}
+         * @return
+         */
+        public Buidler doH264Compress(BaseMediaBitrateConfig compressConfig) {
+            this.compressConfig = compressConfig;
+            return this;
+        }
         /**
          * @param MAX_FRAME_RATE 最大帧率(与视频清晰度、大小息息相关)
          * @return
@@ -267,9 +309,10 @@ public final class MediaRecorderConfig implements Parcelable {
         }
 
         /**
-         * @param VIDEO_BITRATE 视频码率
+         * @param VIDEO_BITRATE 视频码率 设置无效,请用{@link #setMediaBitrateConfig(BaseMediaBitrateConfig)}
          * @return
          */
+        @Deprecated
         public Buidler videoBitrate(int VIDEO_BITRATE) {
             this.VIDEO_BITRATE = VIDEO_BITRATE;
             return this;
@@ -278,6 +321,18 @@ public final class MediaRecorderConfig implements Parcelable {
         public Buidler goHome(boolean GO_HOME) {
             this.GO_HOME = GO_HOME;
             return this;
+        }
+
+        /**
+         *
+         * @param mediaBitrateConfig
+         * 录制码率配置{@link AutoVBRMode }{@link VBRMode}{@link CBRMode}
+         * @return
+         */
+        public Buidler setMediaBitrateConfig(BaseMediaBitrateConfig mediaBitrateConfig) {
+            this.mediaBitrateConfig = mediaBitrateConfig;
+            return this;
+
         }
     }
 

@@ -53,6 +53,7 @@ public class SendSmallVideoActivity extends AppCompatActivity implements View.On
         videoScreenshot = intent.getStringExtra(MediaRecorderActivity.VIDEO_SCREENSHOT);
         Bitmap bitmap = BitmapFactory.decodeFile( videoScreenshot);
         iv_video_screenshot.setImageBitmap(bitmap);
+        et_send_content.setHint("您视频地址为:"+videoUri);
     }
 
     private void initView() {

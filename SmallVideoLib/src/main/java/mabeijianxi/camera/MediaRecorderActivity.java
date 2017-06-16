@@ -34,6 +34,7 @@ import mabeijianxi.camera.util.StringUtils;
 import mabeijianxi.camera.views.ProgressView;
 
 import static mabeijianxi.camera.MediaRecorderBase.SMALL_VIDEO_WIDTH;
+import static mabeijianxi.camera.MediaRecorderBase.compressConfig;
 
 /**
  * 视频录制
@@ -169,6 +170,8 @@ public class MediaRecorderActivity extends Activity implements
         MediaRecorderBase.SMALL_VIDEO_HEIGHT=mediaRecorderConfig.getSmallVideoHeight();
         SMALL_VIDEO_WIDTH=mediaRecorderConfig.getSmallVideoWidth();
         MediaRecorderBase.mVideoBitrate=mediaRecorderConfig.getVideoBitrate();
+        MediaRecorderBase.mediaRecorderConfig=mediaRecorderConfig.getMediaBitrateConfig();
+        MediaRecorderBase.compressConfig=mediaRecorderConfig.getCompressConfig();
         MediaRecorderBase.CAPTURE_THUMBNAILS_TIME=mediaRecorderConfig.getCaptureThumbnailsTime();
         MediaRecorderBase.doH264Compress=mediaRecorderConfig.isDoH264Compress();
         GO_HOME=mediaRecorderConfig.isGO_HOME();
@@ -585,7 +588,11 @@ public class MediaRecorderActivity extends Activity implements
         try {
             intent = new Intent(this, Class.forName(getIntent().getStringExtra(OVER_ACTIVITY_NAME)));
             intent.putExtra(MediaRecorderActivity.OUTPUT_DIRECTORY, mMediaObject.getOutputDirectory());
-            intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempTranscodingVideoPath());
+            if(compressConfig!=null){
+                intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempTranscodingVideoPath());
+            }else {
+                intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempVideoPath());
+            }
             intent.putExtra(MediaRecorderActivity.VIDEO_SCREENSHOT, mMediaObject.getOutputVideoThumbPath());
             intent.putExtra("go_home",GO_HOME);
             startActivity(intent);
