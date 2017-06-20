@@ -375,8 +375,8 @@ public class MainActivity extends AppCompatActivity {
                     permissionState = false;
                 }
             }
-            ActivityCompat.requestPermissions(this, permissionManifest, PERMISSION_REQUEST_CODE);
             if (!permissionState) {
+                ActivityCompat.requestPermissions(this, permissionManifest, PERMISSION_REQUEST_CODE);
             } else {
                 setSupportCameraSize();
             }
