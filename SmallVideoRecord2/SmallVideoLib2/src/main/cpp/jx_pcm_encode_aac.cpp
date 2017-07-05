@@ -92,7 +92,7 @@ int JXPCMEncodeAAC::initAudioEncoder() {
     pCodecCtx->channel_layout = AV_CH_LAYOUT_MONO;
     pCodecCtx->channels = av_get_channel_layout_nb_channels(pCodecCtx->channel_layout);
     pCodecCtx->bit_rate = arguments->audio_bit_rate;
-    pCodecCtx->thread_count = 2;
+//    pCodecCtx->thread_count = 1;
 //    pCodecCtx->profile=FF_PROFILE_AAC_MAIN;
 
     int b= av_get_channel_layout_nb_channels(pCodecCtx->channel_layout);
@@ -145,6 +145,10 @@ int JXPCMEncodeAAC::initAudioEncoder() {
 void JXPCMEncodeAAC::user_end(){
     is_end=END_STATE;
 }
+
+void JXPCMEncodeAAC::release(){
+    is_release=JX_TRUE;
+}
 /**
  * 发送一帧到编码队列
  * @param buf
@@ -195,6 +199,17 @@ int JXPCMEncodeAAC::encodeEnd(){
  void * JXPCMEncodeAAC::startEncode(void* obj) {
     JXPCMEncodeAAC *aac_encoder = (JXPCMEncodeAAC *)obj;
     while (!aac_encoder->is_end||!aac_encoder->frame_queue.empty()) {
+        if(aac_encoder->is_release){
+            if (aac_encoder->audio_st) {
+                avcodec_close(aac_encoder->audio_st->codec);
+                av_free(aac_encoder->pFrame);
+//        av_free(frame_buf);
+            }
+            avio_close(aac_encoder->pFormatCtx->pb);
+            avformat_free_context(aac_encoder->pFormatCtx);
+            return 0;
+        }
+
         if(aac_encoder->frame_queue.empty()){
             continue;
         }

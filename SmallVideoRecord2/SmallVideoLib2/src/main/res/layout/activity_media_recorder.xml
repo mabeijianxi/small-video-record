@@ -2,14 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_381902">
+    android:background="@color/transparent"
+    >
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <SurfaceView
+            android:layout_marginTop="49dp"
+            android:id="@+id/record_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="49dip"
-        android:alpha="0.85"
-        android:background="@color/transparent2"
+        android:layout_height="49dp"
+        android:background="@color/color_381902"
         android:gravity="center_vertical">
 
         <ImageView
@@ -64,18 +74,6 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_below="@+id/title_layout" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/record_progress">
-
-        <SurfaceView
-            android:id="@+id/record_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-
     <!-- camera_bottom_bg -->
     <RelativeLayout
         android:id="@+id/bottom_layout"

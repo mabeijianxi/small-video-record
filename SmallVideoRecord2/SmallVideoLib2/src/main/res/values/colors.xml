@@ -10,4 +10,8 @@
     <color name="camera_progress_split">#005084</color>
     <color name="camera_progress_delete">#f68b2b</color>
     <color name="camera_progress_overflow">#1b5d89</color>
+    <color name="full_title_color">#41000000</color>
+    <color name="full_progress_color">#50000000</color>
+    <color name="transparent">#00000000</color>
+
 </resources>

@@ -104,8 +104,8 @@ int JXYUVEncodeH264::initVideoEncoder() {
     }
 
     pCodecCtx->bit_rate = arguments->video_bit_rate;
-    pCodecCtx->gop_size = 250;
-    pCodecCtx->thread_count = 16;
+    pCodecCtx->gop_size = 50;
+    pCodecCtx->thread_count = 12;
 
     pCodecCtx->time_base.num = 1;
     pCodecCtx->time_base.den = arguments->frame_rate;
@@ -124,8 +124,10 @@ int JXYUVEncodeH264::initVideoEncoder() {
     AVDictionary *param = 0;
     //H.264
     if (pCodecCtx->codec_id == AV_CODEC_ID_H264) {
-        av_opt_set(pCodecCtx->priv_data, "preset", "superfast", 0);
 //        av_dict_set(&param, "tune", "animation", 0);
+//        av_dict_set(&param, "profile", "baseline", 0);
+        av_dict_set(&param, "tune", "zerolatency", 0);
+        av_opt_set(pCodecCtx->priv_data, "preset", "ultrafast", 0);
         av_dict_set(&param, "profile", "baseline", 0);
     }
 
@@ -187,6 +189,19 @@ int JXYUVEncodeH264::startSendOneFrame(uint8_t *buf) {
 void *JXYUVEncodeH264::startEncode(void *obj) {
     JXYUVEncodeH264 *h264_encoder = (JXYUVEncodeH264 *) obj;
     while (!h264_encoder->is_end||!h264_encoder->frame_queue.empty()) {
+        if(h264_encoder->is_release){
+            //Write file trailer
+            av_write_trailer(h264_encoder->pFormatCtx);
+
+            //Clean
+            if (h264_encoder->video_st) {
+                avcodec_close(h264_encoder->video_st->codec);
+                av_free(h264_encoder->pFrame);
+            }
+            avio_close(h264_encoder->pFormatCtx->pb);
+            avformat_free_context(h264_encoder->pFormatCtx);
+            return 0;
+        }
         if (h264_encoder->frame_queue.empty()) {
             continue;
         }
@@ -371,4 +386,7 @@ int JXYUVEncodeH264::encodeEnd() {
  */
 void JXYUVEncodeH264::user_end() {
     is_end = END_STATE;
+}
+void JXYUVEncodeH264::release()  {
+    is_release = JX_TRUE;
 }

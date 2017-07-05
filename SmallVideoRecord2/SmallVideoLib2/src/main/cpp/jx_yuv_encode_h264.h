@@ -29,17 +29,22 @@ public:
 
     void user_end();
 
+    void release();
+
     int encodeEnd();
 
     void custom_filter(const JXYUVEncodeH264 *h264_encoder, const uint8_t *picture_buf,
                        int in_y_size,
                        int format);
+    ~JXYUVEncodeH264() {
+    }
 private:
     int flush_encoder(AVFormatContext *fmt_ctx, unsigned int stream_index);
 
 private:
     UserArguments *arguments;
     int is_end = 0;
+    int is_release = 0;
     threadsafe_queue<uint8_t *> frame_queue;
     AVFormatContext *pFormatCtx;
     AVOutputFormat *fmt;
@@ -52,8 +57,7 @@ private:
     int out_y_size;
     int framecnt = 0;
     int frame_count = 0;
-    ~JXYUVEncodeH264() {
-    }
+
 
 };
 

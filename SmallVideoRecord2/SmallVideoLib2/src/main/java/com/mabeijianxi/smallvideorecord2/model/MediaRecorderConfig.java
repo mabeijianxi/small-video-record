@@ -9,10 +9,16 @@ import android.os.Parcelable;
  * mabeijianxi@gmail.com
  */
 public final class MediaRecorderConfig implements Parcelable {
+
+    private  final boolean FULL_SCREEN;
     /**
      * 录制时间
      */
     private final int RECORD_TIME_MAX;
+    /**
+     * 最少录制时间
+     */
+    private final int RECORD_TIME_MIN;
 
     /**
      * 小视频高度,TODO 注意：宽度不能随意穿，需要传送手机摄像头手支持录制的视频高度，注意是高度（因为会选择，具体原因不多解析）。
@@ -46,7 +52,9 @@ public final class MediaRecorderConfig implements Parcelable {
 
 
     private MediaRecorderConfig(Buidler buidler) {
+        this.FULL_SCREEN = buidler.FULL_SCREEN;
         this.RECORD_TIME_MAX = buidler.RECORD_TIME_MAX;
+        this.RECORD_TIME_MIN = buidler.RECORD_TIME_MIN;
         this.MAX_FRAME_RATE = buidler.MAX_FRAME_RATE;
         this.captureThumbnailsTime = buidler.captureThumbnailsTime;
         this.MIN_FRAME_RATE = buidler.MIN_FRAME_RATE;
@@ -59,7 +67,9 @@ public final class MediaRecorderConfig implements Parcelable {
 
 
     protected MediaRecorderConfig(Parcel in) {
+        FULL_SCREEN = in.readByte() != 0;
         RECORD_TIME_MAX = in.readInt();
+        RECORD_TIME_MIN = in.readInt();
         SMALL_VIDEO_HEIGHT = in.readInt();
         SMALL_VIDEO_WIDTH = in.readInt();
         MAX_FRAME_RATE = in.readInt();
@@ -84,6 +94,9 @@ public final class MediaRecorderConfig implements Parcelable {
     public boolean isGO_HOME() {
         return GO_HOME;
     }
+    public boolean getFullScreen() {
+        return FULL_SCREEN;
+    }
     public int getCaptureThumbnailsTime() {
         return captureThumbnailsTime;
     }
@@ -99,6 +112,9 @@ public final class MediaRecorderConfig implements Parcelable {
 
     public int getRecordTimeMax() {
         return RECORD_TIME_MAX;
+    }
+    public int getRecordTimeMin() {
+        return RECORD_TIME_MIN;
     }
 
     public int getSmallVideoHeight() {
@@ -122,7 +138,9 @@ public final class MediaRecorderConfig implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (FULL_SCREEN ? 1 : 0));
         dest.writeInt(RECORD_TIME_MAX);
+        dest.writeInt(RECORD_TIME_MIN);
         dest.writeInt(SMALL_VIDEO_HEIGHT);
         dest.writeInt(SMALL_VIDEO_WIDTH);
         dest.writeInt(MAX_FRAME_RATE);
@@ -131,6 +149,7 @@ public final class MediaRecorderConfig implements Parcelable {
         dest.writeInt(captureThumbnailsTime);
         dest.writeByte((byte) (GO_HOME ? 1 : 0));
     }
+
 
     public static class Buidler {
         /**
@@ -169,6 +188,9 @@ public final class MediaRecorderConfig implements Parcelable {
 
         private boolean GO_HOME=false;
 
+        public int RECORD_TIME_MIN= (int) (1.5*1000);
+
+        private boolean FULL_SCREEN =false;
 
 
         public MediaRecorderConfig build() {
@@ -212,6 +234,15 @@ public final class MediaRecorderConfig implements Parcelable {
             return this;
         }
 
+        /**
+         * @param RECORD_TIME_MIN 最少录制时间
+         * @return
+         */
+        public Buidler recordTimeMin(int RECORD_TIME_MIN) {
+            this.RECORD_TIME_MIN = RECORD_TIME_MIN;
+            return this;
+        }
+
 
         /**
          * @param SMALL_VIDEO_HEIGHT 小视频高度 ,TODO 注意：宽度不能随意传入，需要传送手机摄像头手支持录制的视频高度，注意是高度（因为会选择，具体原因不多解析）。
@@ -248,6 +279,10 @@ public final class MediaRecorderConfig implements Parcelable {
             return this;
         }
 
+        public Buidler fullScreen(boolean full) {
+            this.FULL_SCREEN =full;
+            return this;
+        }
     }
 
 }

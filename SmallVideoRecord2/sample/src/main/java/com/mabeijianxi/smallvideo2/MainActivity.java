@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private EditText et_only_scale;
+    private EditText et_mintime;
+    private Spinner spinner_need_full;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +152,22 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        spinner_need_full.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              if( ((TextView)view).getText().toString().equals("false")){
+                  et_width.setVisibility(View.VISIBLE);
+              }else {
+                  et_width.setVisibility(View.GONE);
+              }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -163,11 +182,13 @@ public class MainActivity extends AppCompatActivity {
         et_maxframerate = (EditText) findViewById(R.id.et_maxframerate);
         et_bitrate = (EditText) findViewById(R.id.et_record_bitrate);
         et_maxtime = (EditText) findViewById(R.id.et_maxtime);
+        et_mintime = (EditText) findViewById(R.id.et_mintime);
         et_only_framerate = (EditText) findViewById(R.id.et_only_framerate);
         et_only_scale = (EditText) findViewById(R.id.et_only_scale);
 
 
         spinner_record = (Spinner) findViewById(R.id.spinner_record);
+        spinner_need_full = (Spinner) findViewById(R.id.spinner_need_full);
 
 
         i_only_compress = findViewById(R.id.i_only_compress);
@@ -209,6 +230,9 @@ public class MainActivity extends AppCompatActivity {
         String maxFramerate = et_maxframerate.getText().toString();
         String bitrate = et_bitrate.getText().toString();
         String maxTime = et_maxtime.getText().toString();
+        String minTime = et_mintime.getText().toString();
+        String s = spinner_need_full.getSelectedItem().toString();
+        boolean needFull = Boolean.parseBoolean(s);
 
         BaseMediaBitrateConfig recordMode;
         BaseMediaBitrateConfig compressMode = null;
@@ -220,10 +244,14 @@ public class MainActivity extends AppCompatActivity {
             recordMode.setVelocity(spinner_record.getSelectedItem().toString());
         }
 
-        if (checkStrEmpty(width, "请输入宽度")
-                || checkStrEmpty(height, "请输入高度")
+        if(!needFull&&checkStrEmpty(width, "请输入宽度")){
+               return;
+        }
+        if (
+                 checkStrEmpty(height, "请输入高度")
                 || checkStrEmpty(maxFramerate, "请输入最高帧率")
                 || checkStrEmpty(maxTime, "请输入最大录制时间")
+                || checkStrEmpty(minTime, "请输小最大录制时间")
                 || checkStrEmpty(bitrate, "请输入比特率")
                 ) {
             return;
@@ -232,9 +260,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+                .fullScreen(needFull)
                 .smallVideoWidth(Integer.valueOf(width))
                 .smallVideoHeight(Integer.valueOf(height))
                 .recordTimeMax(Integer.valueOf(maxTime))
+                .recordTimeMin(Integer.valueOf(minTime))
                 .maxFrameRate(Integer.valueOf(maxFramerate))
                 .videoBitrate(Integer.valueOf(bitrate))
                 .captureThumbnailsTime(1)

@@ -143,14 +143,33 @@ extern "C"
 JNIEXPORT jint JNICALL
 Java_com_mabeijianxi_smallvideorecord2_jniinterface_FFmpegBridge_recordEnd(JNIEnv *env,
                                                                            jclass type) {
-    h264_encoder->user_end();
-    aac_encoder->user_end();
+
+    if(h264_encoder!=NULL){
+        h264_encoder->user_end();
+        h264_encoder=NULL;
+    }
+
+    if(aac_encoder!=NULL){
+        aac_encoder->user_end();
+        aac_encoder=NULL;
+    }
+
     return 0;
 }
 
+extern "C"
 JNIEXPORT void JNICALL
 Java_com_mabeijianxi_smallvideorecord2_jniinterface_FFmpegBridge_nativeRelease(JNIEnv *env,
                                                                                jclass type) {
 
-    // TODO
+    if(aac_encoder!=NULL){
+        aac_encoder->release();
+        delete aac_encoder;
+        aac_encoder=NULL;
+    }
+    if(h264_encoder!=NULL){
+        h264_encoder->release();
+        delete h264_encoder;
+        h264_encoder=NULL;
+    }
 }

@@ -25,10 +25,13 @@ public:
 
     void user_end();
 
+    void release();
+
     int sendOneFrame(uint8_t* buf);
 
     int encodeEnd();
-
+    ~JXPCMEncodeAAC() {
+    }
 private:
     int flush_encoder(AVFormatContext *fmt_ctx, unsigned int stream_index);
 
@@ -48,10 +51,10 @@ private:
     int size = 0;
 
     int i;
-    int is_end=0;
+    int is_end=JX_FALSE;
+    int is_release=JX_FALSE;
     UserArguments *arguments;
-    ~JXPCMEncodeAAC() {
-    }
+
 };
 
 #endif //JIANXIFFMPEG_JX_PCM_ENCODE_AAC_H

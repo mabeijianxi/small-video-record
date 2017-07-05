@@ -12,13 +12,11 @@ public class FFmpegBridge {
     private static ArrayList<FFmpegStateListener> listeners=new ArrayList();
     static {
         System.loadLibrary("avutil");
-        System.loadLibrary("swresample");
+        System.loadLibrary("fdk-aac");
         System.loadLibrary("avcodec");
         System.loadLibrary("avformat");
         System.loadLibrary("swscale");
-        System.loadLibrary("avfilter");
         System.loadLibrary("jx_ffmpeg_jni");
-
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.List;
  * 视频录制抽象类
  */
 public abstract class MediaRecorderBase implements Callback, PreviewCallback, IMediaRecorder {
+    public static  boolean NEED_FULL_SCREEN = false;
     /**
      * 小视频高度
      */
@@ -199,7 +200,12 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             }
         }
     }
-
+    public void setRecordState(boolean state){
+        this.mRecording=state;
+    }
+    public boolean getRecordState(){
+        return mRecording;
+    }
     /**
      * 设置转码监听
      */
@@ -447,7 +453,12 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
 
     public void stopRecord() {
         mRecording = false;
+        setStopDate();
 
+
+    }
+
+    public void setStopDate() {
         // 判断数据是否处理完，处理完了关闭输出流
         if (mMediaObject != null) {
             MediaObject.MediaPart part = mMediaObject.getCurrentPart();
@@ -533,6 +544,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
             if (size.height == SMALL_VIDEO_HEIGHT) {
 
                 mSupportedPreviewWidth = size.width;
+                checkFullWidth(mSupportedPreviewWidth,SMALL_VIDEO_WIDTH);
                 findWidth = true;
                 break;
             }
@@ -540,7 +552,7 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         if (!findWidth) {
             Log.e(getClass().getSimpleName(), "传入高度不支持或未找到对应宽度,请按照要求重新设置，否则会出现一些严重问题");
             mSupportedPreviewWidth = 640;
-            SMALL_VIDEO_WIDTH = 360;
+            checkFullWidth(640,360);
             SMALL_VIDEO_HEIGHT = 480;
         }
         mParameters.setPreviewSize(mSupportedPreviewWidth, SMALL_VIDEO_HEIGHT);
@@ -571,6 +583,14 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
         if (!DeviceUtils.isDevice("GT-N7100", "GT-I9308", "GT-I9300")) {
             mParameters.set("cam_mode", 1);
             mParameters.set("cam-mode", 1);
+        }
+    }
+
+    private void checkFullWidth(int trueValue, int falseValue) {
+        if(NEED_FULL_SCREEN){
+            SMALL_VIDEO_WIDTH=trueValue;
+        }else {
+            SMALL_VIDEO_WIDTH = falseValue;
         }
     }
 
@@ -670,6 +690,8 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
      * 释放资源
      */
     public void release() {
+
+        FFmpegBridge.nativeRelease();
         stopAllRecord();
         // 停止视频预览
         stopPreview();

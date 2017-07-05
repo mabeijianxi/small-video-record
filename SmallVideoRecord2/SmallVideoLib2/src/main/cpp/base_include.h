@@ -23,6 +23,8 @@ extern "C"
 #define END_STATE 1
 #define START_STATE 0
 
+#define JX_TRUE 1
+#define JX_FALSE 0
 
 #define ROTATE_0_CROP_LT 0
 

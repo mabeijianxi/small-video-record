@@ -11,7 +11,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.mabeijianxi.smallvideo2.MainActivity">
+        <activity android:name="com.mabeijianxi.smallvideo2.MainActivity"
+            android:windowSoftInputMode="stateHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
