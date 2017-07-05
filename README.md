@@ -8,8 +8,8 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 * 利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
 * small-video-record2已解耦FFmpeg，可根据自己需求定制FFmpeg。
 * 暴露FFmpeg命令操作接口，可自定义更多功能。
-* 视频采用libx264编解,音频采用libfdk-aac,相对效率高。
-* 可选择本地视频压缩。
+* small-video-record2 支持全平台，如果你手机 cpu 是64位的将达到秒编！
+* 可选择本地视频进行个性化压缩，如果你手机 cpu 是64位的速度将相对很快。
 * 录制简单，几行代码完成集成，几个参数搞定录制。
 ## 开发步骤、源码详解、工具准备：
 [利用FFmpeg玩转Android视频录制与压缩（一）](http://blog.csdn.net/mabeijianxi/article/details/63335722)<br>
@@ -21,14 +21,10 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 ## 关于small-video-record2：
 ###### 源码编译:
 你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。
-###### 变化
-* 解耦FFmpeg与JNI，你可以编译符合自己的FFmpeg动态库替换掉我的。
-* 输入的高度宽度概念与small-video-record相反，现在相对合理。
-* 暂时不支持暂停录制。
-* 视频录制模式下暂时不支持码率模式控制与编码速度控制（本地压缩支持）。
 ###### 待开发功能
-* 视频暂停录制功能。
-* 暴露全屏录制控制参数。
+* 视频暂停录制功能（已完成）。
+* 暴露全屏录制控制参数(已完成)。
+* 全平台编译（已完成）。
 * 录制时码率模式控制。
 * 进度回调。
 * 美颜功能。
@@ -39,12 +35,15 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 #### 一、small-video-record2使用方法
 ###### 1：添加依赖
 ```java
-compile 'com.mabeijianxi:small-video-record2:2.0.0-beta3@aar'
+compile 'com.mabeijianxi:small-video-record2:2.0.0@aar'
 ```
 ###### 2:在manifests里面添加
 ```java
  <activity android:name="com.mabeijianxi.smallvideorecord2.MediaRecorderActivity"/>
 ```
+###### 3:在本项目 "all_lib" 下 copy SO 动态链接库：
+2.0.0 正式版以后如果采用手动复制 SO 的做法，避免与大家项目不兼容。当然如果你采用直接导入 Module 的就不必如此，
+直接删减已导入的 SO 和修改，并修改 gradle 的 abiFilters 即可。
 ###### 3:在Application里面初始化小视频录制：
 ```java
 public static void initSmallVideo() {
@@ -70,11 +69,14 @@ public static void initSmallVideo() {
 ```java
 // 录制
 MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
+		
+                .fullScreen(false)
                 .smallVideoWidth(360)
                 .smallVideoHeight(480)
-                .recordTimeMax(6*1000)
+                .recordTimeMax(6000)
+                .recordTimeMin(1500)
                 .maxFrameRate(20)
-                .videoBitrate(600*1000)
+                .videoBitrate(600000)
                 .captureThumbnailsTime(1)
                 .build();
         MediaRecorderActivity.goSmallVideoRecorder(this, SendSmallVideoActivity.class.getName(), config);
@@ -168,6 +170,13 @@ LocalMediaConfig.Buidler buidler = new LocalMediaConfig.Buidler();
 	2：出现 java.lang.UnsatisfiedLinkError错误可以尝试在gradle.properties中添加：android.useDeprecatedNdk=true，然后在主module的build.gradle中配置ndk {abiFilters "armeabi", "armeabi-v7a"}
 ## small-video-record2 更新日志：
 
+	2017-07-05:
+	提交 2.0.0 稳定版,修复 bug 若干
+	增加全平台编译
+	优化录制与压缩速度，对于 64 位 CPU 的手机，录制转码达到秒转，本地压缩速度提升近 2 倍多。
+	增加全屏录制功能
+	增加暂停录制功能
+	
 	2017-06-14:
 	提交2.0.0-beta3，本地压缩新增分辨率缩放功能。
 	
