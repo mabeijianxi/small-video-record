@@ -26,7 +26,9 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 
 ###### small-video-record2 源码编译:
 你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。本项目编译的 FFmpeg 是精简版的，如果你需要更强大的功能可以前往 [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android) ,里面有编译好的更全的库,且包含所有平台的编译脚本。
-###### 版待开发功能
+###### 2.0.0正式版
+其在 64 位手机上录制基本0延迟，本地压缩在之前速度上提升2倍+，正出入这个性能上质的提升，也新增加了全屏录制与暂停录制功能！
+###### 待开发功能
 * 视频暂停录制功能（已完成）。
 * 暴露全屏录制控制参数(已完成)。
 * 全平台编译（已完成）。
