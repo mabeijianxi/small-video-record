@@ -19,8 +19,10 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 [编译Android下可用的FFmpeg(包含libx264与libfdk-aac)](http://blog.csdn.net/mabeijianxi/article/details/72904694)<br>
 [Android下玩JNI的新老三种姿势](http://blog.csdn.net/mabeijianxi/article/details/68525164)<br>
 ## 关于small-video-record2：
+
 ###### 源码编译:
-你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。
+你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。本项目编译的 FFmpeg 是精简版的，如果你需要更强大的功能<br>
+可以前往 [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android) ,里面有编译好的更全的库,<br>且包含所有编译脚本，与源码。
 ###### 待开发功能
 * 视频暂停录制功能（已完成）。
 * 暴露全屏录制控制参数(已完成)。
@@ -30,10 +32,6 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 * 美颜功能。
 * 更多未知功能...
 
-## 使用方法：
-**[small-video-record2使用](https://github.com/mabeijianxi/small-video-record/blob/master/2.x_use_help.md)<br>
-
-**[small-video-record1使用](https://github.com/mabeijianxi/small-video-record/blob/master/1.x_use_help.md)<br>
 
 ###### 5:一些参数说明：
 		maxFrameRate：指定最大帧率，越大视频质量越好，体积也会越大，当在cbr模式下不再是动态帧率，而是固定帧率；
