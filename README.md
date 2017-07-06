@@ -30,7 +30,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。
 
 ###### 定制化 FFmpeg
-本工程用的 FFmpeg 是精简版，如果你觉得不够用或者想定制化那么可以前往 [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android) 下载我编译好的一个增强版 FFmpeg SO 库，或者根据里面文档运行脚本重新定制即可。
+本工程用的 FFmpeg 是精简版，如果你觉得不够用或者想定制化那么可以前往  [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android) 下载我编译好的一个增强版 FFmpeg SO 库，或者根据里面文档运行脚本重新定制即可。
 
 ###### 2.0.0正式版
 其在 64 位手机上录制基本0延迟，本地压缩在之前速度上提升2倍+，正出入这个性能上质的提升，也新增加了全屏录制与暂停录制功能！
