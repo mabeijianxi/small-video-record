@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }).start();
                     } else {
-                        Toast.makeText(this, "选择的不是视频或者地址错误,也可能是这种方式定制神机取不到！", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "选择的不是视频或者地址错误,也可能是这种方式定制神机取不到！", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean checkStrEmpty(String str, String display) {
         if (TextUtils.isEmpty(str)) {
-            Toast.makeText(this, display, Toast.LENGTH_SHORT);
+            Toast.makeText(this, display, Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
