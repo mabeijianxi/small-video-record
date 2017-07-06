@@ -15,7 +15,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 * 可选择本地视频进行个性化压缩，如果你手机 cpu 是64位的速度将相对很快。
 * 录制简单，几行代码完成集成，几个参数搞定录制。
 ## 关于 issues：
-如果你集成时遇到问题，可以先扫码下载 APK 运行，看是否也有问题，如果扫码下载APK没问题，那么就跟检查下集成步骤是否漏掉了或则去已有 issues 里面寻找答案，如果还解决不了，那么再添加 issues，并附上详细日志，调试时在初始 debug 标记改为 true 将会又更详细的日志。
+如果你集成时遇到问题，可以先扫码下载 APK 运行，看是否也有问题，如果扫码下载APK没问题，那么就应该检查下集成步骤是否漏掉了或则去已有 issues 里面寻找答案，如果还解决不了，那么再添加 issues，并附上详细日志，调试时在初始时把 debug 标记改为 true 将会又更详细的日志输入！
 ## 开发步骤、源码详解、工具准备：
 [利用FFmpeg玩转Android视频录制与压缩（一）](http://blog.csdn.net/mabeijianxi/article/details/63335722)<br>
 [利用FFmpeg玩转Android视频录制与压缩（二）](http://blog.csdn.net/mabeijianxi/article/details/72983362)<br>
@@ -33,7 +33,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 本工程用的 FFmpeg 是精简版，如果你觉得不够用或者想定制化那么可以前往  [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android) 下载我编译好的一个增强版 FFmpeg SO 库，或者根据里面文档运行脚本重新定制即可。
 
 ###### 2.0.0正式版
-其在 64 位手机上录制基本0延迟，本地压缩在之前速度上提升2倍+，正出入这个性能上质的提升，也新增加了全屏录制与暂停录制功能！
+其在 64 位手机上录制基本0延迟，本地压缩在之前速度上提升2倍+，正因为这个性能上质的提升，也新增加了全屏录制与暂停录制功能！
 ###### 待开发功能
 * 视频暂停录制功能（已完成）。
 * 暴露全屏录制控制参数(已完成)。
