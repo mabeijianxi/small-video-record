@@ -152,3 +152,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 ###### small-video-record:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample.png)
 [Download Demo1](http://fir.im/smallvideorecord)
+
+License
+
+small-video-record is licensed under the Apache License 2.0. See the [LICENSE](https://github.com/mabeijianxi/small-video-record/blob/master/LICENSE) file.
