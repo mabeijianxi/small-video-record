@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .fullScreen(needFull)
-                .smallVideoWidth(Integer.valueOf(width))
+                .smallVideoWidth(needFull?0:Integer.valueOf(width))
                 .smallVideoHeight(Integer.valueOf(height))
                 .recordTimeMax(Integer.valueOf(maxTime))
                 .recordTimeMin(Integer.valueOf(minTime))
