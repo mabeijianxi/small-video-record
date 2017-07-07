@@ -1,6 +1,6 @@
 # small-video-record
-[![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/VirtualAPK/blob/master/LICENSE)
-[![Release Version](https://img.shields.io/badge/release-2.0.1-red.svg)]()
+[![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/mabeijianxi/small-video-record/blob/master/LICENSE)
+[![Release Version](https://img.shields.io/badge/release-2.0.1-red.svg)](https://github.com/mabeijianxi/small-video-record/releases)
 
 Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-video-record2已从C到Java全面开源）！
 
@@ -145,10 +145,14 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 	
 	2016-08-25：
 		提交小视频1.0.0
-### sample下载：
+## sample下载：
 ###### small-video-record2:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample2.png)
 [Download Demo2](https://fir.im/jianxiMediaRecord2)
 ###### small-video-record:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample.png)
 [Download Demo1](http://fir.im/smallvideorecord)
+
+## License
+
+small-video-record is licensed under the Apache License 2.0. See the [LICENSE](https://github.com/mabeijianxi/small-video-record/blob/master/LICENSE) file.
