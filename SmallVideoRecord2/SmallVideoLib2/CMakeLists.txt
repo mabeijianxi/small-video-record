@@ -303,7 +303,7 @@ set_target_properties(
 endif(${ANDROID_ABI} STREQUAL "x86_64")
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/ffmpeg-3.2.5/
+    /Users/jianxi/Downloads/code/ffmpeg-3.2.5
 
 )
 # Searches for a specified prebuilt library and stores the path as a

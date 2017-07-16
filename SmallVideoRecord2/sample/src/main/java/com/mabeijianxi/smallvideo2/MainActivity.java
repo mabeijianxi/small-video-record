@@ -258,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
         }
 //      FFMpegUtils.captureThumbnails("/storage/emulated/0/DCIM/mabeijianxi/1496455533800/1496455533800.mp4", "/storage/emulated/0/DCIM/mabeijianxi/1496455533800/1496455533800.jpg", "1");
 
-
         MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
                 .fullScreen(needFull)
                 .smallVideoWidth(needFull?0:Integer.valueOf(width))
@@ -431,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
             JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
         }
         // 初始化拍摄
-        JianXiCamera.initialize(false, null);
+        JianXiCamera.initialize(true, null);
     }
 
     private void showProgress(String title, String message, int theme) {
