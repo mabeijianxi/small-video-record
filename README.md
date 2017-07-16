@@ -69,7 +69,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 
 |名称|类型|说明|
 |:----:|:-----:|:-------:|
-|AutoVBRMode|int|这是个构造方法，接收一个int的压缩等级，0~51，值越大约模糊，视频越小，建议18~28|
+|AutoVBRMode|int|这是个构造方法，接收一个int的压缩等级，0\~51，值越大约模糊，视频越小，建议18\~28|
 |setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 #### VBRMode
 |名称|类型|说明|
