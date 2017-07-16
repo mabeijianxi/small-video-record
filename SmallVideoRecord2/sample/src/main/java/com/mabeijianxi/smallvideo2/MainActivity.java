@@ -430,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
             JianXiCamera.setVideoCachePath(dcim + "/mabeijianxi/");
         }
         // 初始化拍摄
-        JianXiCamera.initialize(true, null);
+        JianXiCamera.initialize(false, null);
     }
 
     private void showProgress(String title, String message, int theme) {
