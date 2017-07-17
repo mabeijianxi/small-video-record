@@ -85,6 +85,12 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 |setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 
 ## small-video-record2 更新日志：
+
+	2017-07-17:
+		提交 2.0.2。
+		修复部分低端机音频加速问题。
+		新增支持多视频合成命令。
+		
 	2017-07-06:
 		提交 2.0.1 稳定版 ,修复某些手机不支持一些数学函数库出现的兼容问题。
 		
