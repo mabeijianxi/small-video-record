@@ -49,12 +49,12 @@ public class AudioRecorder extends Thread {
 			return;
 		}
 
-		byte[] sampleBuffer = new byte[mMinBufferSize];
+		byte[] sampleBuffer = new byte[2048];
 
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
 
-				int result = mAudioRecord.read(sampleBuffer, 0, mMinBufferSize);
+				int result = mAudioRecord.read(sampleBuffer, 0, 2048);
 				if (result > 0) {
 					mMediaRecorder.receiveAudioData(sampleBuffer, result);
 				}
