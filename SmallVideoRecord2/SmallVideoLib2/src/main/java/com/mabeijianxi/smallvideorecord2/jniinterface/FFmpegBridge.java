@@ -15,9 +15,9 @@ public class FFmpegBridge {
         System.loadLibrary("fdk-aac");
         System.loadLibrary("avcodec");
         System.loadLibrary("avformat");
-        System.loadLibrary("avfilter");
-        System.loadLibrary("swresample");
         System.loadLibrary("swscale");
+        System.loadLibrary("swresample");
+        System.loadLibrary("avfilter");
         System.loadLibrary("jx_ffmpeg_jni");
     }
 
