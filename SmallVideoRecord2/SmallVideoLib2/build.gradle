@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 9
-        versionName "2.0.1"
+        versionCode 10
+        versionName "2.0.2"
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11"
@@ -38,7 +38,7 @@ android {
         userOrg = 'mabeijianxi'//bintray.com用户名
         groupId = 'com.mabeijianxi'//jcenter上的路径
         artifactId = 'small-video-record2'//项目名称
-        publishVersion = '2.0.1'//版本号
+        publishVersion = '2.0.2'//版本号
         desc = '利用FFmpeg来小视频录制与压缩处理!'//描述，不重要
         website = 'https://github.com/mabeijianxi/small-video-record'//网站，不重要
     }
