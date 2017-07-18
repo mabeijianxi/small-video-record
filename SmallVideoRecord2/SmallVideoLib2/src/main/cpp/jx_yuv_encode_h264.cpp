@@ -200,6 +200,7 @@ void *JXYUVEncodeH264::startEncode(void *obj) {
             }
             avio_close(h264_encoder->pFormatCtx->pb);
             avformat_free_context(h264_encoder->pFormatCtx);
+            delete h264_encoder;
             return 0;
         }
         if (h264_encoder->frame_queue.empty()) {

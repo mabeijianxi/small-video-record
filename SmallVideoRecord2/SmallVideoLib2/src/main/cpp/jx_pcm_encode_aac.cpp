@@ -207,6 +207,7 @@ int JXPCMEncodeAAC::encodeEnd(){
             }
             avio_close(aac_encoder->pFormatCtx->pb);
             avformat_free_context(aac_encoder->pFormatCtx);
+            delete aac_encoder;
             return 0;
         }
 
