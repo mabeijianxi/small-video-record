@@ -2,26 +2,31 @@
 [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/mabeijianxi/small-video-record/blob/master/LICENSE)
 [![Release Version](https://img.shields.io/badge/release-2.0.3-red.svg)](https://github.com/mabeijianxi/small-video-record/releases)
 
-[English documents](https://github.com/mabeijianxi/small-video-record/blob/master/document/README_EN.md)
+[查看中文文档](https://github.com/mabeijianxi/small-video-record/blob/master/document/README_CH.md )
 
-Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-video-record2已从C到Java全面开源）！
+Used for capturing audio and video in Android system. The bottom layer uses FFmpeg to compression processing (in small-video-record2, C source code and Java source code are all open).
 
-## 效果如下：
+## The effect is as follows:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
-## 使用：
-* [small-video-record1 使用步骤](https://github.com/mabeijianxi/small-video-record/blob/master/document/1.x_using_help.md)<br>
-* [small-video-record2 使用步骤](https://github.com/mabeijianxi/small-video-record/blob/master/document/2.x_using_help.md)<br>
-## 特点：
-* 边采集边编码。
-* 利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
-* small-video-record2已解耦FFmpeg，可根据自己需求定制FFmpeg。
-* 暴露FFmpeg命令操作接口，可自定义更多功能。
-* small-video-record2 支持全平台，如果你手机 cpu 是64位的将达到秒编！
-* 可选择本地视频进行个性化压缩，如果你手机 cpu 是64位的速度将相对很快。
-* 录制简单，几行代码完成集成，几个参数搞定录制。
-## 关于 issues：
-如果你集成时遇到问题，可以先扫码下载 APK 运行，看是否也有问题，如果扫码下载APK没问题，那么就应该检查下集成步骤是否漏掉了或则去已有 issues 里面寻找答案，如果还解决不了，那么再添加 issues，并附上详细日志，调试时在初始时把 debug 标记改为 true 将会有更详细的日志输入！
-## 开发步骤、源码详解、工具准备：
+
+## Instructions:
+* [small-video-record1 ](https://github.com/mabeijianxi/small-video-record/blob/master/document/1.x_en_using_help.md)<br>
+* [small-video-record2 ](https://github.com/mabeijianxi/small-video-record/blob/master/document/2.x_en_using_help.md)<br>
+
+
+## Features:
+* Collect when encoding. 
+* Use FFmpeg to customize recording the video which has different time, resolution, bit rate, frame rate and transcoding speed.
+* Small-video-record2 has been decoupled FFmpeg, you can customize FFmpeg based on your needs.
+* Exposure FFmpeg command operation interface, you can customize more features.
+* Small-video-record2 support full platform, if your phone’s cpu is 64-bit then the code will be compiled instantaneously!
+* You can choose the local video for personalized compression, if your phone’s cpu is 64-bit then the speed will be relatively fast.
+* Recording is simple, a few lines of code can complete the integration and a few parameters can complete the recording.
+
+
+## About issues:
+If you meet some troubles when integrating, you can first scan the APK operation to see if there is a problem either. If there is no problem, then you should check whether the steps of integration are missing or you can find the answer inside the issues. If it still not works, then you can add another issue accompanied with a detailed log, and when debugging, try to change the mark “debug” to “true” from the beginning, thus there will be more detailed log.
+## Development steps, source code analysis, tool preparation：
 [利用FFmpeg玩转Android视频录制与压缩（一）](http://blog.csdn.net/mabeijianxi/article/details/63335722)<br>
 [利用FFmpeg玩转Android视频录制与压缩（二）](http://blog.csdn.net/mabeijianxi/article/details/72983362)<br>
 [利用FFmpeg玩转Android视频录制与压缩（三）](http://blog.csdn.net/mabeijianxi/article/details/73011313)<br>
@@ -29,135 +34,129 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 [编译Android下可用的全平台FFmpeg(包含libx264与libfdk-aac)](http://blog.csdn.net/mabeijianxi/article/details/74544879)<br>
 [Android下玩JNI的新老三种姿势](http://blog.csdn.net/mabeijianxi/article/details/68525164)<br>
 
-## 关于small-video-record2：
+## About small-video-record 2:
 
-###### small-video-record2 源码编译:
-你需要拥有ndk环境、AndroidStudio版本大于2.2、AndroidStudio装有Cmake插件。
-
-###### 定制化 FFmpeg
-本工程用的 FFmpeg 是精简版，如果你觉得不够用或者想定制化那么可以前往  [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android) 下载我编译好的一个增强版 FFmpeg SO 库，或者根据里面文档运行脚本重新定制即可。
-
-###### 2.0.0正式版
-其在 64 位手机上录制基本0延迟，本地压缩在之前速度上提升2倍+，正因为这个性能上质的提升，也新增加了全屏录制与暂停录制功能！
-###### 待开发功能
-* 视频暂停录制功能（已完成）。
-* 暴露全屏录制控制参数(已完成)。
-* 全平台编译（已完成）。
-* 录制时码率模式控制。
-* 进度回调。
-* 美颜功能。
-* 更多未知功能...
+###### Small-video-record2 Source Code Compilation:
+You need to have ndk environment, AndroidStudio version greater than 2.2, AndroidStudio equipped with Cmake plugin.
 
 
-## 配置说明：
+###### Customized FFmpeg
+FFmpeg used in this project is a simplified version, if you feel it’s not enough or want to customize, then you can enter [https://github.com/mabeijianxi/FFmpeg4Android](https://github.com/mabeijianxi/FFmpeg4Android), download a enhanced version of FFmpeg SO Library compiled by me or run the script to re-customization according to the inside document.
 
-#### 部分方法说明
+###### 2.0.0 Official Version
+ts record on the 64-bit mobile phone basically no delay and the local compression speed is 2 times than before. Because of this great improvement, a new full-screen recording and pause recording function can be added.
 
-| 	名称    | 参数类型 | 说明 |
+
+## Configuration Instructions:
+
+#### Partial Method Description
+
+| 	name    | parameter type | instruction |
 |:-------------: |:---------------:| :-------------:|
-|initialize|boolean/String|第一个是是否输入日志，这个日志有两部分，一部分是直接打印到控制台，你可以清晰的看到视频录制过程，另外一部分是 FFmpeg 命令的输出日志，通过这个日志就可以很快定位执行中的错误。第二个参数就是日志保存位置，不传入将保存到你视频缓存根目录。|
-|   fullScreen   | boolean | 设置是否需要全屏录制   |
-| smallVideoWidth     |    int     |    视频宽度，对应手机长边方向，全屏录制时输入无效(1.x版本宽高颠倒)      |
-| smallVideoHeight | int        |  视频高度，对应手机短边方向，需输入摄像头所支持尺寸，乱输无效（(1.x版本宽高颠倒） |
-|recordTimeMax|int|单位为毫秒，最大录制时间|
-|recordTimeMin|int|单位为毫秒，最小录制时间|
-|maxFrameRate|int|最大帧率，一定程度上影响视频质量与大小，不要太高，有的低配手机转码速度可能会跟不上|
-|videoBitrate|int|比特率，一定程度上影响视频质量与大小，理论上值越大质量将会越好|
-|captureThumbnailsTime|int|缩略图剪裁起始时间|
-|doH264Compress|BaseMediaBitrateConfig|设置压缩模式，支持 AutoVBRMode、CBRMode、VBRMode|
-|setScale|float|视频缩放，对视频大小没要求无需输入，大于1时才执行缩放操作|
+|initialize|boolean/String| The first one means whether the log input or not. The log has two parts, one is printed directly to the console, you can clearly see the video recording process, and the other one is an output log according to the FFmpeg order, through this log you can quickly locate the implementation of the error. The second parameter is the save location of the log, and if there is no incoming, the record will be saved to your video cache root directory. |
+|   fullScreen   | boolean | Set whether or not full screen recording is required.   |
+| smallVideoWidth     |    int     |    Video width, corresponding to the long side of the phone, input invalid in full-screen recording (the width and height is reversed in 1.x version) .      |
+| smallVideoHeight | int        |  Video height, corresponding to the short side of the phone. You need to enter the support size of the camera, chaos invalid (the width and height is reversed in 1.x version) |
+|recordTimeMax|int| Unit per millisecond, maximum recording time |
+|recordTimeMin|int| Unit per millisecond, minimum recording time |
+|maxFrameRate|int| The maximum frame rate, to some extent affects the video quality and size. Don’t set too high, for the transcoding speed of some low allocation phones may not keep up |
+|videoBitrate|int| Bit rate, to some extent affects the video quality and size. In theory, the number is bigger then the quality will be better |
+|captureThumbnailsTime|int|Start time of capturing thumbnails|
+|doH264Compress|BaseMediaBitrateConfig|Set compression mode, support AutoVBRMode、CBRMode、VBRMode|
+|setScale|float|Set video scale, if there is no requirement of the video size, you needn’t input. If larger than one, you should perform scaling operation|
 #### AutoVBRMode
-此模式下可根据等级轻松控制视频质量
+In this mode, you can easily control the video quality according to the grades.
 
-|名称|类型|说明|
+| name | type | instructions |
 |:----:|:-----:|:-------:|
-|AutoVBRMode|int|这是个构造方法，接收一个int的压缩等级，0\~51，值越大约模糊，视频越小，建议18\~28|
-|setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
+|AutoVBRMode|int|This is a constructing method, to receive an “int” compression level, 0 \~ 51, the number is larger, then the picture is vaguer, and the video is much smaller. 18\~28 is recommended|
+|setVelocity|String| Set transcoding speed, you can choose ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 #### VBRMode
-|名称|类型|说明|
+| name | type | instructions |
 |:----:|:-----:|:-------:|
-|VBRMode|int/int|这是个构造方法，接收一个最大码率，与一个额定码率，编码时以额定码率为基础，会尽量不超过最大码率|
-|setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
+|VBRMode|int/int|This is a constructing method, to receive a maximum code rate and a nominal code rate. When encoding, based on the nominal code rate and try not to exceed the maximum code rate|
+|setVelocity|String| Set transcoding speed, you can choose ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 #### CBRMode
-此模式可更加准确的控制视频质量与大小
+In this mode, you can more accurately control the video quality and size
 
-|名称|类型|说明|
+| name | type | instructions |
 |:----:|:-----:|:-------:|
-|CBRMode|int/int|这是个构造方法，接收一个缓冲区值大小，与一个固定码率值，编码时将以固定码率为标准编码|
-|setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
+|CBRMode|int/int|This is a constructing method, to receive a size of buffer value and a fixed code rate. When encoding, the fixed code rate as the standard|
+|setVelocity|String|Set transcoding speed, you can choose ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 
-## small-video-record2 更新日志：
+## Small-video-record2 Update Log:
 	
 	2017-07-20：
-		提交 2.0.3.
-		修复一系列低版本手机兼容问题，包括 so 加载顺序，临时内存回收，结束内存回收等。
+		Submit 2.0.3.
+		Fix a series of low-version phone compatibility issues, including SO Library loading order, temporary memory recovery, end memory recovery, etc.
 
 	2017-07-17:
-		提交 2.0.2。
-		修复部分低端机音频加速问题。
-		新增支持多视频合成命令。
+		Submit 2.0.2
+		Repair part of the low-end machine audio acceleration issues.
+		Added support for multi-video synthesis commands.
 		
 	2017-07-06:
-		提交 2.0.1 稳定版 ,修复某些手机不支持一些数学函数库出现的兼容问题。
+		Submit 2.0.1 stable version; solve the compatibility problems of some phones which don’t support the mathematical function library.
+
 		
 	2017-07-05:
-		提交 2.0.0 ,修复 bug 若干
-		增加全平台编译
-		优化录制与压缩速度，对于 64 位 CPU 的手机，录制转码达到秒转，本地压缩速度提升近 2 倍多。
-		增加全屏录制功能
-		增加暂停录制功能
+		Submit 2.0.0, fix many bugs.
+		Add full platform compilation.
+		Optimize recording and compression speed. For 64-bit CPU mobile phone, you can immediately record transcoding, and the local compression speed increased nearly 2 times.
+		Add full screen recording function.
+		Add pause recording function.
 	
 	2017-06-14:
-		提交2.0.0-beta3，本地压缩新增分辨率缩放功能。
+		Submit 2.0.0-beta3; add new resolution zoom function in local compression.
 	
 	2017-06-13:
-		提交2.0.0-beta2，更改默认压缩速度为最快，开始多线程编码。
+		Submit 2.0.0-beta2; change the default compression speed to the fastest, start multi-threaded encoding.
 	
 	2017-06-10:
-		修改编译脚本，增加可移植性
+		Modify compilation scripts to increase portability.
 
 	
-## small-video-record 更新日志：
+## Small-video-record Update Log:
 
 	2017-06-14:
-		提交1.2.2，本地压缩新增分辨率缩放功能。
+		Submit 1.2.2; add new resolution zoom function in local compression.
 	
 	2017-06-13:
-		提交1.2.1，更改默认压缩速度为最快。
+		Submit 1.2.1; change the default compression speed to the fastest.
 	
 	2017-04-06:
-		提交1.2.0，增加选择本地视频压缩，修改一系列bug
+		Submit 1.2.0; add the choice to select the local video compression; modify a series of bugs.
 	
 	2017-03-16:
-		提交1.1.0，增加更精细的码率控制、转码速度、压缩等级等可配置参数，修复一些bug	
+		Submit 1.1.0; add more accurately control of code rate, transcoding speed, compression level and other configurable parameters; fix some bugs.	
 
 	2017-03-14：
-		提交1.0.9，新增可配置码率模式（VBR、CBR）与其大小
+		Submit 1.0.9; add configurable code rate mode (VBR, CBR) and their sizes.
 	
 	2016-12-14：
-		提交1.0.8，修复部分手机不支持输入帧率问题，彻底修复录制浏览变形
+		Submit 1.0.8; solve the problem of some phones which do not support the input frame rate; completely repair the deformation problem when browsing pictures.
 
 	2016-10-26:
-		提交1.0.7,增强兼容性，防止录制尺寸不支持奔溃
+		Submit 1.0.7; enhance compatibility, to prevent collapse in case that recording size doesn’t support.
 
 	2016-10-14:
-		提交1.0.6，修复在不支持的尺寸下无异常抛出。
+		Submitted 1.0.6; repair the problem that abnormal information appeared under unsupported sizes. 
 
 	2016-10-13:
-		提交小视频1.0.5，修复部分手机录制变形问题。
+		Submit a small video 1.0.5; repair the deformation problems of some mobile phones when recording.
 	
 	2016-10-12：
-		修复sample参数小bug。
+		Repair “sample” parameter and small bug.
 	
 	2016-08-26：
-		提交小视频1.0.2，增加Buidler配置，可自定义更多内容。
+		Submit small video 1.0.2; add “Buidler” configuration, and customize more content.
 	
 	2016-08-26：
-		提交小视频1.0.1，更新配置文件。
+		Submit small video 1.0.1; update the configuration file.
 	
 	2016-08-25：
-		提交小视频1.0.0
-## sample下载：
+		Submit small video 1.0.0
+## Sample download：
 ###### small-video-record2:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/sample2.png)
 [Download Demo2](https://fir.im/jianxiMediaRecord2)
