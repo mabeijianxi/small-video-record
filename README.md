@@ -9,8 +9,8 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 ## 效果如下：
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
 ## 使用：
-* [small-video-record1 使用步骤](https://github.com/mabeijianxi/small-video-record/blob/master/document/1.x_use_help.md)<br>
-* [small-video-record2 使用步骤](https://github.com/mabeijianxi/small-video-record/blob/master/document/2.x_use_help.md)<br>
+* [small-video-record1 使用步骤](https://github.com/mabeijianxi/small-video-record/blob/master/document/1.x_using_help.md)<br>
+* [small-video-record2 使用步骤](https://github.com/mabeijianxi/small-video-record/blob/master/document/2.x_using_help.md)<br>
 ## 特点：
 * 边采集边编码。
 * 利用FFmpeg自定义录制各种时长、分辨率、码率、帧率、转码速度的视频。
