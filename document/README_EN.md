@@ -10,7 +10,7 @@ Used for capturing audio and video in Android system. The bottom layer uses FFmp
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
 
 ## Instructions:
-* [small-video-record1 ](https://github.com/mabeijianxi/small-video-record/blob/master/1.x_en_using_help.md)<br>
+* [small-video-record1 ](https://github.com/mabeijianxi/small-video-record/blob/master/document/1.x_en_using_help.md)<br>
 * [small-video-record2 ](https://github.com/mabeijianxi/small-video-record/blob/master/document/2.x_en_using_help.md)<br>
 
 
