@@ -109,8 +109,8 @@ Java_com_mabeijianxi_smallvideorecord2_jniinterface_FFmpegBridge_encodeFrame2H26
 
     jbyte *elements = env->GetByteArrayElements(data_, 0);
     int i = h264_encoder->startSendOneFrame((uint8_t *) elements);
-
-    return 0;
+    env->ReleaseByteArrayElements(data_,elements,0);
+    return i;
 }
 
 /**
@@ -132,8 +132,10 @@ JNIEXPORT jint JNICALL
 Java_com_mabeijianxi_smallvideorecord2_jniinterface_FFmpegBridge_encodeFrame2AAC(JNIEnv *env,
                                                                                  jclass type,
                                                                                  jbyteArray data_) {
-    return aac_encoder->sendOneFrame((uint8_t *) env->GetByteArrayElements(data_, 0));
-
+    jbyte *elements = env->GetByteArrayElements(data_, 0);
+    int i = aac_encoder->sendOneFrame((uint8_t *) elements);
+    env->ReleaseByteArrayElements(data_,elements,0);
+    return i;
 }
 
 /**
