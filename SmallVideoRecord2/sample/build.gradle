@@ -8,8 +8,8 @@ android {
         applicationId "com.mabeijianxi.smallvideo2"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 10
-        versionName "2.0.2"
+        versionCode 11
+        versionName "2.0.3"
     }
     buildTypes {
         release {
