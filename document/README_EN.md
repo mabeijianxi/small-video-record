@@ -4,7 +4,7 @@
 
 [查看中文文档](https://github.com/mabeijianxi/small-video-record)
 
-Used for capturing audio and video in Android system. The bottom layer uses FFmpeg encoding to compression processing (in small-video-record2, C code and Java code are all open source.).
+Used for capturing audio and video in Android system. The bottom layer uses FFmpeg to compression processing (in small-video-record2, C source code and Java source code are all open).
 
 ## The effect is as follows:
 ![sample](https://github.com/mabeijianxi/small-video-record/blob/master/image/new_sample.gif)
@@ -16,16 +16,16 @@ Used for capturing audio and video in Android system. The bottom layer uses FFmp
 
 ## Features:
 * Collect when encoding. 
-* Use FFmpeg customize recording the video which have different time, resolution, bit rate, frame rate and transcoding speed.
-* Small-video-record2 has been decoupled FFmpeg, you can custom FFmpeg based on your needs.
+* Use FFmpeg to customize recording the video which has different time, resolution, bit rate, frame rate and transcoding speed.
+* Small-video-record2 has been decoupled FFmpeg, you can customize FFmpeg based on your needs.
 * Exposure FFmpeg command operation interface, you can customize more features.
-* Small-video-record2 support full platform, if your phone’s cpu is 64-bit will reach the second!
-* You can choose the local video for personalized compression, if your phone’s cpu is 64-bit speed will be relatively fast.
-* Recording is simple, a few lines of code can complete the integration and a few parameters to get recorded.
+* Small-video-record2 support full platform, if your phone’s cpu is 64-bit then the code will be compiled instantaneously!
+* You can choose the local video for personalized compression, if your phone’s cpu is 64-bit then the speed will be relatively fast.
+* Recording is simple, a few lines of code can complete the integration and a few parameters can complete the recording.
 
 
 ## About issues:
-If you meet some troubles when integrating, you can first scan the APK operation to see if there is a problem either. If there is no problem, then you should check whether the steps of integration are missing or you can find the answer inside the issues. If it’s still not work, then you can add another issues, and accompanied with a detailed log, and when debugging, try to change the mark “debug” to “true” from the beginning, thus there will input more detailed log.
+If you meet some troubles when integrating, you can first scan the APK operation to see if there is a problem either. If there is no problem, then you should check whether the steps of integration are missing or you can find the answer inside the issues. If it still not works, then you can add another issue accompanied with a detailed log, and when debugging, try to change the mark “debug” to “true” from the beginning, thus there will be more detailed log.
 ## Development steps, source code analysis, tool preparation：
 [利用FFmpeg玩转Android视频录制与压缩（一）](http://blog.csdn.net/mabeijianxi/article/details/63335722)<br>
 [利用FFmpeg玩转Android视频录制与压缩（二）](http://blog.csdn.net/mabeijianxi/article/details/72983362)<br>
@@ -88,7 +88,7 @@ In this mode, you can more accurately control the video quality and size
 	
 	2017-07-20：
 		Submit 2.0.3.
-		Fix a series of low-version phone compatibility issues, including so loading order, temporary memory recovery, end memory recovery, etc.
+		Fix a series of low-version phone compatibility issues, including SO Library loading order, temporary memory recovery, end memory recovery, etc.
 
 	2017-07-17:
 		Submit 2.0.2
