@@ -61,7 +61,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 |recordTimeMin|int|单位为毫秒，最小录制时间|
 |maxFrameRate|int|最大帧率，一定程度上影响视频质量与大小，不要太高，有的低配手机转码速度可能会跟不上|
 |videoBitrate|int|比特率，一定程度上影响视频质量与大小，理论上值越大质量将会越好|
-|captureThumbnailsTime|int|缩略图剪裁其实时间|
+|captureThumbnailsTime|int|缩略图剪裁起始时间|
 |doH264Compress|BaseMediaBitrateConfig|设置压缩模式，支持 AutoVBRMode、CBRMode、VBRMode|
 |setScale|float|视频缩放，对视频大小没要求无需输入，大于1时才执行缩放操作|
 #### AutoVBRMode
@@ -77,7 +77,7 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 |VBRMode|int/int|这是个构造方法，接收一个最大码率，与一个额定码率，编码时以额定码率为基础，会尽量不超过最大码率|
 |setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 #### CBRMode
-此模式可毕竟准确的控制视频质量与大小
+此模式可更加准确的控制视频质量与大小
 
 |名称|类型|说明|
 |:----:|:-----:|:-------:|
@@ -85,6 +85,10 @@ Android端音频视频采集，底层利用FFmpeg编码压缩处理（small-vide
 |setVelocity|String| 设置转码速度，可选值有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo |
 
 ## small-video-record2 更新日志：
+	
+	2017-07-20：
+		提交 2.0.3.
+		修复一系列低版本手机兼容问题，包括 so 加载顺序，临时内存回收，结束内存回收等。
 
 	2017-07-17:
 		提交 2.0.2。
