@@ -46,4 +46,24 @@ public static String getCaptureThumbnailsCMD(String videoPath, String outputPath
 		return   FFmpegBridge.jxFFmpegCMDRun(cmd)==0 ;
 	}
 
+
+	/**
+		视频剪切
+		@Param videoPath 视频路径
+		@Param outputPath 截图输出路径
+		@Param ss 剪切起始时间，例如00:00:28
+		@Param t 剪切结束时间，例如00:00:58
+		@return
+		*/
+	public static boolean sectionVideo(String videoPath, String outputPath, String ss, String t) {
+		//ffmpeg -ss 00:00:28 -i "int.mp4f" -acodec copy -vcodec copy -t 00:00:58 output.mp4
+		FileUtils.deleteFile(outputPath);
+		if (ss == null || ss == "")
+			ss = "";
+		else
+			ss = " -ss " + ss;
+		String cmd = String.format("ffmpeg -d stdout -loglevel verbose -i \"%s\" %s -t %s -acodec copy -vcodec copy \"%s\"", videoPath, ss, t, outputPath);
+		return FFmpegBridge.jxFFmpegCMDRun(cmd)==0 ;
+	}
+
 }
