@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">jianxi_record1</string>
+    <string-array name="velocity">
+        <item>none</item>
+        <item>ultrafast</item>
+        <item>superfast</item>
+        <item>veryfast</item>
+        <item>faster</item>
+        <item>fast</item>
+        <item>medium</item>
+        <item>slow</item>
+        <item>slower</item>
+        <item>veryslow</item>
+        <item>placebo</item>
+    </string-array>
+</resources>

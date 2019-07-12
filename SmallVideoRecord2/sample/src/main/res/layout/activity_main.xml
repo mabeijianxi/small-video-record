@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.mabeijianxi.smallvideo2.MainActivity">
+
+    <RadioGroup
+        android:id="@+id/rg_aspiration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_recorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="录制视频" />
+
+        <RadioButton
+            android:id="@+id/rb_local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="本地选择压缩" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:background="#000000" />
+
+    <LinearLayout
+        android:id="@+id/ll_only_compress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <include
+            android:id="@+id/i_only_compress"
+            layout="@layout/bitrate_mode_config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/ll_only_framerate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="视频帧率(不输入就使用原视频的)："
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_only_framerate"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColorHint="#9b9b9b"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_only_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="缩放视频比例，为浮点型，大于1有效"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_only_scale"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColorHint="#9b9b9b"
+                android:text="1.0"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="压缩转码速度(可选):"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/spinner_only_compress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/velocity" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/bt_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="choose"
+            android:text="选择视频并压缩" />
+    </LinearLayout>
+
+    <ScrollView xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="是否全屏录制(你手机如果不是64位的cpu建议不要使用全屏，不然有点慢)"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_need_full"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/need_full" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:background="#000000" />
+            <TextView
+                android:id="@+id/tv_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您手机支持的宽度有480、720、1080"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="width:"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_width"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:text="360" />
+
+                <TextView
+                    android:id="@+id/height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="height:"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_height"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:text="480" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_maxframerate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="视频最大帧率："
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_maxframerate"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="20"
+                    android:textColorHint="#9b9b9b"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_bitrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="视频比特率："
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_record_bitrate"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="580000"
+                    android:textColorHint="#9b9b9b"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最大录制时间："
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_maxtime"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="6000"
+                    android:textColorHint="#9b9b9b"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最小录制时间："
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_mintime"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="1500"
+                    android:textColorHint="#9b9b9b"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="录制转码速度(可选):"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/velocity" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:background="#000000" />
+
+            <Button
+                android:id="@+id/bt_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="go"
+                android:text="开始录制" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

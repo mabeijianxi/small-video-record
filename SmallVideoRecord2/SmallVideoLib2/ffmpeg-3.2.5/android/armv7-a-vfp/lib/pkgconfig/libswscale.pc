@@ -1,0 +1,14 @@
+prefix=./android/armv7-a-vfp
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 4.2.100
+Requires: 
+Requires.private: libavutil >= 55.34.101
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: -lm
+Cflags: -I${includedir}
