@@ -36,8 +36,6 @@ tv/*.iml
 *.ap_
 /build
 /captures
-.externalNativeBuild
-/.externalNativeBuild
 # Files for the Dalvik VM
 *.dex
 
