@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/record_camera_switch_disable" android:state_enabled="false"/>
-    <item android:drawable="@drawable/record_camera_switch_pressed" android:state_pressed="true"/>
-    <item android:drawable="@drawable/record_camera_switch_normal"/>
-
-</selector>
