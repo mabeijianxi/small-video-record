@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 28
+    buildToolsVersion '29.0.0'
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 11
         versionName "2.0.3"
         externalNativeBuild {
@@ -14,8 +14,9 @@ android {
                 cppFlags "-std=c++11"
             }
         }
-        ndk{
-            abiFilters "armeabi","armeabi-v7a","arm64-v8a","x86","x86_64"
+        ndk {
+//            abiFilters "armeabi","armeabi-v7a","arm64-v8a","x86","x86_64"
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
     buildTypes {
@@ -32,9 +33,7 @@ android {
             path "CMakeLists.txt"
         }
     }
-
     publish {
-
         userOrg = 'mabeijianxi'//bintray.com用户名
         groupId = 'com.mabeijianxi'//jcenter上的路径
         artifactId = 'small-video-record2'//项目名称
@@ -45,5 +44,5 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
