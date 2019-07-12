@@ -1,0 +1,12 @@
+[submodule "SmallVideoRecord2"]
+	path = SmallVideoRecord2
+	url = https://github.com/CMingTseng/mabeijianxi_SmallVideoRecord2.git
+[submodule "SmallVideoRecord1"]
+	path = SmallVideoRecord1
+	url = https://github.com/CMingTseng/mabeijianxi_SmallVideoRecord1.git
+[submodule "VideoR1"]
+	path = VideoR1
+	url = https://github.com/CMingTseng/mabeijianxi_SmallVideoRecord1
+[submodule "VideoR2"]
+	path = VideoR2
+	url = https://github.com/CMingTseng/mabeijianxi_SmallVideoRecord2.git

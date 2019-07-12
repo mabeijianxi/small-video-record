@@ -1,8 +1,42 @@
+# Created by .ignore support plugin (hsz.mobi)
+### NetBeans template
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Mac OS X Garbage
+.DS_Store
+Thumbs.db
+
+.idea/
+
+### Android Studio
+/jniLibs
+mobile/mobile.iml
+mobile/mobile.iml
+tv/tv.iml
+app/app.iml
+app/*.iml
+*.iml
+mobile/*.iml
+tv/*.iml
+.idea/workspace.xml
+.idea/libraries
+.idea/
+.idea
+/build
+/captures
+### Android template
 # Built application files
 *.apk
 *.ap_
-
-# Files for the ART/Dalvik VM
+/build
+/captures
+# Files for the Dalvik VM
 *.dex
 
 # Java class files
@@ -11,13 +45,9 @@
 # Generated files
 bin/
 gen/
-out/
 
 # Gradle files
 .gradle/
-build/
-.idea/
-
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -28,21 +58,59 @@ proguard/
 # Log Files
 *.log
 
-# Android Studio Navigation editor temp files
-.navigation/
 
-# Android Studio captures folder
-captures/
+### Java template
+*.class
 
-# Intellij
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+
+### Eclipse template
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.settings/
+.loadpath
+/build
+/captures
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# TeXlipse plugin
+.texlipse
+
+# Android Studio
 *.iml
-.idea/workspace.xml
 
-# Keystore files
-*.jks
+# Keep external libs
+!app/libs/*.jar
 
-gradlew
-
-gradlew
-
-SmallVideoRecord2/copy.sh
+# script output
+check-dpi.txt*
