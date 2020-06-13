@@ -159,7 +159,7 @@ public class MediaObject implements Serializable {
     }
 
     /**
-     * 获取视频信息春促路径
+     * 获取视频信息存储路径
      */
     public String getObjectFilePath() {
         if (StringUtils.isEmpty(mOutputObjectPath)) {
